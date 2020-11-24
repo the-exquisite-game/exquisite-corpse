@@ -1,7 +1,7 @@
 {
-  "name": "boilermaker",
+  "name": "exquisite-corpse",
   "version": "2.0.0",
-  "description": "Some boilerplate code to get you started - get shakin'!",
+  "description": "Draw!",
   "engines": {
     "node": "~12.11.1"
   },

@@ -16,17 +16,18 @@ class Drawing extends Component {
   }
 
   handleMouseDown(e) {
-    //this needs hook
     this.setState({isDrawing: true})
 
     const position = e.target.getStage().getPointerPosition()
 
     //messed up here
-    this.setState({
-      lines: [
-        ...this.state.lines,
-        {...this.state.tool, points: [position.x, position.y]}
-      ]
+    this.setState(prevState => {
+      return {
+        lines: [
+          ...prevState.lines,
+          {tool: prevState.tool, points: [position.x, position.y]}
+        ]
+      }
     })
   }
 
@@ -45,13 +46,11 @@ class Drawing extends Component {
     lastLine.points = lastLine.points.concat([point.x, point.y])
 
     //replace last one
-    let newLineList = this.state.lines.splice(
-      this.state.lines.length - 1,
-      1,
-      lastLine
-    )
+    let lineList = this.state.lines
 
-    this.setState({lines: newLineList})
+    let newLineList = lineList.splice(this.state.lines.length - 1, 1, lastLine)
+
+    this.setState({lines: lineList})
   }
 
   //on Mouse Up sets state of paint to false

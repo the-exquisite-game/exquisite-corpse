@@ -6,4 +6,8 @@ socket.on('connect', () => {
   console.log('Connected!')
 })
 
+socket.on('roomCreate', str => {
+  console.log(str)
+})
+
 export default socket

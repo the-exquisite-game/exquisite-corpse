@@ -6,8 +6,8 @@ socket.on('connect', () => {
   console.log('Connected!')
 })
 
-socket.on('roomCreate', str => {
-  console.log(str)
+socket.on('roomCreate', room => {
+  console.log(room)
 })
 
 export default socket

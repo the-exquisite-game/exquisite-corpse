@@ -20,6 +20,7 @@ class Routes extends Component {
         <Route path="/login" component={Login} />
         <Route path="/signup" component={Signup} />
         <Route path="/home" component={Home} />
+        <Route path="/drawing" component={Drawing} />
 
         {/* Displays our Login component as a fallback */}
         <Route component={Login} />

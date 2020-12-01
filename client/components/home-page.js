@@ -24,6 +24,20 @@ export class Home extends React.Component {
   constructor() {
     super()
     this.handleClick = this.handleClick.bind(this)
+    this.onRoomCreated = this.onRoomCreated.bind(this)
+  }
+
+  onRoomCreated(room) {
+    console.log(room)
+    this.props.history.push(`/drawing/${room}`)
+  }
+
+  componentDidMount() {
+    socket.on('roomCreated', this.onRoomCreated)
+  }
+
+  componentWillUnmount() {
+    socket.off('roomCreated', this.onRoomCreated)
   }
 
   render() {
@@ -38,6 +52,6 @@ export class Home extends React.Component {
 
   handleClick() {
     socket.emit('roomCreate')
-    this.props.history.push('/drawing')
+    // this.props.history.push('/drawing')
   }
 }

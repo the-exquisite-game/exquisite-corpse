@@ -10,9 +10,14 @@ module.exports = io => {
       let roomNo = 3
       socket.join(roomNo)
       //console.log(`room no.: 3`)
-      io.to(roomNo).emit('roomCreate', roomNo)
+      io.to(roomNo).emit('roomCreated', roomNo)
+    })
+
+    socket.on('newLines', arr => {
+      socket.broadcast.emit('linesToState', arr)
     })
   })
+
   // io.on('roomEnter', socket => {
   //   console.log(`A socket connection to the server has been made: ${socket.id}`)
   // })

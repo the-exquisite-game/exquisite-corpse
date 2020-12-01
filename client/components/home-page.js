@@ -1,24 +1,6 @@
 import React from 'react'
 import {default as socket} from '../socket'
-
-/*export const Home = props => {
-  const handleClick = () => {
-    socket.emit('roomCreate');
-    props.history.push('/drawing');
-  }
-
-  return (
-    <div>
-      <button
-        type="button"
-        id="createRoom"
-        onClick={handleClick
-        }>
-        Test Room
-      </button>
-    </div>
-  )
-} */
+import {createRoom, leaveRoom} from '../socket'
 
 export class Home extends React.Component {
   constructor() {
@@ -28,16 +10,11 @@ export class Home extends React.Component {
   }
 
   onRoomCreated(room) {
-    console.log(room)
     this.props.history.push(`/drawing/${room}`)
   }
 
-  componentDidMount() {
-    socket.on('roomCreated', this.onRoomCreated)
-  }
-
   componentWillUnmount() {
-    socket.off('roomCreated', this.onRoomCreated)
+    leaveRoom(this.onRoomCreated)
   }
 
   render() {
@@ -51,7 +28,6 @@ export class Home extends React.Component {
   }
 
   handleClick() {
-    socket.emit('roomCreate')
-    // this.props.history.push('/drawing')
+    createRoom(this.onRoomCreated)
   }
 }

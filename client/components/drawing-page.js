@@ -1,5 +1,6 @@
 import React, {Component} from 'react'
 import {Stage, Layer, Line} from 'react-konva'
+import {newLine, broadcastLines} from '../socket'
 
 class Drawing extends Component {
   constructor(props) {
@@ -15,12 +16,19 @@ class Drawing extends Component {
     this.handleMouseUp = this.handleMouseUp.bind(this)
   }
 
+  componentDidMount() {
+    broadcastLines(broadcastedState =>
+      this.setState({
+        lines: broadcastedState
+      })
+    )
+  }
+
   handleMouseDown(e) {
     this.setState({isDrawing: true})
 
     const position = e.target.getStage().getPointerPosition()
 
-    //messed up here
     this.setState(prevState => {
       return {
         lines: [
@@ -46,11 +54,12 @@ class Drawing extends Component {
     lastLine.points = lastLine.points.concat([point.x, point.y])
 
     //replace last one
-    let lineList = this.state.lines
+    let lineList = [...this.state.lines]
 
-    let newLineList = lineList.splice(this.state.lines.length - 1, 1, lastLine)
+    lineList.splice(this.state.lines.length - 1, 1, lastLine)
 
     this.setState({lines: lineList})
+    newLine(this.state.lines)
   }
 
   //on Mouse Up sets state of paint to false

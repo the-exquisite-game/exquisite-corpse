@@ -1,6 +1,6 @@
 import React from 'react'
 
-import {Navbar, Drawing, MyTurn} from './components'
+import {Navbar, Drawing} from './components'
 
 import Routes from './routes'
 
@@ -8,7 +8,7 @@ const App = () => {
   return (
     <div>
       <Navbar />
-      <MyTurn />
+      <Routes />
     </div>
   )
 }

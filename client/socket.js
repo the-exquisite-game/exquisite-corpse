@@ -15,8 +15,11 @@ export function leaveRoom(callback) {
   socket.off('roomCreated', callback)
 }
 
-export function newLine(callback, arr) {
-  socket.on('linesToState', callback)
+export function newLine(arr) {
   socket.emit('newLines', arr)
+}
+
+export function broadcastLines(callback) {
+  socket.on('linesToState', callback)
 }
 export default socket

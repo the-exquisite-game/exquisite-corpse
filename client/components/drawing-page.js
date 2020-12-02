@@ -1,6 +1,7 @@
+import {number} from 'prop-types'
 import React, {Component} from 'react'
 import {Stage, Layer, Line} from 'react-konva'
-import {newLine, broadcastLines} from '../socket'
+import {newLine, broadcastLines, doneDrawing} from '../socket'
 
 class Drawing extends Component {
   constructor(props) {
@@ -9,11 +10,13 @@ class Drawing extends Component {
     this.state = {
       tool: 'pen',
       lines: [],
-      isDrawing: false
+      isDrawing: false,
+      done: 0
     }
     this.handleMouseMove = this.handleMouseMove.bind(this)
     this.handleMouseDown = this.handleMouseDown.bind(this)
     this.handleMouseUp = this.handleMouseUp.bind(this)
+    this.handleDone = this.handleDone.bind(this)
   }
 
   componentDidMount() {
@@ -67,12 +70,27 @@ class Drawing extends Component {
     this.setState({isDrawing: false})
   }
 
+  handleDone(numberFinished) {
+    console.log('done!', numberFinished)
+
+    this.setState(prevState => {
+      return {
+        done: prevState.done + 1
+      }
+    })
+
+    //will update party page state to include another done drawing, push the drawing and num done
+
+    //will push to history party page, for now pushing to home page
+    // this.props.history.push('/home')
+  }
+
   render() {
     return (
       <div>
         <Stage
           width={600}
-          height={1000}
+          height={500}
           onMouseDown={this.handleMouseDown}
           onMouseMove={this.handleMouseMove}
           onMouseUp={this.handleMouseUp}
@@ -102,6 +120,10 @@ class Drawing extends Component {
           <option value="pen">Pen</option>
           <option value="eraser">Eraser</option>
         </select>
+
+        <button type="button" onClick={() => doneDrawing(this.handleDone)}>
+          Done!
+        </button>
       </div>
     )
   }

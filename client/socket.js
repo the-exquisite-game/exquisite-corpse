@@ -15,11 +15,20 @@ export function leaveRoom(callback) {
   socket.off('roomCreated', callback)
 }
 
+//emit a new Line
 export function newLine(arr) {
   socket.emit('newLines', arr)
 }
 
+//broadcast all lines
 export function broadcastLines(callback) {
   socket.on('linesToState', callback)
 }
+
+//finish drawing function
+export function doneDrawing(callback) {
+  socket.emit('doneDrawing')
+  socket.on('done', callback)
+}
+
 export default socket

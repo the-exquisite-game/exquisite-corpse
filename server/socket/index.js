@@ -6,6 +6,7 @@ module.exports = io => {
       console.log(`Connection ${socket.id} has left the building`)
     })
 
+    //create the room
     socket.on('roomCreate', () => {
       let roomNo = 3
       socket.join(roomNo)
@@ -13,8 +14,15 @@ module.exports = io => {
       io.to(roomNo).emit('roomCreated', roomNo)
     })
 
+    //broadcast Lines
     socket.on('newLines', arr => {
       socket.broadcast.emit('linesToState', arr)
+    })
+
+    //finish drawing
+    socket.on('doneDrawing', () => {
+      console.log('DONE!')
+      socket.emit('done', 1)
     })
   })
 

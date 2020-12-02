@@ -5,7 +5,7 @@ import {newLine, broadcastLines} from '../socket'
 class Drawing extends Component {
   constructor(props) {
     super(props)
-    this.canvas = React.createRef()
+    // this.canvas = React.createRef()
     this.state = {
       tool: 'pen',
       lines: [],
@@ -76,6 +76,7 @@ class Drawing extends Component {
           onMouseDown={this.handleMouseDown}
           onMouseMove={this.handleMouseMove}
           onMouseUp={this.handleMouseUp}
+          ref={this.props.canvas}
         >
           <Layer>
             {this.state.lines.map((line, i) => (

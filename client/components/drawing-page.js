@@ -17,7 +17,7 @@ class Drawing extends Component {
   }
 
   componentDidMount() {
-    joinRoom(this.props.match.params.room)
+    joinRoom(this.props.room)
     broadcastLines(broadcastedState => {
       this.setState({
         lines: broadcastedState
@@ -60,7 +60,7 @@ class Drawing extends Component {
     lineList.splice(this.state.lines.length - 1, 1, lastLine)
 
     this.setState({lines: lineList})
-    newLine(this.state.lines, this.props.match.params.room)
+    newLine(this.state.lines, this.props.room)
   }
 
   //on Mouse Up sets state of paint to false

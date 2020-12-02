@@ -73,10 +73,8 @@ class Drawing extends Component {
   handleDone(numberFinished) {
     console.log('done!', numberFinished)
 
-    this.setState(prevState => {
-      return {
-        done: prevState.done + 1
-      }
+    this.setState({
+      done: numberFinished
     })
 
     //will update party page state to include another done drawing, push the drawing and num done
@@ -121,7 +119,10 @@ class Drawing extends Component {
           <option value="eraser">Eraser</option>
         </select>
 
-        <button type="button" onClick={() => doneDrawing(this.handleDone)}>
+        <button
+          type="button"
+          onClick={() => doneDrawing(this.state.done + 1, this.handleDone)}
+        >
           Done!
         </button>
       </div>

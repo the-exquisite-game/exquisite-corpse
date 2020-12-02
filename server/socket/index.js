@@ -19,10 +19,28 @@ module.exports = io => {
       socket.broadcast.emit('linesToState', arr)
     })
 
-    //finish drawing
-    socket.on('doneDrawing', () => {
-      console.log('DONE!')
-      socket.emit('done', 1)
+    //finish drawing button
+    socket.on('doneDrawing', num => {
+      console.log('DONE!', num)
+
+      //io.sockets.clients('room').length
+
+      //room info, and users sockets names!
+      let room = io.sockets.adapter.rooms[3]
+      console.log(room)
+
+      //can I get the room # from the url?
+
+      //amount of players
+      let numOfPlayers = room.length
+
+      console.log(numOfPlayers)
+
+      if (num < numOfPlayers) {
+        socket.emit('done', num)
+      } else {
+        socket.emit('finished')
+      }
     })
   })
 

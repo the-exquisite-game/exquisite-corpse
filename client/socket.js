@@ -26,9 +26,16 @@ export function broadcastLines(callback) {
 }
 
 //finish drawing function
-export function doneDrawing(callback) {
-  socket.emit('doneDrawing')
+export function doneDrawing(num, callback) {
+  socket.emit('doneDrawing', num)
+
   socket.on('done', callback)
+
+  socket.on('finished', finishedCorpse)
+}
+
+function finishedCorpse() {
+  console.log('DONE DRAWING!!! WOOO A MONSTER')
 }
 
 export default socket

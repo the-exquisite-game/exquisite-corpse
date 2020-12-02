@@ -19,7 +19,6 @@ class Drawing extends Component {
   componentDidMount() {
     joinRoom(this.props.match.params.room)
     broadcastLines(broadcastedState => {
-      console.log('broadcasted state', broadcastedState)
       this.setState({
         lines: broadcastedState
       })

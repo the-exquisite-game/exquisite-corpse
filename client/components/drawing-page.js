@@ -6,12 +6,11 @@ import {newLine, broadcastLines, doneDrawing} from '../socket'
 class Drawing extends Component {
   constructor(props) {
     super(props)
-    // this.canvas = React.createRef()
+    this.canvas = React.createRef()
     this.state = {
       tool: 'pen',
       lines: [],
-      isDrawing: false,
-      done: 0
+      isDrawing: false
     }
     this.handleMouseMove = this.handleMouseMove.bind(this)
     this.handleMouseDown = this.handleMouseDown.bind(this)
@@ -73,14 +72,18 @@ class Drawing extends Component {
   handleDone(numberFinished) {
     console.log('done!', numberFinished)
 
-    this.setState({
-      done: numberFinished
+    const bodyPart = this.canvas.current.toDataURL()
+
+    const leadingLines = this.canvas.current.toDataURL({
+      y: 400,
+      x: 0,
+      width: 600,
+      height: 100
     })
 
-    //will update party page state to include another done drawing, push the drawing and num done
+    this.props.handleTurn(bodyPart, leadingLines, numberFinished)
 
-    //will push to history party page, for now pushing to home page
-    // this.props.history.push('/home')
+    //will update party page state to include another done drawing, push the drawing and num done
   }
 
   render() {
@@ -92,7 +95,7 @@ class Drawing extends Component {
           onMouseDown={this.handleMouseDown}
           onMouseMove={this.handleMouseMove}
           onMouseUp={this.handleMouseUp}
-          ref={this.props.canvas}
+          ref={this.canvas}
         >
           <Layer>
             {this.state.lines.map((line, i) => (
@@ -122,7 +125,7 @@ class Drawing extends Component {
 
         <button
           type="button"
-          onClick={() => doneDrawing(this.state.done + 1, this.handleDone)}
+          onClick={() => doneDrawing(this.props.userTurn + 1, this.handleDone)}
         >
           Done!
         </button>

@@ -4,13 +4,23 @@ import Drawing from './drawing-page'
 export class PartyRoom extends React.Component {
   constructor() {
     super()
+    this.state = {
+      userTurn: '',
+      users: [],
+      done: 0,
+      bodyPartsImage: [],
+      bodyParts: ['head', 'torso', 'hips', 'legs'],
+      connectingLines: ''
+    }
     this.canvas = React.createRef()
-    this.handleClick = this.handleClick.bind(this)
+    this.handleDownload = this.handleDownload.bind(this)
+    this.handleTurn = this.handleTurn.bind(this)
   }
-  handleClick() {
+  handleDownload() {
     const img = this.canvas.current.toDataURL()
     this.downloadURI(img, 'corpse.png')
   }
+
   downloadURI(uri, name) {
     let link = document.createElement('a')
     link.download = name
@@ -19,13 +29,40 @@ export class PartyRoom extends React.Component {
     link.click()
     document.body.removeChild(link)
   }
+
+  //function that increases the userTurn, adds images
+  handleTurn(limbs, leadingLines, numberFinished) {
+    this.setState(prevState => {
+      return {
+        done: numberFinished,
+        bodyPartsImage: [...prevState.bodyPartsImage, limbs],
+        connectingLines: leadingLines
+      }
+    })
+  }
+
   render() {
     return (
       <div>
-        <Drawing canvas={this.canvas} />
-        <button type="button" onClick={this.handleClick}>
+        <Drawing
+          canvas={this.canvas}
+          handleTurn={this.handleTurn}
+          userTurn={this.state.done}
+        />
+        {this.state.bodyPartsImage.length > 0
+          ? this.state.bodyPartsImage.map((part, index) => {
+              return <img key={this.state.bodyParts[index]} src={part} />
+            })
+          : ''}
+        connectingLines
+        {this.state.connectingLines ? (
+          <img src={this.state.connectingLines} />
+        ) : (
+          ''
+        )}
+        {/* <button type="button" onClick={this.handleDownload}>
           Download
-        </button>
+        </button> */}
         {/* <button type="button" onClick={this.handleClick}>
           Save to Gallery
         </button> */}

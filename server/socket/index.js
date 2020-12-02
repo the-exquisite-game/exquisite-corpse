@@ -26,17 +26,17 @@ module.exports = io => {
       //io.sockets.clients('room').length
 
       //room info, and users sockets names!
-      let room = io.sockets.adapter.rooms[3]
-      console.log(room)
+      // let room = io.sockets.adapter.rooms[3]
+      // console.log(room)
 
       //can I get the room # from the url?
 
       //amount of players
-      let numOfPlayers = room.length
+      // let numOfPlayers = room.length
 
-      console.log(numOfPlayers)
+      // console.log(numOfPlayers)
 
-      if (num < numOfPlayers) {
+      if (num < 4) {
         socket.emit('done', num)
       } else {
         socket.emit('finished')

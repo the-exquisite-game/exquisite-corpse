@@ -96,7 +96,10 @@ class Drawing extends Component {
   }
 
   handleDoneClick() {
-    doneDrawing(this.props.userTurn + 1, this.props.room)
+    const turn = this.props.userTurn + 1
+
+    doneDrawing(turn, this.props.room)
+    this.handleDone(turn)
   }
 
   render() {

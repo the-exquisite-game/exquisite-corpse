@@ -1,5 +1,4 @@
 import React from 'react'
-import {default as socket} from '../socket'
 import {createRoom, leaveRoom} from '../socket'
 
 export class Home extends React.Component {
@@ -10,7 +9,7 @@ export class Home extends React.Component {
   }
 
   onRoomCreated(room) {
-    this.props.history.push(`/drawing/${room}`)
+    this.props.history.push(`/partyRoom/${room}`)
   }
 
   componentWillUnmount() {
@@ -20,6 +19,8 @@ export class Home extends React.Component {
   render() {
     return (
       <div>
+        <label>Username:</label>
+        <input />
         <button type="button" id="createRoom" onClick={this.handleClick}>
           Test Room
         </button>

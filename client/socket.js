@@ -22,4 +22,9 @@ export function newLine(arr) {
 export function broadcastLines(callback) {
   socket.on('linesToState', callback)
 }
+
+export function getUsers(callback) {
+  socket.on('sendUsers', callback)
+}
+
 export default socket

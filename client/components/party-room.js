@@ -1,5 +1,6 @@
 import React from 'react'
 import Drawing from './drawing-page'
+import {UsersBar} from './users-bar'
 
 export class PartyRoom extends React.Component {
   constructor() {
@@ -22,6 +23,7 @@ export class PartyRoom extends React.Component {
   render() {
     return (
       <div>
+        <UsersBar />
         <Drawing canvas={this.canvas} />
         <button type="button" onClick={this.handleClick}>
           Download

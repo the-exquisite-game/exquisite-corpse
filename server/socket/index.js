@@ -22,8 +22,12 @@ module.exports = io => {
       io.to(room).emit('roomCreated', room)
     })
 
-    socket.on('newLines', arr => {
-      socket.broadcast.emit('linesToState', arr)
+    socket.on('newLines', (arr, room) => {
+      socket.to(room).broadcast.emit('linesToState', arr)
+    })
+
+    socket.on('joinedRoom', room => {
+      socket.join(room)
     })
   })
 

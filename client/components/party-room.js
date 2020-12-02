@@ -1,5 +1,6 @@
 import React from 'react'
 import Drawing from './drawing-page'
+import {joinRoom} from '../socket'
 
 export class PartyRoom extends React.Component {
   constructor() {
@@ -16,6 +17,11 @@ export class PartyRoom extends React.Component {
     this.handleDownload = this.handleDownload.bind(this)
     this.handleTurn = this.handleTurn.bind(this)
   }
+
+  componentDidMount() {
+    joinRoom(this.props.match.params.room)
+  }
+
   handleDownload() {
     const img = this.canvas.current.toDataURL()
     this.downloadURI(img, 'corpse.png')
@@ -48,6 +54,7 @@ export class PartyRoom extends React.Component {
           canvas={this.canvas}
           handleTurn={this.handleTurn}
           userTurn={this.state.done}
+          room={this.props.match.params.room}
         />
         {this.state.bodyPartsImage.length > 0
           ? this.state.bodyPartsImage.map((part, index) => {

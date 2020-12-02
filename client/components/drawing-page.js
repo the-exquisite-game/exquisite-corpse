@@ -1,6 +1,12 @@
 import React, {Component} from 'react'
 import {Stage, Layer, Line} from 'react-konva'
-import {newLine, broadcastLines, joinRoom, doneDrawing} from '../socket'
+import {
+  newLine,
+  broadcastLines,
+  joinRoom,
+  doneDrawing,
+  turnListener
+} from '../socket'
 
 class Drawing extends Component {
   constructor(props) {
@@ -15,15 +21,19 @@ class Drawing extends Component {
     this.handleMouseDown = this.handleMouseDown.bind(this)
     this.handleMouseUp = this.handleMouseUp.bind(this)
     this.handleDone = this.handleDone.bind(this)
+    this.handleDoneClick = this.handleDoneClick.bind(this)
   }
 
   componentDidMount() {
-    joinRoom(this.props.room)
+    // joinRoom(this.props.room)
     broadcastLines(broadcastedState => {
       this.setState({
         lines: broadcastedState
       })
     })
+
+    //listening for turns being done
+    turnListener(this.handleDone)
   }
 
   handleMouseDown(e) {
@@ -81,9 +91,12 @@ class Drawing extends Component {
       height: 100
     })
 
+    //updates party-room state
     this.props.handleTurn(bodyPart, leadingLines, numberFinished)
+  }
 
-    //will update party page state to include another done drawing, push the drawing and num done
+  handleDoneClick() {
+    doneDrawing(this.props.userTurn + 1, this.props.room)
   }
 
   render() {
@@ -123,10 +136,7 @@ class Drawing extends Component {
           <option value="eraser">Eraser</option>
         </select>
 
-        <button
-          type="button"
-          onClick={() => doneDrawing(this.props.userTurn + 1, this.handleDone)}
-        >
+        <button type="button" onClick={() => this.handleDoneClick()}>
           Done!
         </button>
       </div>

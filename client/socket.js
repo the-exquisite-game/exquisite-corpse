@@ -27,13 +27,15 @@ export function broadcastLines(callback) {
   socket.on('linesToState', callback)
 }
 
-//finish drawing function
-export function doneDrawing(num, callback) {
-  socket.emit('doneDrawing', num)
-
+//listen for turns
+export function turnListener(callback) {
   socket.on('done', callback)
-
   socket.on('finished', finishedCorpse)
+}
+
+//finish drawing function
+export function doneDrawing(num, room) {
+  socket.emit('doneDrawing', num, room)
 }
 
 function finishedCorpse() {

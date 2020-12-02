@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import {Stage, Layer, Line} from 'react-konva'
 import {newLine, broadcastLines} from '../socket'
+import Palette from './palette'
 
 class Drawing extends Component {
   constructor(props) {
@@ -9,11 +10,14 @@ class Drawing extends Component {
     this.state = {
       tool: 'pen',
       lines: [],
-      isDrawing: false
+      isDrawing: false,
+      color: '#df4b26',
+      brushSize: 5
     }
     this.handleMouseMove = this.handleMouseMove.bind(this)
     this.handleMouseDown = this.handleMouseDown.bind(this)
     this.handleMouseUp = this.handleMouseUp.bind(this)
+    this.handleChange = this.handleChange.bind(this)
   }
 
   componentDidMount() {
@@ -33,7 +37,12 @@ class Drawing extends Component {
       return {
         lines: [
           ...prevState.lines,
-          {tool: prevState.tool, points: [position.x, position.y]}
+          {
+            tool: prevState.tool,
+            brushSize: prevState.brushSize,
+            color: prevState.color,
+            points: [position.x, position.y]
+          }
         ]
       }
     })
@@ -67,12 +76,21 @@ class Drawing extends Component {
     this.setState({isDrawing: false})
   }
 
+  handleChange(event) {
+    if (event.target.name === 'brushSize') {
+      let value = +event.target.value
+      this.setState({brushSize: value})
+    } else {
+      this.setState({[event.target.name]: event.target.value})
+    }
+  }
+
   render() {
     return (
       <div>
         <Stage
           width={600}
-          height={1000}
+          height={500}
           onMouseDown={this.handleMouseDown}
           onMouseMove={this.handleMouseMove}
           onMouseUp={this.handleMouseUp}
@@ -82,8 +100,8 @@ class Drawing extends Component {
               <Line
                 key={i}
                 points={line.points}
-                stroke="#df4b26"
-                strokeWidth={5}
+                stroke={line.color}
+                strokeWidth={line.brushSize}
                 tension={0.5}
                 lineCap="round"
                 globalCompositeOperation={
@@ -93,15 +111,7 @@ class Drawing extends Component {
             ))}
           </Layer>
         </Stage>
-        <select
-          value={this.state.tool}
-          onChange={e => {
-            this.setState({tool: e.target.value})
-          }}
-        >
-          <option value="pen">Pen</option>
-          <option value="eraser">Eraser</option>
-        </select>
+        <Palette tool={this.state.tool} handleChange={this.handleChange} />
       </div>
     )
   }

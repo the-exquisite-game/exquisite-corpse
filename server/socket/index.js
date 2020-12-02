@@ -1,6 +1,6 @@
 const {
   uniqueNamesGenerator,
-  colors,
+  adjectives,
   animals
 } = require('unique-names-generator')
 
@@ -14,7 +14,7 @@ module.exports = io => {
 
     socket.on('roomCreate', () => {
       const room = uniqueNamesGenerator({
-        dictionaries: [colors, animals],
+        dictionaries: [adjectives, animals],
         length: 2,
         separator: '-'
       })

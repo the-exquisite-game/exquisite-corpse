@@ -1,5 +1,5 @@
 import React from 'react'
-import {default as socket} from '../socket'
+// import {default as socket} from '../socket'
 import {createRoom, leaveRoom} from '../socket'
 
 export class Home extends React.Component {
@@ -10,7 +10,7 @@ export class Home extends React.Component {
   }
 
   onRoomCreated(room) {
-    this.props.history.push(`/drawing/${room}`)
+    this.props.history.push(`/partyroom/${room}`)
   }
 
   componentWillUnmount() {

@@ -1,116 +1,59 @@
 import React from 'react'
+import {lightColors, darkColors, tools} from '../../script/paletteProperties.js'
 
 const Palette = props => {
   return (
     <div id="palette">
-      <button
-        type="button"
-        name="tool"
-        onClick={props.handleChange}
-        value="pen"
-      >
-        Pen
-      </button>
-      <button
-        type="button"
-        name="tool"
-        value="eraser"
-        onClick={props.handleChange}
-      >
-        Eraser
-      </button>
-      {/* <select value={props.tool}
-          onChange={() => {props.handleToolChange(event)}} defaultValue = "pen">
-          <option value="pen">Pen</option>
-          <option value="eraser">Eraser</option>
-        </select> */}
-
-      <button
-        type="button"
-        name="brushSize"
-        onClick={props.handleChange}
-        value="5"
-      >
-        Small
-      </button>
-      <button
-        type="button"
-        name="brushSize"
-        onClick={props.handleChange}
-        value="10"
-      >
-        Medium
-      </button>
-      <button
-        type="button"
-        name="brushSize"
-        onClick={props.handleChange}
-        value="20"
-      >
-        Large
-      </button>
-
       {/* colors */}
       <div className="colorSelector">
-        <button
-          type="button"
-          className="red"
-          name="color"
-          value="#FE797B"
-          onClick={props.handleChange}
-        >
-          red
-        </button>
-
-        <button
-          type="button"
-          className="orange"
-          name="color"
-          value="#FFB750"
-          onClick={props.handleChange}
-        >
-          orange
-        </button>
-
-        <button
-          type="button"
-          className="yellow"
-          name="color"
-          value="#FFEA56"
-          onClick={props.handleChange}
-        >
-          yellow
-        </button>
-
-        <button
-          type="button"
-          className="green"
-          name="color"
-          value="#8FE968"
-          onClick={props.handleChange}
-        >
-          green
-        </button>
-
-        <button
-          type="button"
-          className="blue"
-          name="color"
-          value="#36CEDC"
-          onClick={props.handleChange}
-        >
-          blue
-        </button>
-
-        <button
-          type="button"
-          className="purple"
-          name="color"
-          value="#A587CA"
-          onClick={props.handleChange}
-        >
-          purple
-        </button>
+        <div className="light">
+          {Object.keys(lightColors).map(element => {
+            return (
+              <button
+                key={element}
+                type="button"
+                style={{backgroundColor: lightColors[element]}}
+                className={element}
+                name="color"
+                value={lightColors[element]}
+                onClick={props.handleChange}
+              />
+            )
+          })}
+        </div>
+        <div className="dark">
+          {Object.keys(darkColors).map(element => {
+            return (
+              <button
+                key={element}
+                type="button"
+                style={{backgroundColor: darkColors[element]}}
+                className={element}
+                name="color"
+                value={darkColors[element]}
+                onClick={props.handleChange}
+              />
+            )
+          })}
+        </div>
+      </div>
+      {/* tools */}
+      <div className="toolSelector">
+        {Object.keys(tools).map(element => {
+          return (
+            <button
+              key={element}
+              type="button"
+              className="tool"
+              style={{
+                backgroundImage: `url(${tools[element].icon})`
+              }}
+              name={tools[element].name}
+              value={tools[element].value}
+              onClick={props.handleChange}
+            />
+          )
+        })}
       </div>
     </div>
   )

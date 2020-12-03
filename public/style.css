@@ -21,9 +21,27 @@ form div {
 }
 
 #palette {
-  height: 500px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  background-color: #f1e5eb;
+  border-radius: 12px;
+  width: 350px;
 }
 
-.pastelPurple {
-  background-color: #a587ca;
+button {
+  border: none;
+  padding: 15px 15px;
+  margin: 5px;
+  display: inline-block;
+  font-size: 16px;
+  border-radius: 12px;
+  cursor: pointer;
+}
+
+.tool {
+  background-color: #dcdcdc;
+  background-repeat: no-repeat;
+  background-position: center;
 }

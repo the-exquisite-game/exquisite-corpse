@@ -8,10 +8,10 @@ class Drawing extends Component {
     super(props)
     this.canvas = React.createRef()
     this.state = {
+      isDrawing: false,
       tool: 'pen',
       lines: [],
-      isDrawing: false,
-      color: '#df4b26',
+      color: 'black',
       brushSize: 5
     }
     this.handleMouseMove = this.handleMouseMove.bind(this)
@@ -77,10 +77,29 @@ class Drawing extends Component {
   }
 
   handleChange(event) {
+    //changes brush size
     if (event.target.name === 'brushSize') {
       let value = +event.target.value
       this.setState({brushSize: value})
+    } else if (event.target.name === 'color') {
+      //changes color and invokes pen automatically
+      this.setState({
+        [event.target.name]: event.target.value,
+        tool: 'pen'
+      })
+    } else if (event.target.name === 'clear') {
+      //clears whole canvas
+      this.canvas.current.clear()
+      this.setState({
+        lines: []
+      })
+    } else if (event.target.name === 'undo') {
+      //undo
+      let undoList = [...this.state.lines]
+      undoList.pop()
+      this.setState({lines: undoList})
     } else {
+      //changes tool size
       this.setState({[event.target.name]: event.target.value})
     }
   }
@@ -94,6 +113,7 @@ class Drawing extends Component {
           onMouseDown={this.handleMouseDown}
           onMouseMove={this.handleMouseMove}
           onMouseUp={this.handleMouseUp}
+          ref={this.canvas}
         >
           <Layer>
             {this.state.lines.map((line, i) => (
@@ -104,6 +124,7 @@ class Drawing extends Component {
                 strokeWidth={line.brushSize}
                 tension={0.5}
                 lineCap="round"
+                lineJoin="round"
                 globalCompositeOperation={
                   line.tool === 'eraser' ? 'destination-out' : 'source-over'
                 }

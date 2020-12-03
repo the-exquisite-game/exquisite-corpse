@@ -22,7 +22,7 @@ export class PartyRoom extends React.Component {
   render() {
     return (
       <div>
-        <Drawing canvas={this.canvas} />
+        <Drawing canvas={this.canvas} room={this.props.match.params.room} />
         <button type="button" onClick={this.handleClick}>
           Download
         </button>

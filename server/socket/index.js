@@ -1,3 +1,9 @@
+const {
+  uniqueNamesGenerator,
+  adjectives,
+  animals
+} = require('unique-names-generator')
+
 module.exports = io => {
   io.on('connection', socket => {
     console.log(`A socket connection to the server has been made: ${socket.id}`)
@@ -7,14 +13,20 @@ module.exports = io => {
     })
 
     socket.on('roomCreate', () => {
-      let roomNo = 3
-      socket.join(roomNo)
-      //console.log(`room no.: 3`)
-      io.to(roomNo).emit('roomCreated', roomNo)
+      const room = uniqueNamesGenerator({
+        dictionaries: [adjectives, animals],
+        length: 2,
+        separator: '-'
+      })
+      io.emit('roomCreated', room)
     })
 
-    socket.on('newLines', arr => {
-      socket.broadcast.emit('linesToState', arr)
+    socket.on('newLines', (arr, room) => {
+      socket.to(room).broadcast.emit('linesToState', arr)
+    })
+
+    socket.on('joinedRoom', room => {
+      socket.join(room)
     })
   })
 

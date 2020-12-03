@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import {Stage, Layer, Line} from 'react-konva'
-import {newLine, broadcastLines} from '../socket'
+import {newLine, broadcastLines, joinRoom} from '../socket'
 
 class Drawing extends Component {
   constructor(props) {
@@ -17,11 +17,12 @@ class Drawing extends Component {
   }
 
   componentDidMount() {
-    broadcastLines(broadcastedState =>
+    joinRoom(this.props.room)
+    broadcastLines(broadcastedState => {
       this.setState({
         lines: broadcastedState
       })
-    )
+    })
   }
 
   handleMouseDown(e) {
@@ -59,7 +60,7 @@ class Drawing extends Component {
     lineList.splice(this.state.lines.length - 1, 1, lastLine)
 
     this.setState({lines: lineList})
-    newLine(this.state.lines)
+    newLine(this.state.lines, this.props.room)
   }
 
   //on Mouse Up sets state of paint to false

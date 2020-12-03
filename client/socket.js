@@ -15,8 +15,11 @@ export function leaveRoom(callback) {
   socket.off('roomCreated', callback)
 }
 
-export function newLine(arr) {
-  socket.emit('newLines', arr)
+export function joinRoom(room) {
+  socket.emit('joinedRoom', room)
+}
+export function newLine(arr, room) {
+  socket.emit('newLines', arr, room)
 }
 
 export function broadcastLines(callback) {

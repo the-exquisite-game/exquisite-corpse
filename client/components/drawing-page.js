@@ -90,7 +90,7 @@ class Drawing extends Component {
       })
     } else if (event.target.name === 'clear') {
       //clears whole canvas
-      this.canvas.current.clear()
+      this.props.canvas.current.clear()
       this.setState({
         lines: []
       })
@@ -100,12 +100,13 @@ class Drawing extends Component {
       undoList.pop()
       this.setState({lines: undoList})
     } else {
-      //changes tool size
+      //changes tool & tool size
       this.setState({[event.target.name]: event.target.value})
     }
   }
 
   render() {
+    console.log(this.state.lines)
     return (
       <div>
         <Stage

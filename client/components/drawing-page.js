@@ -7,21 +7,25 @@ import {
   doneDrawing,
   turnListener
 } from '../socket'
+import Palette from './palette'
 
 class Drawing extends Component {
   constructor(props) {
     super(props)
     this.canvas = React.createRef()
     this.state = {
+      isDrawing: false,
       tool: 'pen',
       lines: [],
-      isDrawing: false
+      color: 'black',
+      brushSize: 5
     }
     this.handleMouseMove = this.handleMouseMove.bind(this)
     this.handleMouseDown = this.handleMouseDown.bind(this)
     this.handleMouseUp = this.handleMouseUp.bind(this)
     this.handleDone = this.handleDone.bind(this)
     this.handleDoneClick = this.handleDoneClick.bind(this)
+    this.handleChange = this.handleChange.bind(this)
   }
 
   componentDidMount() {
@@ -45,7 +49,12 @@ class Drawing extends Component {
       return {
         lines: [
           ...prevState.lines,
-          {tool: prevState.tool, points: [position.x, position.y]}
+          {
+            tool: prevState.tool,
+            brushSize: prevState.brushSize,
+            color: prevState.color,
+            points: [position.x, position.y]
+          }
         ]
       }
     })
@@ -101,8 +110,36 @@ class Drawing extends Component {
     doneDrawing(turn, this.props.room)
     this.handleDone(turn)
   }
+  handleChange(event) {
+    //changes brush size
+    if (event.target.name === 'brushSize') {
+      let value = +event.target.value
+      this.setState({brushSize: value})
+    } else if (event.target.name === 'color') {
+      //changes color and invokes pen automatically
+      this.setState({
+        [event.target.name]: event.target.value,
+        tool: 'pen'
+      })
+    } else if (event.target.name === 'clear') {
+      //clears whole canvas
+      this.props.canvas.current.clear()
+      this.setState({
+        lines: []
+      })
+    } else if (event.target.name === 'undo') {
+      //undo
+      let undoList = [...this.state.lines]
+      undoList.pop()
+      this.setState({lines: undoList})
+    } else {
+      //changes tool & tool size
+      this.setState({[event.target.name]: event.target.value})
+    }
+  }
 
   render() {
+    console.log(this.state.lines)
     return (
       <div>
         <Stage
@@ -118,10 +155,11 @@ class Drawing extends Component {
               <Line
                 key={i}
                 points={line.points}
-                stroke="#df4b26"
-                strokeWidth={5}
+                stroke={line.color}
+                strokeWidth={line.brushSize}
                 tension={0.5}
                 lineCap="round"
+                lineJoin="round"
                 globalCompositeOperation={
                   line.tool === 'eraser' ? 'destination-out' : 'source-over'
                 }
@@ -129,15 +167,8 @@ class Drawing extends Component {
             ))}
           </Layer>
         </Stage>
-        <select
-          value={this.state.tool}
-          onChange={e => {
-            this.setState({tool: e.target.value})
-          }}
-        >
-          <option value="pen">Pen</option>
-          <option value="eraser">Eraser</option>
-        </select>
+
+        <Palette tool={this.state.tool} handleChange={this.handleChange} />
 
         <button type="button" onClick={() => this.handleDoneClick()}>
           Done!

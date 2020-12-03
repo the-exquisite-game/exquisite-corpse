@@ -33,11 +33,13 @@ module.exports = io => {
       for (socketID in roomInfo.sockets) {
         if (io.sockets.connected[socketID].hasOwnProperty('nickname')) {
           const nickname = io.sockets.connected[socketID].nickname
-          users.push(nickname)
+
+          const userInfo = {nickname: nickname, id: socketID}
+          users.push(userInfo)
         } else {
-          //temporary, look into security of this
-          socket.nickname = `User${socketID}`
-          users.push(socket.nickname)
+          socket.nickname = `User`
+          const userInfo = {nickname: socket.nickname, id: socketID}
+          users.push(userInfo)
         }
       }
 
@@ -47,7 +49,7 @@ module.exports = io => {
     socket.on('getMe', () => {
       const id = socket.id
       const nickname = socket.nickname
-      io.to(id).emit('nickname', nickname)
+      io.to(id).emit('nickname', {id: id, nickname: nickname})
     })
 
     socket.on('newLines', (arr, room) => {

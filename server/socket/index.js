@@ -22,6 +22,34 @@ module.exports = io => {
       io.emit('roomCreated', room)
     })
 
+    socket.on('set-nickname', name => {
+      socket.nickname = name
+    })
+
+    socket.on('users', room => {
+      const roomInfo = io.sockets.adapter.rooms[room]
+      let users = []
+
+      for (socketID in roomInfo.sockets) {
+        if (io.sockets.connected[socketID].hasOwnProperty('nickname')) {
+          const nickname = io.sockets.connected[socketID].nickname
+          users.push(nickname)
+        } else {
+          //temporary, look into security of this
+          socket.nickname = `User${socketID}`
+          users.push(socket.nickname)
+        }
+      }
+
+      io.in(room).emit('getUsers', users)
+    })
+
+    socket.on('getMe', () => {
+      const id = socket.id
+      const nickname = socket.nickname
+      io.to(id).emit('nickname', nickname)
+    })
+
     socket.on('newLines', (arr, room) => {
       socket.to(room).broadcast.emit('linesToState', arr)
     })
@@ -40,7 +68,7 @@ module.exports = io => {
       socket.to(room).broadcast.emit('done', num)
 
       if (num === numOfPlayers) {
-        socket.to(room).broadcast.emit('finished')
+        io.in(room).emit('finished')
       }
     })
   })

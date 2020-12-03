@@ -1,6 +1,6 @@
 import React from 'react'
 import Drawing from './drawing-page'
-import {joinRoom} from '../socket'
+import {getMe, getUsers, joinRoom} from '../socket'
 
 export class PartyRoom extends React.Component {
   constructor() {
@@ -8,6 +8,7 @@ export class PartyRoom extends React.Component {
     this.state = {
       userTurn: '',
       users: [],
+      me: '',
       done: 0,
       bodyPartsImage: [],
       bodyParts: ['head', 'torso', 'hips', 'legs'],
@@ -16,10 +17,31 @@ export class PartyRoom extends React.Component {
     this.canvas = React.createRef()
     this.handleDownload = this.handleDownload.bind(this)
     this.handleTurn = this.handleTurn.bind(this)
+
+    this.handleUsers = this.handleUsers.bind(this)
+
+    this.handleMyself = this.handleMyself.bind(this)
   }
 
   componentDidMount() {
+    //joins the room via link (do we want to change this?)
     joinRoom(this.props.match.params.room)
+
+    //gets all users + listens for more
+    getUsers(this.handleUsers, this.props.match.params.room)
+
+    //gets my nickname
+    getMe(this.handleMyself)
+
+    //create whose turn it is
+  }
+
+  handleUsers(users) {
+    this.setState({users: users})
+  }
+
+  handleMyself(me) {
+    this.setState({me: me})
   }
 
   handleDownload() {
@@ -36,11 +58,15 @@ export class PartyRoom extends React.Component {
     document.body.removeChild(link)
   }
 
+  initializeTurn() {
+    //has to be broadcasted as well
+  }
   //function that increases the userTurn, adds images
   handleTurn(limbs, leadingLines, numberFinished) {
     this.setState(prevState => {
       return {
         done: numberFinished,
+        userTurn: prevState.users[numberFinished],
         bodyPartsImage: [...prevState.bodyPartsImage, limbs],
         connectingLines: leadingLines
       }
@@ -50,13 +76,17 @@ export class PartyRoom extends React.Component {
   render() {
     return (
       <div>
+        {/* add ternary that says if userTurn === me, show drawing */}
         <Drawing
           canvas={this.canvas}
           handleTurn={this.handleTurn}
           userTurn={this.state.done}
           room={this.props.match.params.room}
+          connectingLines={this.state.connectingLines}
         />
-        {this.state.bodyPartsImage.length > 0
+
+        {/* I did this for testing */}
+        {/* {this.state.bodyPartsImage.length > 0
           ? this.state.bodyPartsImage.map((part, index) => {
               return <img key={this.state.bodyParts[index]} src={part} />
             })
@@ -66,7 +96,7 @@ export class PartyRoom extends React.Component {
           <img src={this.state.connectingLines} />
         ) : (
           ''
-        )}
+        )} */}
         {/* <button type="button" onClick={this.handleDownload}>
           Download
         </button> */}

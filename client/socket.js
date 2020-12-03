@@ -6,9 +6,14 @@ socket.on('connect', () => {
   console.log('Connected!')
 })
 
-export function createRoom(callback) {
+export function createRoom(callback, name) {
   socket.emit('roomCreate')
+  setName(name)
   socket.on('roomCreated', callback)
+}
+
+export function setName(name) {
+  socket.emit('set-nickname', name)
 }
 
 export function leaveRoom(callback) {
@@ -18,6 +23,20 @@ export function leaveRoom(callback) {
 export function joinRoom(room) {
   socket.emit('joinedRoom', room)
 }
+
+export function getUsers(callback, room) {
+  socket.on('getUsers', callback)
+  socket.emit('users', room)
+}
+
+export function getMe(callback) {
+  socket.emit('getMe')
+  socket.on('nickname', callback)
+  //send user only themselves
+  // sending to individual socketid (private message)
+  // io.to(socketId).emit("hey", "I just met you");
+}
+
 export function newLine(arr, room) {
   socket.emit('newLines', arr, room)
 }
@@ -38,6 +57,7 @@ export function doneDrawing(num, room) {
   socket.emit('doneDrawing', num, room)
 }
 
+//finished drawing
 function finishedCorpse() {
   console.log('DONE DRAWING!!! WOOO A MONSTER')
 }

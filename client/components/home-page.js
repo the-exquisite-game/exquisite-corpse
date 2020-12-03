@@ -10,7 +10,7 @@ export class Home extends React.Component {
   }
 
   onRoomCreated(room) {
-    this.props.history.push(`/drawing/${room}`)
+    this.props.history.push(`/partyroom/${room}`)
   }
 
   componentWillUnmount() {

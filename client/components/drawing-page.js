@@ -108,7 +108,7 @@ class Drawing extends Component {
   render() {
     console.log(this.state.lines)
     return (
-      <div>
+      <div className="drawing-page">
         <Stage
           width={600}
           height={500}

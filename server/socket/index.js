@@ -19,8 +19,7 @@ module.exports = io => {
         length: 2,
         separator: '-'
       })
-      socket.join(room)
-      io.to(room).emit('roomCreated', room)
+      io.emit('roomCreated', room)
     })
 
     socket.on('newLines', (arr, room) => {

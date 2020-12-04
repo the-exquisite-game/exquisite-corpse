@@ -1,8 +1,7 @@
 import React, {Component} from 'react'
 import {Stage, Layer, Rect} from 'react-konva'
 import IconImage from './icon-image.js'
-// import ColoredRect from './trash/rect-color.js'
-import {lightColors, darkColors} from '../../script/paletteProperties'
+import {lightColors} from '../../script/paletteProperties'
 
 class Icon extends Component {
   constructor() {
@@ -13,25 +12,8 @@ class Icon extends Component {
     this.canvas = React.createRef()
     this.backgrounds = ['red', 'orange', 'yellow', 'green', 'blue', 'purple']
     this.colorIdx = 0
-
-    // this.handleClick = this.handleClick.bind(this)
     this.handleChange = this.handleChange.bind(this)
   }
-
-  // handleClick() {
-  //   const img = this.canvas.current.toDataURL()
-  //   console.log('partyroomIMG', img)
-  //   this.downloadURI(img, 'icon.png')
-  // }
-
-  // downloadURI(uri, name) {
-  //   let link = document.createElement('a')
-  //   link.download = name
-  //   link.href = uri
-  //   document.body.appendChild(link)
-  //   link.click()
-  //   document.body.removeChild(link)
-  // }
 
   handleChange(event) {
     //cycles through background colors array and matches to key in lightColors
@@ -39,9 +21,7 @@ class Icon extends Component {
       if (this.colorIdx === this.backgrounds.length - 1) {
         this.colorIdx = -1
       }
-
       this.colorIdx += 1
-      console.log(this.colorIdx)
       this.setState({
         color: lightColors[this.backgrounds[this.colorIdx]]
       })
@@ -88,9 +68,6 @@ class Icon extends Component {
           name="rightarrow"
           onClick={this.handleChange}
         />
-        <button type="button" onClick={this.handleClick}>
-          Download
-        </button>
       </div>
     )
   }

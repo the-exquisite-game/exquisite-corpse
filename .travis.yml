@@ -13,15 +13,18 @@ notifications:
 install:
   - npm ci # faster, goes only from package-lock
 before_script:
-  - psql -c 'create database "boilermaker-test";' -U postgres # remember to change this name if you change it elsewhere (e.g. package.json)
+  - psql -c 'create database "exquisite-corpse-test";' -U postgres # remember to change this name if you change it elsewhere (e.g. package.json)
 script:
   - npm test # test the code
   - npm run build-client # make the bundle
-# before_deploy:
-#   - rm -rf node_modules # omit from the tarball, since we skip cleanup
-# deploy:
-#   skip_cleanup: true # prevents travis from deleting the build
-#   provider: heroku
-#   app: YOUR-HEROKU-APP-NAME-HERE # see README
-#   api_key:
-#     secure: YOUR-***ENCRYPTED***-API-KEY-HERE # see README
+before_deploy: # omit node_modules, since we set skip_cleanup below
+  - rm -rf node_modules
+deploy: # see README for details on these keys
+  # prevents travis from deleting the build
+  skip_cleanup: true
+  provider: heroku
+  # app should be your heroku app name; see README
+  app: xquisitecorpse
+  # the secure key indicates an encrypted value; see README
+  api_key:
+    secure: PxF7fr9F7kh8vVEVP8QYilJhK3lxQYtGICaKN91oZh6hlW2WLbyPUp+3PP8LOqLpUc3IcIz4ZXsjWICYFOoiQZvfudPVZwAbKEjdPQ82DMRp0pnnhBqwEI9DXhVtyCdBGj2a8k8ooYSE5+cnHglPBrZ1Bccv4AvPTSXLQbDugeOD/KdvmdRTsVUMlAFECuRfygrgJgObPfF3DAWxVqYW+rSNzcacLqWtLuRAeCf7NseC94GUJwD6MpjzMTTatCpK0bDBC6H+gEo2znei87xwbJuTK9M3DJVWvbTjcl715wcP0AQ0fihwQU6CVAGAoNFu8kDohG+fB3J0nkzYr/YNTCUnVGwUJfijIu2Pp88NNMb4rH2bCkzdLqofypWCCIDIDlJqbq7DNOQtCM60NO5ZSfmd9Jv49fkm+ytz44gRws/OeuKMb9IoCh0gzMt01Kr+ieT0MnnVGN4Dzj/FRjCt59Kekny/RCiUIz1rMMgx9p2+NJaDJOB3mviiypWdTjnQP820YRC94ojKoWjJKrpdqGaKV6jXtGjMQlLSQ2BpADY8CNTr8T5ChTumbEsevdS3jEgk1pAQb/wnUnAbD3rpuuyHw1lpgqgRKRNCdUGHqIrgfKBaz+mGVIH20F49lqexaPe+mJPJDgXes5YcPqDKaEMl/O/Bpzr1Qbd0wKU5+K4=

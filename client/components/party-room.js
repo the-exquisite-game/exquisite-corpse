@@ -59,6 +59,7 @@ export class PartyRoom extends React.Component {
 
   handleDownload() {
     const img = this.canvas.current.toDataURL()
+    console.log('partyroomIMG', img)
     this.downloadURI(img, 'corpse.png')
   }
 

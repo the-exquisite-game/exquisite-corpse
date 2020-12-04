@@ -1,6 +1,7 @@
 import React from 'react'
 // import {default as socket} from '../socket'
 import {createRoom, leaveRoom} from '../socket'
+import Icon from './icon'
 
 export class Home extends React.Component {
   constructor() {
@@ -28,6 +29,7 @@ export class Home extends React.Component {
   render() {
     return (
       <div>
+        <Icon />
         Enter a name!
         <label>Username:</label>
         <input value={this.state.name} onChange={this.handleNameChange} />

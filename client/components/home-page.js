@@ -29,11 +29,8 @@ export class Home extends React.Component {
     return (
       <div>
         Enter a name!
-        <input
-          type="text"
-          value={this.state.name}
-          onChange={this.handleNameChange}
-        />
+        <label>Username:</label>
+        <input value={this.state.name} onChange={this.handleNameChange} />
         <button type="button" id="createRoom" onClick={this.handleClick}>
           Create a Room!
         </button>

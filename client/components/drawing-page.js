@@ -1,12 +1,6 @@
 import React, {Component} from 'react'
 import {Stage, Layer, Line} from 'react-konva'
-import {
-  newLine,
-  broadcastLines,
-  joinRoom,
-  doneDrawing,
-  turnListener
-} from '../socket'
+import {newLine, broadcastLines, doneDrawing} from '../socket'
 import Palette from './palette'
 
 class Drawing extends Component {
@@ -29,15 +23,11 @@ class Drawing extends Component {
   }
 
   componentDidMount() {
-    // joinRoom(this.props.room)
     broadcastLines(broadcastedState => {
       this.setState({
         lines: broadcastedState
       })
     })
-
-    //listening for turns being done
-    turnListener(this.handleDone)
   }
 
   handleMouseDown(e) {
@@ -61,7 +51,7 @@ class Drawing extends Component {
   }
 
   handleMouseMove(e) {
-    if (this.state.isDrawing === false) {
+    if (!this.state.isDrawing) {
       return
     }
 
@@ -89,27 +79,22 @@ class Drawing extends Component {
   }
 
   handleDone(numberFinished) {
-    console.log('done!', numberFinished)
-
     const bodyPart = this.canvas.current.toDataURL()
 
     const leadingLines = this.canvas.current.toDataURL({
       y: 400,
       x: 0,
       width: 600,
-      height: 100
+      height: 50
     })
-
-    //updates party-room state
-    this.props.handleTurn(bodyPart, leadingLines, numberFinished)
+    doneDrawing(numberFinished, this.props.room, bodyPart, leadingLines)
   }
 
   handleDoneClick() {
     const turn = this.props.userTurn + 1
-
-    doneDrawing(turn, this.props.room)
     this.handleDone(turn)
   }
+
   handleChange(event) {
     //changes brush size
     if (event.target.name === 'brushSize') {
@@ -139,9 +124,10 @@ class Drawing extends Component {
   }
 
   render() {
-    console.log(this.state.lines)
+    const connectingLines = this.props.connectingLines || ''
     return (
       <div>
+        <img src={connectingLines} />
         <Stage
           width={600}
           height={500}

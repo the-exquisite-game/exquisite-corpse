@@ -1,26 +1,35 @@
 import React from 'react'
 import Drawing from './drawing-page'
-import {getMe, getUsers, joinRoom} from '../socket'
+import {
+  getMe,
+  getUsers,
+  initializeGame,
+  joinRoom,
+  turnListener
+} from '../socket'
+import {UsersBar} from './users-bar'
 
 export class PartyRoom extends React.Component {
   constructor() {
     super()
     this.state = {
-      userTurn: '',
+      userTurn: {},
       users: [],
       me: '',
       done: 0,
       bodyPartsImage: [],
-      bodyParts: ['head', 'torso', 'hips', 'legs'],
-      connectingLines: ''
+      bodyParts: ['head', 'torso', 'legs', 'feet'],
+      connectingLines: '',
+      gamePlay: false,
+      finished: false
     }
     this.canvas = React.createRef()
     this.handleDownload = this.handleDownload.bind(this)
     this.handleTurn = this.handleTurn.bind(this)
-
     this.handleUsers = this.handleUsers.bind(this)
-
     this.handleMyself = this.handleMyself.bind(this)
+    this.gameStart = this.gameStart.bind(this)
+    this.handleFinish = this.handleFinish.bind(this)
   }
 
   componentDidMount() {
@@ -33,7 +42,11 @@ export class PartyRoom extends React.Component {
     //gets my nickname
     getMe(this.handleMyself)
 
-    //create whose turn it is
+    //listening for turns being done
+    turnListener(this.handleTurn, this.handleFinish)
+
+    //listening for Game Start
+    initializeGame(this.gameStart)
   }
 
   handleUsers(users) {
@@ -58,10 +71,10 @@ export class PartyRoom extends React.Component {
     document.body.removeChild(link)
   }
 
-  initializeTurn() {
-    //has to be broadcasted as well
+  gameStart(users) {
+    this.setState({users: users, userTurn: users[0], gamePlay: true})
   }
-  //function that increases the userTurn, adds images
+
   handleTurn(limbs, leadingLines, numberFinished) {
     this.setState(prevState => {
       return {
@@ -73,30 +86,43 @@ export class PartyRoom extends React.Component {
     })
   }
 
+  handleFinish() {
+    this.setState({gamePlay: false, finished: true})
+  }
+
   render() {
+    const myself = this.state.me || ''
+    const userTurn = this.state.userTurn || ''
+
     return (
       <div>
-        {/* add ternary that says if userTurn === me, show drawing */}
-        <Drawing
-          canvas={this.canvas}
-          handleTurn={this.handleTurn}
-          userTurn={this.state.done}
-          room={this.props.match.params.room}
-          connectingLines={this.state.connectingLines}
-        />
-
-        {/* I did this for testing */}
-        {/* {this.state.bodyPartsImage.length > 0
-          ? this.state.bodyPartsImage.map((part, index) => {
-              return <img key={this.state.bodyParts[index]} src={part} />
-            })
-          : ''}
-        connectingLines
-        {this.state.connectingLines ? (
-          <img src={this.state.connectingLines} />
+        <UsersBar users={this.state.users} />
+        {this.state.gamePlay ? (
+          <div>
+            It is {userTurn.nickname}'s turn! Drawing the{' '}
+            {this.state.bodyParts[this.state.done]}
+            {myself.id === userTurn.id ? (
+              <Drawing
+                canvas={this.canvas}
+                handleTurn={this.handleTurn}
+                userTurn={this.state.done}
+                room={this.props.match.params.room}
+                connectingLines={this.state.connectingLines}
+              />
+            ) : (
+              ''
+            )}
+          </div>
         ) : (
-          ''
-        )} */}
+          <div>
+            {this.state.finished
+              ? this.state.bodyPartsImage.map((part, index) => {
+                  return <img key={this.state.bodyParts[index]} src={part} />
+                })
+              : 'Waiting for more players!'}
+          </div>
+        )}
+        {/* Make the finished monster into a separate component */}
         {/* <button type="button" onClick={this.handleDownload}>
           Download
         </button> */}

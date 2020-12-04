@@ -22,10 +22,12 @@ module.exports = io => {
       io.emit('roomCreated', room)
     })
 
+    //setting nickname for users
     socket.on('set-nickname', name => {
       socket.nickname = name
     })
 
+    //getting all users
     socket.on('users', room => {
       const roomInfo = io.sockets.adapter.rooms[room]
       let users = []
@@ -44,8 +46,13 @@ module.exports = io => {
       }
 
       io.in(room).emit('getUsers', users)
+
+      if (users.length === 4) {
+        io.in(room).emit('gameStart', users)
+      }
     })
 
+    //getting their own nickname
     socket.on('getMe', () => {
       const id = socket.id
       const nickname = socket.nickname
@@ -61,25 +68,17 @@ module.exports = io => {
     })
 
     //finish drawing button
-    socket.on('doneDrawing', (num, room) => {
+    socket.on('doneDrawing', (num, room, limbs, leadingLines) => {
       //room info, and users sockets names!
       const roomInfo = io.sockets.adapter.rooms[room]
 
       //amount of players
       let numOfPlayers = roomInfo.length
-      socket.to(room).broadcast.emit('done', num)
+      io.in(room).emit('done', limbs, leadingLines, num)
 
-      if (num === numOfPlayers) {
+      if (num === 4) {
         io.in(room).emit('finished')
       }
     })
   })
-
-  // io.on('roomEnter', socket => {
-  //   console.log(`A socket connection to the server has been made: ${socket.id}`)
-  // })
-
-  // io.on('roomLeave', socket => {
-  //   console.log(`A socket connection to the server has been made: ${socket.id}`)
-  // })
 }

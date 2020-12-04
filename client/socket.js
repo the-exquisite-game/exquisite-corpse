@@ -32,9 +32,6 @@ export function getUsers(callback, room) {
 export function getMe(callback) {
   socket.emit('getMe')
   socket.on('nickname', callback)
-  //send user only themselves
-  // sending to individual socketid (private message)
-  // io.to(socketId).emit("hey", "I just met you");
 }
 
 export function newLine(arr, room) {
@@ -47,19 +44,18 @@ export function broadcastLines(callback) {
 }
 
 //listen for turns
-export function turnListener(callback) {
+export function turnListener(callback, finishedCallback) {
   socket.on('done', callback)
-  socket.on('finished', finishedCorpse)
+  socket.on('finished', finishedCallback)
 }
 
 //finish drawing function
-export function doneDrawing(num, room) {
-  socket.emit('doneDrawing', num, room)
+export function doneDrawing(num, room, limbs, leadingLines) {
+  socket.emit('doneDrawing', num, room, limbs, leadingLines)
 }
 
-//finished drawing
-function finishedCorpse() {
-  console.log('DONE DRAWING!!! WOOO A MONSTER')
+export function initializeGame(callback) {
+  socket.on('gameStart', callback)
 }
 
 export default socket

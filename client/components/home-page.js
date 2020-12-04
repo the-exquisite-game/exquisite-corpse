@@ -28,15 +28,20 @@ export class Home extends React.Component {
 
   render() {
     return (
-      <div>
+      <div className="home-page">
         <Icon />
-        Enter a name!
-        <label>Username:</label>
-        <input value={this.state.name} onChange={this.handleNameChange} />
-        <button type="button" id="createRoom" onClick={this.handleClick}>
-          Create a Room!
-        </button>
-        {/* <button type = "button" id = "joinRoom" onClick = {this.handleJoin} >Join a Room!</button> */}
+        <span>
+          <label>Enter a nickname:</label>
+          <input value={this.state.name} onChange={this.handleNameChange} />
+        </span>
+        <div id="buttons-container">
+          <button type="button" id="createRoom" onClick={this.handleClick}>
+            Create a Room!
+          </button>
+          <button type="button" id="joinRoom" onClick={this.handleJoin}>
+            Join a Room!
+          </button>
+        </div>
       </div>
     )
   }

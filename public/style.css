@@ -22,6 +22,12 @@ nav a {
   font-size: 35px;
 }
 
+#app {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
 #navbar {
   padding-top: 25px;
   background-color: #d1d2f9;
@@ -87,4 +93,42 @@ button {
 div.konvajs-content {
   background-color: white;
   border-radius: 12px;
+}
+
+.home-page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex-grow: 1;
+  padding-top: 10em;
+  font-size: 25px;
+}
+
+#buttons-container {
+  display: flex;
+}
+
+span input {
+  border-radius: 15px;
+  font-family: 'Gamja Flower', cursive;
+  width: 200px;
+  height: 30px;
+  font-size: 20px;
+  text-align: center;
+}
+
+input:focus {
+  outline: none;
+}
+
+button:focus {
+  outline: none;
+}
+
+span {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: 30px;
+  margin-top: 10px;
 }

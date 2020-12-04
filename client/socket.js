@@ -6,9 +6,8 @@ socket.on('connect', () => {
   console.log('Connected!')
 })
 
-export function createRoom(callback, name) {
+export function createRoom(callback) {
   socket.emit('roomCreate')
-  setName(name)
   socket.on('roomCreated', callback)
 }
 

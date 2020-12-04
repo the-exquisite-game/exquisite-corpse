@@ -8,6 +8,7 @@ import {
   turnListener
 } from '../socket'
 import {UsersBar} from './users-bar'
+import {FinalMonster} from './finalMonster'
 
 export class PartyRoom extends React.Component {
   constructor() {
@@ -59,7 +60,6 @@ export class PartyRoom extends React.Component {
 
   handleDownload() {
     const img = this.canvas.current.toDataURL()
-    console.log('partyroomIMG', img)
     this.downloadURI(img, 'corpse.png')
   }
 
@@ -119,18 +119,22 @@ export class PartyRoom extends React.Component {
             </div>
           ) : (
             <div>
-              {this.state.finished
-                ? this.state.bodyPartsImage.map((part, index) => {
-                    return <img key={this.state.bodyParts[index]} src={part} />
-                  })
-                : 'Waiting for more players!'}
+              {this.state.finished ? (
+                <div id="finalMonster">
+                  <FinalMonster
+                    bodyParts={this.state.bodyPartsImage}
+                    canvas={this.canvas}
+                  />
+                  <button type="button" onClick={this.handleDownload}>
+                    Download
+                  </button>
+                </div>
+              ) : (
+                'Waiting for more players!'
+              )}
             </div>
           )}
         </div>
-        {/* Make the finished monster into a separate component */}
-        {/* <button type="button" onClick={this.handleDownload}>
-          Download
-        </button> */}
         {/* <button type="button" onClick={this.handleClick}>
           Save to Gallery
         </button> */}

@@ -20,7 +20,7 @@ label {
 nav a {
   display: inline-block;
   padding: 1em;
-  font-size: 35px;
+  font-size: 30px;
 }
 
 #app {
@@ -130,11 +130,11 @@ button:focus {
   border: solid #c7d66d;
   border-width: 2px;
   align-content: center;
+  height: 250px;
 }
 
 .indiv-user-sidebar {
   display: flex;
-  justify-content: center;
   font-size: x-large;
   align-items: center;
 }

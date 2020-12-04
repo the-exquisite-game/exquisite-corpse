@@ -97,8 +97,8 @@ export class PartyRoom extends React.Component {
 
     return (
       <div id="party-room">
-        <div id="users-bar">
-          <UsersBar users={this.state.users} />
+        <div id="users-section">
+          <UsersBar users={this.state.users} id="users-bar" />
         </div>
         <div id="party-room-canvas">
           {this.state.gamePlay ? (

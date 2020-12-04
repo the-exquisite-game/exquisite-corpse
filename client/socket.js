@@ -6,14 +6,14 @@ socket.on('connect', () => {
   console.log('Connected!')
 })
 
-export function createRoom(callback, name) {
+export function createRoom(callback, name, icon) {
   socket.emit('roomCreate')
-  setName(name)
+  setNameAndIcon(name, icon)
   socket.on('roomCreated', callback)
 }
 
-export function setName(name) {
-  socket.emit('set-nickname', name)
+export function setNameAndIcon(name, icon) {
+  socket.emit('set-nickname', name, icon)
 }
 
 export function leaveRoom(callback) {

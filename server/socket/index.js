@@ -22,9 +22,10 @@ module.exports = io => {
       io.emit('roomCreated', room)
     })
 
-    //setting nickname for users
-    socket.on('set-nickname', name => {
+    //setting nickname + icon for users
+    socket.on('set-nickname', (name, icon) => {
       socket.nickname = name
+      socket.icon = icon
     })
 
     //getting all users
@@ -36,11 +37,18 @@ module.exports = io => {
         if (io.sockets.connected[socketID].hasOwnProperty('nickname')) {
           const nickname = io.sockets.connected[socketID].nickname
 
-          const userInfo = {nickname: nickname, id: socketID}
+          const icon = io.sockets.connected[socketID].icon
+
+          const userInfo = {nickname: nickname, id: socketID, icon: icon}
           users.push(userInfo)
         } else {
           socket.nickname = `User`
-          const userInfo = {nickname: socket.nickname, id: socketID}
+          socket.icon = '/images/unamusedMonster_blue.png'
+          const userInfo = {
+            nickname: socket.nickname,
+            id: socketID,
+            icon: socket.icon
+          }
           users.push(userInfo)
         }
       }
@@ -56,7 +64,8 @@ module.exports = io => {
     socket.on('getMe', () => {
       const id = socket.id
       const nickname = socket.nickname
-      io.to(id).emit('nickname', {id: id, nickname: nickname})
+      const icon = socket.icon
+      io.to(id).emit('nickname', {id: id, nickname: nickname, icon: icon})
     })
 
     socket.on('newLines', (arr, room) => {

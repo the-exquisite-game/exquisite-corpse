@@ -8,11 +8,11 @@ export class UsersBar extends React.Component {
   render() {
     const users = this.props.users || []
     return (
-      <div className="indiv-user-sidebar">
+      <div>
         {users.map(username => (
-          <div key={username.id}>
-            <img src={username.icon} />
-            {username.nickname}
+          <div key={username.id} className="indiv-user-sidebar">
+            <img id="image-sidebar" src={username.icon} />
+            <div id="username-sidebar">{username.nickname}</div>
           </div>
         ))}
       </div>

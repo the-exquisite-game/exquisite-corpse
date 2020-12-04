@@ -10,6 +10,7 @@ h1 {
 
 a {
   text-decoration: none;
+  color: #153243;
 }
 
 label {
@@ -23,10 +24,19 @@ nav a {
 }
 
 #navbar {
-  padding-top: 25px;
+  /* padding-top: 25px;
   background-color: #d1d2f9;
   padding-left: 2em;
-  border-bottom: 1px dotted #576490;
+  border-bottom: 1px dotted #576490; */
+
+  background-image: linear-gradient(#a6a8e0, #d1d2f9);
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  grid-template-rows: repeat(1, 1fr);
+  justify-items: center;
+  align-items: center;
+  z-index: 2;
+  box-shadow: 4px 5px 5px 1px rgba(0, 0, 0, 0.24);
 }
 
 form div {
@@ -87,8 +97,6 @@ button {
   background-color: #fbf9f9;
   border: solid #c7d66d;
   border-width: 2px;
-  height: 150px;
-  width: 150px;
   align-content: center;
 }
 
@@ -96,6 +104,12 @@ button {
   display: flex;
   justify-content: center;
   font-size: x-large;
+  align-items: center;
+}
+
+#image-sidebar {
+  width: 25%;
+  margin: 8px;
 }
 
 .drawing-page {

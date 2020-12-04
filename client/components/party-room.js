@@ -9,6 +9,7 @@ export class PartyRoom extends React.Component {
   }
   handleClick() {
     const img = this.canvas.current.toDataURL()
+    console.log('partyroomIMG', img)
     this.downloadURI(img, 'corpse.png')
   }
   downloadURI(uri, name) {

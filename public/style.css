@@ -45,3 +45,13 @@ button {
   background-repeat: no-repeat;
   background-position: center;
 }
+
+.iconCanvas {
+  display: flex;
+  align-items: center;
+}
+
+.arrowButton {
+  max-height: 30px;
+  max-width: 30px;
+}

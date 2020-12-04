@@ -1,6 +1,7 @@
 import React from 'react'
 import {default as socket} from '../socket'
 import {createRoom, leaveRoom} from '../socket'
+import Icon from './icon'
 
 export class Home extends React.Component {
   constructor() {
@@ -20,8 +21,9 @@ export class Home extends React.Component {
   render() {
     return (
       <div>
+        <Icon />
         <button type="button" id="createRoom" onClick={this.handleClick}>
-          Test Room
+          New Game!
         </button>
       </div>
     )

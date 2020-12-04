@@ -10,7 +10,10 @@ export class UsersBar extends React.Component {
     return (
       <div className="indiv-user-sidebar">
         {users.map(username => (
-          <div key={username.id}>{username.nickname}</div>
+          <div key={username.id}>
+            <img src={username.icon} />
+            {username.nickname}
+          </div>
         ))}
       </div>
     )

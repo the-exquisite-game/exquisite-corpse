@@ -97,32 +97,36 @@ export class PartyRoom extends React.Component {
 
     return (
       <div id="party-room">
-        <UsersBar users={this.state.users} />
-        {this.state.gamePlay ? (
-          <div>
-            It is {userTurn.nickname}'s turn! Drawing the{' '}
-            {this.state.bodyParts[this.state.done]}
-            {myself.id === userTurn.id ? (
-              <Drawing
-                canvas={this.canvas}
-                handleTurn={this.handleTurn}
-                userTurn={this.state.done}
-                room={this.props.match.params.room}
-                connectingLines={this.state.connectingLines}
-              />
-            ) : (
-              ''
-            )}
-          </div>
-        ) : (
-          <div>
-            {this.state.finished
-              ? this.state.bodyPartsImage.map((part, index) => {
-                  return <img key={this.state.bodyParts[index]} src={part} />
-                })
-              : 'Waiting for more players!'}
-          </div>
-        )}
+        <div id="users-bar">
+          <UsersBar users={this.state.users} />
+        </div>
+        <div id="party-room-canvas">
+          {this.state.gamePlay ? (
+            <div>
+              It is {userTurn.nickname}'s turn! Drawing the{' '}
+              {this.state.bodyParts[this.state.done]}
+              {myself.id === userTurn.id ? (
+                <Drawing
+                  canvas={this.canvas}
+                  handleTurn={this.handleTurn}
+                  userTurn={this.state.done}
+                  room={this.props.match.params.room}
+                  connectingLines={this.state.connectingLines}
+                />
+              ) : (
+                ''
+              )}
+            </div>
+          ) : (
+            <div>
+              {this.state.finished
+                ? this.state.bodyPartsImage.map((part, index) => {
+                    return <img key={this.state.bodyParts[index]} src={part} />
+                  })
+                : 'Waiting for more players!'}
+            </div>
+          )}
+        </div>
         {/* Make the finished monster into a separate component */}
         {/* <button type="button" onClick={this.handleDownload}>
           Download

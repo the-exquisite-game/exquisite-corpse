@@ -73,9 +73,29 @@ button {
 
 #party-room {
   display: flex;
-  flex-direction: column;
-  align-items: center;
+  /* flex-direction: column;
+  align-items: center; */
+  justify-content: center;
   margin-top: 5em;
+}
+
+#users-bar {
+  border-radius: 9px;
+  padding: 12px;
+  margin-right: 12px;
+  margin-left: 12px;
+  background-color: #fbf9f9;
+  border: solid #c7d66d;
+  border-width: 2px;
+  height: 150px;
+  width: 150px;
+  align-content: center;
+}
+
+.indiv-user-sidebar {
+  display: flex;
+  justify-content: center;
+  font-size: x-large;
 }
 
 .drawing-page {

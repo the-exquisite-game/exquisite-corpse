@@ -8,7 +8,7 @@ export class UsersBar extends React.Component {
   render() {
     const users = this.props.users || []
     return (
-      <div>
+      <div className="indiv-user-sidebar">
         {users.map(username => (
           <div key={username.id}>{username.nickname}</div>
         ))}

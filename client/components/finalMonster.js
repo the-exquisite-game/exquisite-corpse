@@ -10,7 +10,6 @@ export const FinalMonster = props => {
   const legs = bodyParts[2]
   const feet = bodyParts[3]
 
-  console.log(head)
   return (
     <Stage width={600} height={800} ref={props.canvas}>
       <Layer>

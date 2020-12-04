@@ -52,13 +52,25 @@ form div {
 
 button {
   border: none;
-  padding: 15px 15px;
+  padding: 10px 10px;
   margin: 5px;
   display: inline-block;
   font-size: 25px;
-  border-radius: 12px;
+  border-radius: 25px;
   cursor: pointer;
   font-family: 'Gamja Flower', cursive;
+  background-color: #dcdcdc;
+  transition: all 50ms;
+}
+
+button:hover {
+  background-color: #a9a9a9;
+  transform: scale(1.1);
+  border-radius: 25px;
+}
+
+button:focus {
+  outline: none;
 }
 
 .tool {
@@ -75,6 +87,20 @@ button {
 .arrowButton {
   max-height: 30px;
   max-width: 30px;
+  padding: 17px 17px;
+  border-radius: 12px;
+  transition: all 50ms;
+}
+
+.arrowButton:active {
+  background-color: #a9a9a9;
+  transform: scale(0.8) !important;
+}
+
+.arrowButton:hover {
+  background-color: #a9a9a9;
+  border-radius: 12px;
+  transform: scale(1);
 }
 
 #party-room {
@@ -106,6 +132,9 @@ div.konvajs-content {
 
 #buttons-container {
   display: flex;
+  width: 400px;
+  justify-content: space-evenly;
+  padding: 15px;
 }
 
 span input {
@@ -118,10 +147,6 @@ span input {
 }
 
 input:focus {
-  outline: none;
-}
-
-button:focus {
   outline: none;
 }
 

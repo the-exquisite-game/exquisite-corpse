@@ -1,6 +1,6 @@
 import React from 'react'
 // import {default as socket} from '../socket'
-import {createRoom, leaveRoom, setName} from '../socket'
+import {createRoom, leaveRoom, setNameAndIcon} from '../socket'
 import Icon from './icon'
 
 export class Home extends React.Component {
@@ -10,7 +10,7 @@ export class Home extends React.Component {
       name: 'User',
       joinRoom: ''
     }
-
+    this.canvas = React.createRef()
     this.handleClick = this.handleClick.bind(this)
     this.onRoomCreated = this.onRoomCreated.bind(this)
     this.handleChange = this.handleChange.bind(this)
@@ -30,14 +30,15 @@ export class Home extends React.Component {
   }
 
   handleJoin() {
-    setName(this.state.name)
+    const icon = this.canvas.current.toDataURL()
+    setNameAndIcon(this.state.name, icon)
     this.props.history.push(`/partyroom/${this.state.joinRoom}`)
   }
 
   render() {
     return (
       <div>
-        <Icon />
+        <Icon canvas={this.canvas} />
         Enter a name!
         <label>Username:</label>
         <input
@@ -62,7 +63,8 @@ export class Home extends React.Component {
   }
 
   handleClick() {
-    setName(this.state.name)
+    const icon = this.canvas.current.toDataURL()
+    setNameAndIcon(this.state.name, icon)
     createRoom(this.onRoomCreated)
   }
 }

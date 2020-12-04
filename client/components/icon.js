@@ -9,7 +9,6 @@ class Icon extends Component {
     this.state = {
       color: lightColors.red
     }
-    this.canvas = React.createRef()
     this.backgrounds = ['red', 'orange', 'yellow', 'green', 'blue', 'purple']
     this.colorIdx = 0
     this.handleChange = this.handleChange.bind(this)
@@ -48,7 +47,7 @@ class Icon extends Component {
           name="leftarrow"
           onClick={this.handleChange}
         />
-        <Stage width={100} height={100} ref={this.canvas}>
+        <Stage width={100} height={100} ref={this.props.canvas}>
           <Layer>
             <Rect
               width={100}

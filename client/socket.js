@@ -11,8 +11,8 @@ export function createRoom(callback) {
   socket.on('roomCreated', callback)
 }
 
-export function setName(name) {
-  socket.emit('set-nickname', name)
+export function setNameAndIcon(name, icon) {
+  socket.emit('set-nickname', name, icon)
 }
 
 export function leaveRoom(callback) {

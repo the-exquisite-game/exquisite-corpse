@@ -95,7 +95,7 @@ export class PartyRoom extends React.Component {
     const userTurn = this.state.userTurn || ''
 
     return (
-      <div>
+      <div id="party-room">
         <UsersBar users={this.state.users} />
         {this.state.gamePlay ? (
           <div>

@@ -23,7 +23,7 @@ class Routes extends Component {
         <Route path="/partyroom/:room" component={PartyRoom} />
         <Route path="/drawing/:room" component={Drawing} />
         {/* Displays our Login component as a fallback */}
-        <Route component={Login} />
+        <Route component={Home} />
       </Switch>
     )
   }

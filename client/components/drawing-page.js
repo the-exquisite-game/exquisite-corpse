@@ -126,7 +126,7 @@ class Drawing extends Component {
   render() {
     const connectingLines = this.props.connectingLines || ''
     return (
-      <div>
+      <div className="drawing-page">
         <img src={connectingLines} />
         <Stage
           width={600}

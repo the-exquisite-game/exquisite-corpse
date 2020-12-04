@@ -57,6 +57,7 @@ export const tools = {
 
   undo: {
     name: 'undo',
-    value: 'undo'
+    value: 'undo',
+    icon: '/images/undo.png'
   }
 }

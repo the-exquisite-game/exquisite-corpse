@@ -60,7 +60,6 @@ export class PartyRoom extends React.Component {
 
   handleDownload() {
     const img = this.canvas.current.toDataURL()
-    console.log('partyroomIMG', img)
     this.downloadURI(img, 'corpse.png')
   }
 
@@ -98,41 +97,44 @@ export class PartyRoom extends React.Component {
 
     return (
       <div id="party-room">
-        <UsersBar users={this.state.users} />
-        {this.state.gamePlay ? (
-          <div>
-            It is {userTurn.nickname}'s turn! Drawing the{' '}
-            {this.state.bodyParts[this.state.done]}
-            {myself.id === userTurn.id ? (
-              <Drawing
-                canvas={this.canvas}
-                handleTurn={this.handleTurn}
-                userTurn={this.state.done}
-                room={this.props.match.params.room}
-                connectingLines={this.state.connectingLines}
-              />
-            ) : (
-              ''
-            )}
-          </div>
-        ) : (
-          <div>
-            {this.state.finished ? (
-              <div id="finalMonster">
-                <FinalMonster
-                  bodyParts={this.state.bodyPartsImage}
+        <div id="users-section">
+          <UsersBar users={this.state.users} id="users-bar" />
+        </div>
+        <div id="party-room-canvas">
+          {this.state.gamePlay ? (
+            <div>
+              It is {userTurn.nickname}'s turn! Drawing the{' '}
+              {this.state.bodyParts[this.state.done]}
+              {myself.id === userTurn.id ? (
+                <Drawing
                   canvas={this.canvas}
+                  handleTurn={this.handleTurn}
+                  userTurn={this.state.done}
+                  room={this.props.match.params.room}
+                  connectingLines={this.state.connectingLines}
                 />
-                <button type="button" onClick={this.handleDownload}>
-                  Download
-                </button>
-              </div>
-            ) : (
-              'Waiting for more players!'
-            )}
-          </div>
-        )}
-
+              ) : (
+                ''
+              )}
+            </div>
+          ) : (
+            <div>
+              {this.state.finished ? (
+                <div id="finalMonster">
+                  <FinalMonster
+                    bodyParts={this.state.bodyPartsImage}
+                    canvas={this.canvas}
+                  />
+                  <button type="button" onClick={this.handleDownload}>
+                    Download
+                  </button>
+                </div>
+              ) : (
+                'Waiting for more players!'
+              )}
+            </div>
+          )}
+        </div>
         {/* <button type="button" onClick={this.handleClick}>
           Save to Gallery
         </button> */}

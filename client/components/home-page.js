@@ -9,9 +9,10 @@ export class Home extends React.Component {
     this.state = {
       name: 'User'
     }
+    this.canvas = React.createRef()
     this.handleClick = this.handleClick.bind(this)
     this.onRoomCreated = this.onRoomCreated.bind(this)
-    this.handleNameChange = this.handleNameChange.bind(this)
+    this.handleChange = this.handleChange.bind(this)
   }
 
   onRoomCreated(room) {
@@ -22,17 +23,21 @@ export class Home extends React.Component {
     leaveRoom(this.onRoomCreated)
   }
 
-  handleNameChange(event) {
-    this.setState({name: event.target.value})
+  handleChange(event) {
+    this.setState({[event.target.name]: event.target.value})
   }
 
   render() {
     return (
       <div>
-        <Icon />
+        <Icon canvas={this.canvas} />
         Enter a name!
         <label>Username:</label>
-        <input value={this.state.name} onChange={this.handleNameChange} />
+        <input
+          name="name"
+          value={this.state.name}
+          onChange={this.handleChange}
+        />
         <button type="button" id="createRoom" onClick={this.handleClick}>
           Create a Room!
         </button>
@@ -42,6 +47,7 @@ export class Home extends React.Component {
   }
 
   handleClick() {
-    createRoom(this.onRoomCreated, this.state.name)
+    const icon = this.canvas.current.toDataURL()
+    createRoom(this.onRoomCreated, this.state.name, icon)
   }
 }

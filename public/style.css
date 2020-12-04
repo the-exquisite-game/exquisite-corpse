@@ -23,6 +23,12 @@ nav a {
   font-size: 35px;
 }
 
+#app {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
 #navbar {
   /* padding-top: 25px;
   background-color: #d1d2f9;
@@ -56,13 +62,25 @@ form div {
 
 button {
   border: none;
-  padding: 15px 15px;
+  padding: 10px 10px;
   margin: 5px;
   display: inline-block;
   font-size: 25px;
-  border-radius: 12px;
+  border-radius: 25px;
   cursor: pointer;
   font-family: 'Gamja Flower', cursive;
+  background-color: #dcdcdc;
+  transition: all 50ms;
+}
+
+button:hover {
+  background-color: #a9a9a9;
+  transform: scale(1.1);
+  border-radius: 25px;
+}
+
+button:focus {
+  outline: none;
 }
 
 .tool {
@@ -79,6 +97,20 @@ button {
 .arrowButton {
   max-height: 30px;
   max-width: 30px;
+  padding: 17px 17px;
+  border-radius: 12px;
+  transition: all 50ms;
+}
+
+.arrowButton:active {
+  background-color: #a9a9a9;
+  transform: scale(0.8) !important;
+}
+
+.arrowButton:hover {
+  background-color: #a9a9a9;
+  border-radius: 12px;
+  transform: scale(1);
 }
 
 #party-room {
@@ -121,4 +153,41 @@ button {
 div.konvajs-content {
   background-color: white;
   border-radius: 12px;
+}
+
+.home-page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex-grow: 1;
+  padding-top: 10em;
+  font-size: 25px;
+}
+
+#buttons-container {
+  display: flex;
+  width: 400px;
+  justify-content: space-evenly;
+  padding: 15px;
+}
+
+span input {
+  border-radius: 15px;
+  font-family: 'Gamja Flower', cursive;
+  width: 200px;
+  height: 30px;
+  font-size: 20px;
+  text-align: center;
+}
+
+input:focus {
+  outline: none;
+}
+
+span {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: 30px;
+  margin-top: 10px;
 }

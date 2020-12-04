@@ -1,12 +1,12 @@
 import React, {Component} from 'react'
 import {Stage, Layer, Line} from 'react-konva'
-import {newLine, broadcastLines, joinRoom} from '../socket'
+import {newLine, broadcastLines, doneDrawing} from '../socket'
 import Palette from './palette'
 
 class Drawing extends Component {
   constructor(props) {
     super(props)
-    // this.canvas = React.createRef()
+    this.canvas = React.createRef()
     this.state = {
       isDrawing: false,
       tool: 'pen',
@@ -17,11 +17,12 @@ class Drawing extends Component {
     this.handleMouseMove = this.handleMouseMove.bind(this)
     this.handleMouseDown = this.handleMouseDown.bind(this)
     this.handleMouseUp = this.handleMouseUp.bind(this)
+    this.handleDone = this.handleDone.bind(this)
+    this.handleDoneClick = this.handleDoneClick.bind(this)
     this.handleChange = this.handleChange.bind(this)
   }
 
   componentDidMount() {
-    joinRoom(this.props.room)
     broadcastLines(broadcastedState => {
       this.setState({
         lines: broadcastedState
@@ -50,7 +51,7 @@ class Drawing extends Component {
   }
 
   handleMouseMove(e) {
-    if (this.state.isDrawing === false) {
+    if (!this.state.isDrawing) {
       return
     }
 
@@ -75,6 +76,23 @@ class Drawing extends Component {
   //on Mouse Up sets state of paint to false
   handleMouseUp() {
     this.setState({isDrawing: false})
+  }
+
+  handleDone(numberFinished) {
+    const bodyPart = this.canvas.current.toDataURL()
+
+    const leadingLines = this.canvas.current.toDataURL({
+      y: 400,
+      x: 0,
+      width: 600,
+      height: 50
+    })
+    doneDrawing(numberFinished, this.props.room, bodyPart, leadingLines)
+  }
+
+  handleDoneClick() {
+    const turn = this.props.userTurn + 1
+    this.handleDone(turn)
   }
 
   handleChange(event) {
@@ -106,16 +124,17 @@ class Drawing extends Component {
   }
 
   render() {
-    console.log(this.state.lines)
+    const connectingLines = this.props.connectingLines || ''
     return (
       <div className="drawing-page">
+        <img src={connectingLines} />
         <Stage
           width={600}
           height={500}
           onMouseDown={this.handleMouseDown}
           onMouseMove={this.handleMouseMove}
           onMouseUp={this.handleMouseUp}
-          ref={this.props.canvas}
+          ref={this.canvas}
         >
           <Layer>
             {this.state.lines.map((line, i) => (
@@ -134,7 +153,12 @@ class Drawing extends Component {
             ))}
           </Layer>
         </Stage>
+
         <Palette tool={this.state.tool} handleChange={this.handleChange} />
+
+        <button type="button" onClick={() => this.handleDoneClick()}>
+          Done!
+        </button>
       </div>
     )
   }

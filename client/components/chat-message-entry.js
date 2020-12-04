@@ -1,4 +1,5 @@
 import React, {Component} from 'react'
+import {sendMessage} from '../socket'
 
 const defaultState = {
   message: ''
@@ -33,6 +34,7 @@ export default class ChatMessageEntry extends Component {
 
   handleSubmit(e) {
     e.preventDefault()
+    sendMessage(this.state.message, this.props.room)
     this.setState(defaultState)
   }
 }

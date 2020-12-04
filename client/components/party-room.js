@@ -9,6 +9,7 @@ import {
 } from '../socket'
 import {UsersBar} from './users-bar'
 import {FinalMonster} from './finalMonster'
+import ChatWindow from './chat-window'
 
 export class PartyRoom extends React.Component {
   constructor() {
@@ -94,6 +95,7 @@ export class PartyRoom extends React.Component {
   render() {
     const myself = this.state.me
     const userTurn = this.state.userTurn || {}
+    const room = this.props.match.params.room
 
     return (
       <div id="party-room">
@@ -110,7 +112,7 @@ export class PartyRoom extends React.Component {
                   canvas={this.canvas}
                   handleTurn={this.handleTurn}
                   userTurn={this.state.done}
-                  room={this.props.match.params.room}
+                  room={room}
                   connectingLines={this.state.connectingLines}
                 />
               ) : (
@@ -138,6 +140,7 @@ export class PartyRoom extends React.Component {
         {/* <button type="button" onClick={this.handleClick}>
           Save to Gallery
         </button> */}
+        <ChatWindow room={room} />
       </div>
     )
   }

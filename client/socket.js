@@ -57,4 +57,8 @@ export function initializeGame(callback) {
   socket.on('gameStart', callback)
 }
 
+export function sendMessage(message, room) {
+  socket.to(room).emit('sentMessage', message)
+}
+
 export default socket

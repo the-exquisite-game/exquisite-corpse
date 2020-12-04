@@ -37,27 +37,30 @@ export class Home extends React.Component {
 
   render() {
     return (
-      <div>
+      <div className="home-page">
         <Icon canvas={this.canvas} />
-        Enter a name!
-        <label>Username:</label>
-        <input
-          name="name"
-          value={this.state.name}
-          onChange={this.handleChange}
-        />
-        <label>Join an Existing Room</label>
-        <input
-          name="joinRoom"
-          value={this.state.joinRoom}
-          onChange={this.handleChange}
-        />
-        <button type="button" id="createRoom" onClick={this.handleClick}>
-          Create a Room!
-        </button>
-        <button type="button" id="joinRoom" onClick={this.handleJoin}>
-          Join a Room!
-        </button>
+        <span>
+          <label>Enter a nickname:</label>
+          <input
+            name="name"
+            value={this.state.name}
+            onChange={this.handleChange}
+          />
+          <label>Join an Existing Room</label>
+          <input
+            name="joinRoom"
+            value={this.state.joinRoom}
+            onChange={this.handleChange}
+          />
+        </span>
+        <div id="buttons-container">
+          <button type="button" id="createRoom" onClick={this.handleClick}>
+            Create a Room!
+          </button>
+          <button type="button" id="joinRoom" onClick={this.handleJoin}>
+            Join a Room!
+          </button>
+        </div>
       </div>
     )
   }

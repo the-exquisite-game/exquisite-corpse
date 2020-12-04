@@ -30,10 +30,14 @@ export class Home extends React.Component {
   render() {
     return (
       <div className="home-page">
-        <Icon />
+        <Icon canvas={this.canvas} />
         <span>
           <label>Enter a nickname:</label>
-          <input value={this.state.name} onChange={this.handleNameChange} />
+          <input
+            name="name"
+            value={this.state.name}
+            onChange={this.handleChange}
+          />
         </span>
         <div id="buttons-container">
           <button type="button" id="createRoom" onClick={this.handleClick}>

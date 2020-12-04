@@ -19,8 +19,17 @@ export default class ChatWindow extends Component {
     return (
       <div>
         {this.state.messages.map(message => <ChatMessage message={message} />)}
-        <ChatMessageEntry room={this.props.room} />
+        <ChatMessageEntry
+          room={this.props.room}
+          setMessages={this.setMessages}
+        />
       </div>
     )
+  }
+
+  setMessages(message) {
+    this.setState(prevState => ({
+      messages: [...prevState.messages, message]
+    }))
   }
 }

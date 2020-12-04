@@ -19,7 +19,12 @@ export default class ChatMessageEntry extends Component {
     return (
       <div>
         <form id="chat-message-entry" onSubmit={this.handleSubmit}>
-          <input type="text" onChange={this.props.handleChange} />
+          <input
+            type="text"
+            name="messages"
+            value={this.state.message}
+            onChange={this.handleChange}
+          />
           <button type="submit">Send</button>
         </form>
       </div>
@@ -32,9 +37,9 @@ export default class ChatMessageEntry extends Component {
     })
   }
 
-  handleSubmit(e) {
-    e.preventDefault()
-    sendMessage(this.state.message, this.props.room)
+  handleSubmit(evt) {
+    evt.preventDefault()
+    sendMessage(this.state.message, this.props.room, this.props.setMessages)
     this.setState(defaultState)
   }
 }

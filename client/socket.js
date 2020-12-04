@@ -42,6 +42,11 @@ export function broadcastLines(callback) {
   socket.on('linesToState', callback)
 }
 
+export function sendMessage(message, room, callback) {
+  socket.emit('sentMessage', room, message)
+  socket.on('messagesToState', callback)
+}
+
 //listen for turns
 export function turnListener(callback, finishedCallback) {
   socket.on('done', callback)
@@ -55,10 +60,6 @@ export function doneDrawing(num, room, limbs, leadingLines) {
 
 export function initializeGame(callback) {
   socket.on('gameStart', callback)
-}
-
-export function sendMessage(message, room) {
-  socket.to(room).emit('sentMessage', message)
 }
 
 export default socket

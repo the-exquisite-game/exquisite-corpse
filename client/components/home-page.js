@@ -46,6 +46,12 @@ export class Home extends React.Component {
             value={this.state.name}
             onChange={this.handleChange}
           />
+          <label>Join an Existing Room</label>
+          <input
+            name="joinRoom"
+            value={this.state.joinRoom}
+            onChange={this.handleChange}
+          />
         </span>
         <div id="buttons-container">
           <button type="button" id="createRoom" onClick={this.handleClick}>

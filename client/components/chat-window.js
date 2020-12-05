@@ -6,9 +6,6 @@ import {joinRoom} from '../socket'
 export default class ChatWindow extends Component {
   constructor(props) {
     super(props)
-    this.state = {
-      messages: []
-    }
   }
 
   componentDidMount() {
@@ -16,20 +13,15 @@ export default class ChatWindow extends Component {
   }
 
   render() {
+    const messages = this.props.messages
     return (
       <div>
-        {this.state.messages.map(message => <ChatMessage message={message} />)}
+        {messages.map(message => <ChatMessage message={message} />)}
         <ChatMessageEntry
           room={this.props.room}
-          setMessages={this.setMessages}
+          addMessage={this.props.addMessage}
         />
       </div>
     )
-  }
-
-  setMessages(message) {
-    this.setState(prevState => ({
-      messages: [...prevState.messages, message]
-    }))
   }
 }

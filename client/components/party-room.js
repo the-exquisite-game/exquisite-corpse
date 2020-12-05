@@ -23,8 +23,10 @@ export class PartyRoom extends React.Component {
       bodyParts: ['head', 'torso', 'legs', 'feet'],
       connectingLines: '',
       gamePlay: false,
-      finished: false
+      finished: false,
+      chatMessages: []
     }
+
     this.canvas = React.createRef()
     this.handleDownload = this.handleDownload.bind(this)
     this.handleTurn = this.handleTurn.bind(this)
@@ -32,6 +34,7 @@ export class PartyRoom extends React.Component {
     this.handleMyself = this.handleMyself.bind(this)
     this.gameStart = this.gameStart.bind(this)
     this.handleFinish = this.handleFinish.bind(this)
+    this.addMessage = this.addMessage.bind(this)
   }
 
   componentDidMount() {
@@ -92,6 +95,12 @@ export class PartyRoom extends React.Component {
     this.setState({gamePlay: false, finished: true})
   }
 
+  addMessage(message) {
+    this.setState(prevState => ({
+      chatMessages: [...prevState.messages, message]
+    }))
+  }
+
   render() {
     const myself = this.state.me
     const userTurn = this.state.userTurn || {}
@@ -140,7 +149,11 @@ export class PartyRoom extends React.Component {
         {/* <button type="button" onClick={this.handleClick}>
           Save to Gallery
         </button> */}
-        <ChatWindow room={room} />
+        <ChatWindow
+          messages={this.state.chatMessages}
+          room={room}
+          addMessage={this.addMessage}
+        />
       </div>
     )
   }

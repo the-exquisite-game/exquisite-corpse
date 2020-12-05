@@ -89,7 +89,7 @@ module.exports = io => {
     })
 
     socket.on('sentMessage', (message, room) => {
-      socket.to(room).emit('messagesToState', message)
+      io.in(room).emit('messageToState', message)
     })
 
     //finish drawing button

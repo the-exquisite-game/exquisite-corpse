@@ -9,7 +9,7 @@ export default class ChatWindow extends Component {
   }
 
   componentDidMount() {
-    joinRoom(this.props.room)
+    //joinRoom(this.props.room)
   }
 
   render() {
@@ -17,10 +17,7 @@ export default class ChatWindow extends Component {
     return (
       <div>
         {messages.map(message => <ChatMessage message={message} />)}
-        <ChatMessageEntry
-          room={this.props.room}
-          addMessage={this.props.addMessage}
-        />
+        <ChatMessageEntry room={this.props.room} />
       </div>
     )
   }

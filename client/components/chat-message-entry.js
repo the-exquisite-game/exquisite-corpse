@@ -39,7 +39,7 @@ export default class ChatMessageEntry extends Component {
 
   handleSubmit(evt) {
     evt.preventDefault()
-    sendMessage(this.state.message, this.props.room, this.props.addMessage)
+    sendMessage(this.state.message, this.props.room)
     this.setState(defaultState)
   }
 }

@@ -39,7 +39,7 @@ export class PartyRoom extends React.Component {
 
   componentDidMount() {
     //joins the room via link (do we want to change this?)
-    joinRoom(this.props.match.params.room)
+    joinRoom(this.props.match.params.room, this.addMessage)
 
     //gets all users + listens for more
     getUsers(this.handleUsers, this.props.match.params.room)
@@ -149,11 +149,7 @@ export class PartyRoom extends React.Component {
         {/* <button type="button" onClick={this.handleClick}>
           Save to Gallery
         </button> */}
-        <ChatWindow
-          messages={this.state.chatMessages}
-          room={room}
-          addMessage={this.addMessage}
-        />
+        <ChatWindow messages={this.state.chatMessages} room={room} />
       </div>
     )
   }

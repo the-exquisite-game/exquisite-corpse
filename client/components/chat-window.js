@@ -8,10 +8,6 @@ export default class ChatWindow extends Component {
     super(props)
   }
 
-  componentDidMount() {
-    //joinRoom(this.props.room)
-  }
-
   render() {
     const messages = this.props.messages
     return (

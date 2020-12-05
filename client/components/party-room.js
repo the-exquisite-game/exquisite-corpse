@@ -97,7 +97,7 @@ export class PartyRoom extends React.Component {
 
   addMessage(message) {
     this.setState(prevState => ({
-      chatMessages: [...prevState.messages, message]
+      chatMessages: [...prevState.chatMessages, message]
     }))
   }
 

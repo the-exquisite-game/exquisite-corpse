@@ -149,7 +149,11 @@ export class PartyRoom extends React.Component {
         {/* <button type="button" onClick={this.handleClick}>
           Save to Gallery
         </button> */}
-        <ChatWindow messages={this.state.chatMessages} room={room} />
+        <ChatWindow
+          messages={this.state.chatMessages}
+          room={room}
+          me={this.state.me}
+        />
       </div>
     )
   }

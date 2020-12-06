@@ -11,6 +11,7 @@ export default class ChatMessageEntry extends Component {
     this.state = defaultState
     this.handleChange = this.handleChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
+    this.createMessage = this.createMessage.bind(this)
   }
 
   componentDidMount() {}
@@ -39,7 +40,15 @@ export default class ChatMessageEntry extends Component {
 
   handleSubmit(evt) {
     evt.preventDefault()
-    sendMessage(this.state.message, this.props.room)
+    sendMessage(this.createMessage(this.state.message), this.props.room)
     this.setState(defaultState)
+  }
+
+  createMessage(message) {
+    return {
+      id: Math.floor(Math.random() * 10000),
+      nickname: this.props.me.nickname,
+      content: message
+    }
   }
 }

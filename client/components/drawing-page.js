@@ -8,7 +8,7 @@ class Drawing extends Component {
     super(props)
     this.canvas = React.createRef()
     this.state = {
-      isDrawing: false,
+      // isDrawing: false,
       tool: 'pen',
       lines: [],
       color: 'black',
@@ -16,14 +16,14 @@ class Drawing extends Component {
     }
     this.handleMouseMove = this.handleMouseMove.bind(this)
     this.handleMouseDown = this.handleMouseDown.bind(this)
-    this.handleMouseUp = this.handleMouseUp.bind(this)
+    // this.handleMouseUp = this.handleMouseUp.bind(this)
     this.handleDone = this.handleDone.bind(this)
     this.handleDoneClick = this.handleDoneClick.bind(this)
     this.handleChange = this.handleChange.bind(this)
   }
 
   handleMouseDown(e) {
-    this.setState({isDrawing: true})
+    // this.setState({isDrawing: true})
 
     const position = e.target.getStage().getPointerPosition()
 
@@ -43,10 +43,9 @@ class Drawing extends Component {
   }
 
   handleMouseMove(e) {
-    if (!this.state.isDrawing) {
+    if (!this.props.hasClicked) {
       return
     }
-
     const stage = e.target.getStage()
     const point = stage.getPointerPosition()
 
@@ -65,9 +64,9 @@ class Drawing extends Component {
   }
 
   //on Mouse Up sets state of paint to false
-  handleMouseUp() {
-    this.setState({isDrawing: false})
-  }
+  // handleMouseUp() {
+  //   // this.setState({isDrawing: false})
+  // }
 
   handleDone(numberFinished) {
     const bodyPart = this.canvas.current.toDataURL()
@@ -115,6 +114,7 @@ class Drawing extends Component {
   }
 
   render() {
+    // console.log('hit', this.props.hasClicked)
     const connectingLines = this.props.connectingLines || ''
     return (
       <div className="drawing-page">
@@ -125,6 +125,7 @@ class Drawing extends Component {
           onMouseDown={this.handleMouseDown}
           onMouseMove={this.handleMouseMove}
           onMouseUp={this.handleMouseUp}
+          // onMouseLeave={this.handleMouseLeave}
           ref={this.canvas}
         >
           <Layer>

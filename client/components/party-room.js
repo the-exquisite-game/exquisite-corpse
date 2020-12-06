@@ -22,7 +22,8 @@ export class PartyRoom extends React.Component {
       bodyParts: ['head', 'torso', 'legs', 'feet'],
       connectingLines: '',
       gamePlay: false,
-      finished: false
+      finished: false,
+      hasClicked: false
     }
     this.canvas = React.createRef()
     this.handleDownload = this.handleDownload.bind(this)
@@ -31,6 +32,8 @@ export class PartyRoom extends React.Component {
     this.handleMyself = this.handleMyself.bind(this)
     this.gameStart = this.gameStart.bind(this)
     this.handleFinish = this.handleFinish.bind(this)
+    this.handleMouseDown = this.handleMouseDown.bind(this)
+    this.handleMouseUp = this.handleMouseUp.bind(this)
   }
 
   componentDidMount() {
@@ -90,13 +93,29 @@ export class PartyRoom extends React.Component {
   handleFinish() {
     this.setState({gamePlay: false, finished: true})
   }
+  //click functions to stop line runoff while drawing
+  handleMouseDown() {
+    this.setState({
+      hasClicked: true
+    })
+  }
+
+  handleMouseUp() {
+    this.setState({
+      hasClicked: false
+    })
+  }
 
   render() {
     const myself = this.state.me || ''
     const userTurn = this.state.userTurn || ''
-
+    console.log('pr, hitt')
     return (
-      <div id="party-room">
+      <div
+        id="party-room"
+        onMouseDown={this.handleMouseDown}
+        onMouseUp={this.handleMouseUp}
+      >
         <div id="users-section">
           <UsersBar users={this.state.users} id="users-bar" />
         </div>
@@ -112,6 +131,7 @@ export class PartyRoom extends React.Component {
                   userTurn={this.state.done}
                   room={this.props.match.params.room}
                   connectingLines={this.state.connectingLines}
+                  hasClicked={this.state.hasClicked}
                 />
               ) : (
                 ''

@@ -1,6 +1,6 @@
 import React from 'react'
 
-import {Navbar, Drawing} from './components'
+import {Navbar} from './components'
 
 import Routes from './routes'
 

@@ -1,14 +1,10 @@
 import React from 'react'
-import {Stage, Layer, Image, Rect} from 'react-konva'
-import useImage from 'use-image'
+import {Stage, Layer, Rect} from 'react-konva'
 import BodyPartImage from './bodyPart-Image'
 
 export const FinalMonster = props => {
   const bodyParts = props.bodyParts
-  const head = bodyParts[0]
-  const torso = bodyParts[1]
-  const legs = bodyParts[2]
-  const feet = bodyParts[3]
+  const [head, torso, legs, feet] = bodyParts
 
   return (
     <Stage width={600} height={800} ref={props.canvas}>

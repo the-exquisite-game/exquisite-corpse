@@ -4,6 +4,17 @@ const {
   animals
 } = require('unique-names-generator')
 
+//shuffling using Durstenfeld shuffle
+const shuffle = arr => {
+  for (let i = 0; i < arr.length; i++) {
+    let j = Math.floor(Math.random() * (i + 1))
+    let tmp = arr[i]
+    arr[i] = arr[j]
+    arr[j] = tmp
+  }
+  return arr
+}
+
 module.exports = io => {
   io.on('connection', socket => {
     console.log(`A socket connection to the server has been made: ${socket.id}`)
@@ -19,7 +30,7 @@ module.exports = io => {
         length: 2,
         separator: '-'
       })
-      io.emit('roomCreated', room)
+      io.emit('roomCreated', room) //problem child!!!
     })
 
     //setting nickname + icon for users
@@ -56,11 +67,12 @@ module.exports = io => {
       io.in(room).emit('getUsers', users)
 
       if (users.length === 4) {
+        users = shuffle(users)
         io.in(room).emit('gameStart', users)
       }
     })
 
-    //getting their own nickname
+    //getting their own nickname + icon
     socket.on('getMe', () => {
       const id = socket.id
       const nickname = socket.nickname
@@ -81,8 +93,6 @@ module.exports = io => {
       //room info, and users sockets names!
       const roomInfo = io.sockets.adapter.rooms[room]
 
-      //amount of players
-      let numOfPlayers = roomInfo.length
       io.in(room).emit('done', limbs, leadingLines, num)
 
       if (num === 4) {

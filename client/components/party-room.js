@@ -31,11 +31,12 @@ export class PartyRoom extends React.Component {
     this.handleMyself = this.handleMyself.bind(this)
     this.gameStart = this.gameStart.bind(this)
     this.handleFinish = this.handleFinish.bind(this)
+    this.handleTooManyPlayers = this.handleTooManyPlayers.bind(this)
   }
 
   componentDidMount() {
-    //joins the room via link (do we want to change this?)
-    joinRoom(this.props.match.params.room)
+    //joins the room
+    joinRoom(this.props.match.params.room, this.handleTooManyPlayers)
 
     //gets all users + listens for more
     getUsers(this.handleUsers, this.props.match.params.room)
@@ -50,6 +51,10 @@ export class PartyRoom extends React.Component {
     initializeGame(this.gameStart)
   }
 
+  handleTooManyPlayers() {
+    this.props.history.push(`/home`)
+    alert('Only four players allowed! ')
+  }
   handleUsers(users) {
     this.setState({users: users})
   }

@@ -74,14 +74,18 @@ module.exports = io => {
     })
 
     socket.on('joinedRoom', room => {
-      socket.join(room)
+      //room info, and users sockets names!
+      const roomInfo = io.sockets.adapter.rooms[room] || []
+
+      if (roomInfo.length < 4) {
+        socket.join(room)
+      } else {
+        socket.emit('tooMany')
+      }
     })
 
     //finish drawing button
     socket.on('doneDrawing', (num, room, limbs, leadingLines) => {
-      //room info, and users sockets names!
-      const roomInfo = io.sockets.adapter.rooms[room]
-
       io.in(room).emit('done', limbs, leadingLines, num)
 
       if (num === 4) {

@@ -19,8 +19,9 @@ export function leaveRoom(callback) {
   socket.off('roomCreated', callback)
 }
 
-export function joinRoom(room) {
+export function joinRoom(room, callback) {
   socket.emit('joinedRoom', room)
+  socket.on('tooMany', callback)
 }
 
 export function getUsers(callback, room) {

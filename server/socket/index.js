@@ -95,6 +95,10 @@ module.exports = io => {
       }
     })
 
+    socket.on('sentMessage', (message, room) => {
+      io.in(room).emit('messageToState', message)
+    })
+
     //finish drawing button
     socket.on('doneDrawing', (num, room, limbs, leadingLines) => {
       io.in(room).emit('done', limbs, leadingLines, num)

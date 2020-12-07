@@ -9,6 +9,7 @@ import {
 } from '../socket'
 import {UsersBar} from './users-bar'
 import {FinalMonster} from './finalMonster'
+import swal from '@sweetalert/with-react'
 import ChatWindow from './chat-window'
 
 export class PartyRoom extends React.Component {
@@ -34,12 +35,17 @@ export class PartyRoom extends React.Component {
     this.handleMyself = this.handleMyself.bind(this)
     this.gameStart = this.gameStart.bind(this)
     this.handleFinish = this.handleFinish.bind(this)
+    this.handleTooManyPlayers = this.handleTooManyPlayers.bind(this)
     this.addMessage = this.addMessage.bind(this)
   }
 
   componentDidMount() {
-    //joins the room via link (do we want to change this?)
-    joinRoom(this.props.match.params.room, this.addMessage)
+    //joins the room via link
+    joinRoom(
+      this.props.match.params.room,
+      this.addMessage,
+      this.handleTooManyPlayers
+    )
 
     //gets all users + listens for more
     getUsers(this.handleUsers, this.props.match.params.room)
@@ -52,6 +58,12 @@ export class PartyRoom extends React.Component {
 
     //listening for Game Start
     initializeGame(this.gameStart)
+  }
+
+  handleTooManyPlayers() {
+    this.props.history.push(`/home`)
+    //third argument here is the image
+    swal('Sorry, room is full!', 'Only four players allowed :(', 'warning')
   }
 
   handleUsers(users) {

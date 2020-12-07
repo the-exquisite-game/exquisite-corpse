@@ -13,13 +13,11 @@ class Routes extends Component {
         <Route path="/home" component={Home} />
         <Route path="/partyroom/:room" component={PartyRoom} />
         <Route path="/drawing/:room" component={Drawing} />
-        {/* Displays our Login component as a fallback */}
+        {/* Displays our Home component as a fallback */}
         <Route component={Home} />
       </Switch>
     )
   }
 }
 
-// The `withRouter` wrapper makes sure that updates are not blocked
-// when the url changes
 export default Routes

@@ -56,6 +56,8 @@ module.exports = io => {
       io.in(room).emit('getUsers', users)
 
       if (users.length === 4) {
+        //shuffle here
+
         io.in(room).emit('gameStart', users)
       }
     })

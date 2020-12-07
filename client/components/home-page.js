@@ -2,13 +2,13 @@ import React from 'react'
 // import {default as socket} from '../socket'
 import {createRoom, leaveRoom, setNameAndIcon} from '../socket'
 import Icon from './icon'
+import swal from '@sweetalert/with-react'
 
 export class Home extends React.Component {
   constructor() {
     super()
     this.state = {
-      name: 'User',
-      joinRoom: ''
+      name: 'User'
     }
     this.canvas = React.createRef()
     this.handleClick = this.handleClick.bind(this)
@@ -29,10 +29,30 @@ export class Home extends React.Component {
     this.setState({[event.target.name]: event.target.value})
   }
 
-  handleJoin() {
+  async handleJoin() {
     const icon = this.canvas.current.toDataURL()
     setNameAndIcon(this.state.name, icon)
-    this.props.history.push(`/partyroom/${this.state.joinRoom}`)
+
+    const room = await swal({
+      text: "Enter the room's code!",
+      buttons: {
+        cancel: 'Cancel',
+        confirm: {
+          text: 'Enter'
+        }
+      },
+      content: 'input'
+    })
+
+    if (room !== null) {
+      this.props.history.push(`/partyroom/${room}`)
+    }
+  }
+
+  handleClick() {
+    const icon = this.canvas.current.toDataURL()
+    setNameAndIcon(this.state.name, icon)
+    createRoom(this.onRoomCreated)
   }
 
   render() {
@@ -46,12 +66,6 @@ export class Home extends React.Component {
             value={this.state.name}
             onChange={this.handleChange}
           />
-          <label>Join an Existing Room</label>
-          <input
-            name="joinRoom"
-            value={this.state.joinRoom}
-            onChange={this.handleChange}
-          />
         </span>
         <div id="buttons-container">
           <button type="button" id="createRoom" onClick={this.handleClick}>
@@ -63,11 +77,5 @@ export class Home extends React.Component {
         </div>
       </div>
     )
-  }
-
-  handleClick() {
-    const icon = this.canvas.current.toDataURL()
-    setNameAndIcon(this.state.name, icon)
-    createRoom(this.onRoomCreated)
   }
 }

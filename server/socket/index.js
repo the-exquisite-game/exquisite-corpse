@@ -88,6 +88,10 @@ module.exports = io => {
       socket.join(room)
     })
 
+    socket.on('sentMessage', (message, room) => {
+      io.in(room).emit('messageToState', message)
+    })
+
     //finish drawing button
     socket.on('doneDrawing', (num, room, limbs, leadingLines) => {
       //room info, and users sockets names!

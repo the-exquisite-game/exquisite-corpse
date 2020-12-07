@@ -82,8 +82,6 @@ module.exports = io => {
       //room info, and users sockets names!
       const roomInfo = io.sockets.adapter.rooms[room]
 
-      //amount of players
-      let numOfPlayers = roomInfo.length
       io.in(room).emit('done', limbs, leadingLines, num)
 
       if (num === 4) {

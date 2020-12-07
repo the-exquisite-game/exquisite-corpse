@@ -99,7 +99,7 @@ class Drawing extends Component {
       })
     } else if (event.target.name === 'clear') {
       //clears whole canvas
-      this.props.canvas.current.clear()
+      this.canvas.current.clear()
       this.setState({
         lines: []
       })

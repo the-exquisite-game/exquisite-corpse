@@ -10,6 +10,7 @@ h1 {
 
 a {
   text-decoration: none;
+  color: #153243;
 }
 
 label {
@@ -19,7 +20,7 @@ label {
 nav a {
   display: inline-block;
   padding: 1em;
-  font-size: 35px;
+  font-size: 30px;
 }
 
 #app {
@@ -29,10 +30,19 @@ nav a {
 }
 
 #navbar {
-  padding-top: 25px;
+  /* padding-top: 25px;
   background-color: #d1d2f9;
   padding-left: 2em;
-  border-bottom: 1px dotted #576490;
+  border-bottom: 1px dotted #576490; */
+
+  background-image: linear-gradient(#a6a8e0, #d1d2f9);
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  grid-template-rows: repeat(1, 1fr);
+  justify-items: center;
+  align-items: center;
+  z-index: 2;
+  box-shadow: 4px 5px 5px 1px rgba(0, 0, 0, 0.24);
 }
 
 form div {
@@ -60,6 +70,16 @@ button {
   cursor: pointer;
   font-family: 'Gamja Flower', cursive;
   background-color: #dcdcdc;
+  transition: all 50ms;
+}
+
+#palette-button {
+  border: none;
+  padding: 10px 10px;
+  margin: 5px;
+  display: inline-block;
+  border-radius: 8px;
+  cursor: pointer;
   transition: all 50ms;
 }
 
@@ -105,9 +125,33 @@ button:focus {
 
 #party-room {
   display: flex;
-  flex-direction: column;
-  align-items: center;
+  /* flex-direction: column;
+  align-items: center; */
+  justify-content: center;
   margin-top: 5em;
+}
+
+#users-bar {
+  border-radius: 9px;
+  padding: 12px;
+  margin-right: 12px;
+  margin-left: 12px;
+  background-color: #fbf9f9;
+  border: solid #c7d66d;
+  border-width: 2px;
+  align-content: center;
+  height: 250px;
+}
+
+.indiv-user-sidebar {
+  display: flex;
+  font-size: x-large;
+  align-items: center;
+}
+
+#image-sidebar {
+  width: 25%;
+  margin: 8px;
 }
 
 .drawing-page {

@@ -93,7 +93,7 @@ export class PartyRoom extends React.Component {
 
   render() {
     const myself = this.state.me
-    const userTurn = this.state.userTurn
+    const userTurn = this.state.userTurn || {}
 
     return (
       <div id="party-room">

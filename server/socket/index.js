@@ -56,13 +56,12 @@ module.exports = io => {
       io.in(room).emit('getUsers', users)
 
       if (users.length === 4) {
-        //shuffle here
-
+        users = shuffle(users)
         io.in(room).emit('gameStart', users)
       }
     })
 
-    //getting their own nickname
+    //getting their own nickname + icon
     socket.on('getMe', () => {
       const id = socket.id
       const nickname = socket.nickname
@@ -92,4 +91,15 @@ module.exports = io => {
       }
     })
   })
+}
+
+//shuffling using Durstenfeld shuffle
+const shuffle = arr => {
+  for (let i = 0; i < arr.length; i++) {
+    let j = Math.floor(Math.random() * (i + 1))
+    let tmp = arr[i]
+    arr[i] = arr[j]
+    arr[j] = tmp
+  }
+  return arr
 }

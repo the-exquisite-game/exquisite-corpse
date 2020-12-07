@@ -1,3 +1,7 @@
+/*
+  I like this file for setting some values for your palette. I wouldn't necessary consider it a "script" though. Perhaps a good location for this could be inside of the client folder and inside of a new "utilities" folder? Or a folder called "assets"?
+*/
+
 export const lightColors = {
   red: '#FE797B',
   orange: '#FFB750',

@@ -4,6 +4,10 @@ import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 // import {logout} from '../store'
 
+/* 
+  Reminder: Clean up boilermaker code
+*/
+
 const Navbar = () => (
   <div id="navbar">
     <h1>Exquisite Corpse!</h1>

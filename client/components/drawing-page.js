@@ -3,6 +3,10 @@ import {Stage, Layer, Line} from 'react-konva'
 import {doneDrawing} from '../socket'
 import Palette from './palette'
 
+/*
+  Could localStorage help you solve the refresh page bug?
+*/
+
 class Drawing extends Component {
   constructor(props) {
     super(props)

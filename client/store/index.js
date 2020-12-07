@@ -4,6 +4,10 @@ import thunkMiddleware from 'redux-thunk'
 import {composeWithDevTools} from 'redux-devtools-extension'
 import user from './user'
 
+/* 
+	Same note here as on the backend. If you don't need Redux, feel free to cut it out!
+*/
+
 const reducer = combineReducers({user})
 const middleware = composeWithDevTools(
   applyMiddleware(thunkMiddleware, createLogger({collapsed: true}))

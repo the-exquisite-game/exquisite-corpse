@@ -5,6 +5,8 @@ import BodyPartImage from './bodyPart-Image'
 
 export const FinalMonster = props => {
   const bodyParts = props.bodyParts
+  // array destructuring would look pretty slick here:
+  // const [ head, torso, legs, feet ] = bodyParts
   const head = bodyParts[0]
   const torso = bodyParts[1]
   const legs = bodyParts[2]

@@ -4,6 +4,10 @@ const {
   animals
 } = require('unique-names-generator')
 
+/*
+  If this is the only file you need on your backend, consider deleting the boilermaker code you don't need to trim down on the codebase. E.g. do you need a database?
+*/
+
 module.exports = io => {
   io.on('connection', socket => {
     console.log(`A socket connection to the server has been made: ${socket.id}`)
@@ -55,6 +59,7 @@ module.exports = io => {
 
       io.in(room).emit('getUsers', users)
 
+      // can we handle other cases here? If length is < 4 display "Still waiting on more to join!" if it's > 4 "Uh oh! Too many folks at this party, we need exactly 4 players"
       if (users.length === 4) {
         io.in(room).emit('gameStart', users)
       }

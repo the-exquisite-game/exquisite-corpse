@@ -21,6 +21,7 @@ export class Home extends React.Component {
     this.props.history.push(`/partyroom/${room}`)
   }
 
+  // nice use of componentWillUnmount!
   componentWillUnmount() {
     leaveRoom(this.onRoomCreated)
   }

@@ -9,6 +9,7 @@ class Icon extends Component {
     this.state = {
       color: lightColors.red
     }
+    // could backgrounds also get stored in paletteProperties?
     this.backgrounds = ['red', 'orange', 'yellow', 'green', 'blue', 'purple']
     this.colorIdx = 0
     this.handleChange = this.handleChange.bind(this)

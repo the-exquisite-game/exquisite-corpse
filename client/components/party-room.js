@@ -58,6 +58,9 @@ export class PartyRoom extends React.Component {
     this.setState({me: me})
   }
 
+  // just a thought here - it would be kind of cute to download the image as room-name-corpse since folks may play more than once and this name is more unique
+
+  // also I think the handleDownload and downloadURI function might work better in a utilities file as you can reuse these in your gallery feature
   handleDownload() {
     const img = this.canvas.current.toDataURL()
     this.downloadURI(img, 'corpse.png')
@@ -93,6 +96,7 @@ export class PartyRoom extends React.Component {
 
   render() {
     const myself = this.state.me || ''
+    // userTurn is defaulted to {} in your constructor but changed to '' here. What is its correct type? In either case, no need to set the default values twice until you're updating these values to 'null' or 'undefined' somewhere else.
     const userTurn = this.state.userTurn || ''
 
     return (

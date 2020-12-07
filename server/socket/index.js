@@ -4,6 +4,17 @@ const {
   animals
 } = require('unique-names-generator')
 
+//shuffling using Durstenfeld shuffle
+const shuffle = arr => {
+  for (let i = 0; i < arr.length; i++) {
+    let j = Math.floor(Math.random() * (i + 1))
+    let tmp = arr[i]
+    arr[i] = arr[j]
+    arr[j] = tmp
+  }
+  return arr
+}
+
 module.exports = io => {
   io.on('connection', socket => {
     console.log(`A socket connection to the server has been made: ${socket.id}`)
@@ -89,15 +100,4 @@ module.exports = io => {
       }
     })
   })
-}
-
-//shuffling using Durstenfeld shuffle
-const shuffle = arr => {
-  for (let i = 0; i < arr.length; i++) {
-    let j = Math.floor(Math.random() * (i + 1))
-    let tmp = arr[i]
-    arr[i] = arr[j]
-    arr[j] = tmp
-  }
-  return arr
 }

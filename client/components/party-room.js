@@ -9,6 +9,7 @@ import {
 } from '../socket'
 import {UsersBar} from './users-bar'
 import {FinalMonster} from './finalMonster'
+import swal from '@sweetalert/with-react'
 
 export class PartyRoom extends React.Component {
   constructor() {
@@ -53,7 +54,8 @@ export class PartyRoom extends React.Component {
 
   handleTooManyPlayers() {
     this.props.history.push(`/home`)
-    alert('Only four players allowed! ')
+    //third argument here is the image
+    swal('Sorry, room is full!', 'Only four players allowed :(', 'warning')
   }
   handleUsers(users) {
     this.setState({users: users})

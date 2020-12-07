@@ -125,8 +125,8 @@ button:focus {
 
 #party-room {
   display: flex;
-  /* flex-direction: column;
-  align-items: center; */
+  flex-direction: column;
+  align-items: center;
   justify-content: center;
   margin-top: 5em;
 }
@@ -210,4 +210,10 @@ span {
 
 #party-room-canvas {
   width: 600px;
+}
+
+#chat-user-container {
+  display: flex;
+  flex-direction: row;
+  margin-top: 2em;
 }

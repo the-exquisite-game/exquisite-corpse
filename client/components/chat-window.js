@@ -12,9 +12,11 @@ export default class ChatWindow extends Component {
     const messages = this.props.messages
     return (
       <div>
-        {messages.map(message => (
-          <ChatMessage key={message.id} message={message} />
-        ))}
+        <div id="chat-messages">
+          {messages.map(message => (
+            <ChatMessage key={message.id} message={message} />
+          ))}
+        </div>
         <ChatMessageEntry room={this.props.room} me={this.props.me} />
       </div>
     )

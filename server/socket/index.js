@@ -19,7 +19,7 @@ module.exports = io => {
         length: 2,
         separator: '-'
       })
-      io.emit('roomCreated', room)
+      io.emit('roomCreated', room) //problem child!!!
     })
 
     //setting nickname + icon for users

@@ -205,15 +205,30 @@ span {
 #chat-messages {
   height: 500px;
   width: 350px;
+  border-radius: 9px;
+  padding: 8px;
+  background-color: #fbf9f9;
+  border: solid #c7d66d;
+  border-width: 2px;
   overflow-y: scroll;
+  margin-left: 20px;
 }
 
-#party-room-canvas {
+/* #party-room-canvas {
   width: 600px;
-}
+} */
 
 #chat-user-container {
   display: flex;
   flex-direction: row;
   margin-top: 2em;
+}
+
+#instructions {
+  border-radius: 9px;
+  padding: 8px;
+  background-color: #fbf9f9;
+  border: solid #c7d66d;
+  border-width: 2px;
+  align-content: center;
 }

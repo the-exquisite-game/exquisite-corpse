@@ -232,3 +232,9 @@ span {
   border-width: 2px;
   align-content: center;
 }
+
+.instructions-button {
+  position: absolute;
+  right: 60px;
+  bottom: 60px;
+}

@@ -38,7 +38,7 @@ export class PartyRoom extends React.Component {
     this.handleFinish = this.handleFinish.bind(this)
     this.handleTooManyPlayers = this.handleTooManyPlayers.bind(this)
     this.addMessage = this.addMessage.bind(this)
-    this.displayInstructions = this.displayInstructions(this)
+    this.displayInstructions = this.displayInstructions.bind(this)
   }
 
   componentDidMount() {
@@ -60,6 +60,9 @@ export class PartyRoom extends React.Component {
 
     //listening for Game Start
     initializeGame(this.gameStart)
+
+    //displays instructions
+    this.displayInstructions()
   }
 
   handleTooManyPlayers() {
@@ -69,7 +72,7 @@ export class PartyRoom extends React.Component {
   }
 
   displayInstructions() {
-    swal(<Instructions />)
+    this.state.users.length <= 4 && swal(<Instructions />)
   }
 
   handleUsers(users) {
@@ -126,7 +129,6 @@ export class PartyRoom extends React.Component {
 
     return (
       <div id="party-room">
-        {!this.state.gamePlay && <Instructions />}
         <div id="chat-user-container">
           <div id="users-section">
             <UsersBar users={this.state.users} id="users-bar" />
@@ -175,8 +177,12 @@ export class PartyRoom extends React.Component {
             me={this.state.me}
           />
         </div>
-        <button type="button" onClick={() => this.displayInstructions}>
-          ?
+        <button
+          className="instructions-button"
+          type="button"
+          onClick={this.displayInstructions}
+        >
+          Instructions
         </button>
       </div>
     )

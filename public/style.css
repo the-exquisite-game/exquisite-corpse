@@ -30,11 +30,6 @@ nav a {
 }
 
 #navbar {
-  /* padding-top: 25px;
-  background-color: #d1d2f9;
-  padding-left: 2em;
-  border-bottom: 1px dotted #576490; */
-
   background-image: linear-gradient(#a6a8e0, #d1d2f9);
   display: grid;
   grid-template-columns: repeat(1, 1fr);
@@ -125,9 +120,9 @@ button:focus {
 
 #party-room {
   display: flex;
-  /* flex-direction: column;
-  align-items: center; */
+  align-items: center;
   justify-content: center;
+  flex-direction: row;
   margin-top: 5em;
 }
 
@@ -170,7 +165,7 @@ div.konvajs-content {
   flex-direction: column;
   align-items: center;
   flex-grow: 1;
-  padding-top: 75px;
+  padding-top: 200px;
   padding-bottom: 75px;
   font-size: 25px;
 }
@@ -206,9 +201,25 @@ span {
 #chat-messages {
   height: 500px;
   width: 350px;
+  border-radius: 9px;
+  padding: 8px;
+  background-color: #fbf9f9;
+  border: solid #c7d66d;
+  border-width: 2px;
   overflow-y: scroll;
+  margin-left: 20px;
 }
 
-#party-room-canvas {
-  width: 600px;
+#instructions {
+  border-radius: 9px;
+  padding: 8px;
+  background-color: #fbf9f9;
+  border: solid #c7d66d;
+  border-width: 2px;
+  align-content: center;
+}
+
+.instructions-button {
+  position: absolute;
+  bottom: 200px;
 }

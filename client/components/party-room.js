@@ -11,6 +11,7 @@ import {UsersBar} from './users-bar'
 import {FinalMonster} from './finalMonster'
 import swal from '@sweetalert/with-react'
 import ChatWindow from './chat-window'
+import {Instructions} from './instructions'
 
 export class PartyRoom extends React.Component {
   constructor() {
@@ -41,6 +42,7 @@ export class PartyRoom extends React.Component {
     this.handleMouseUp = this.handleMouseUp.bind(this)
     this.handleTooManyPlayers = this.handleTooManyPlayers.bind(this)
     this.addMessage = this.addMessage.bind(this)
+    this.displayInstructions = this.displayInstructions.bind(this)
   }
 
   componentDidMount() {
@@ -62,12 +64,19 @@ export class PartyRoom extends React.Component {
 
     //listening for Game Start
     initializeGame(this.gameStart)
+
+    //displays instructions
+    this.displayInstructions()
   }
 
   handleTooManyPlayers() {
     this.props.history.push(`/home`)
     //third argument here is the image
     swal('Sorry, room is full!', 'Only four players allowed :(', 'warning')
+  }
+
+  displayInstructions() {
+    this.state.users.length <= 4 && swal(<Instructions />)
   }
 
   handleUsers(users) {
@@ -189,6 +198,13 @@ export class PartyRoom extends React.Component {
           room={room}
           me={this.state.me}
         />
+        <button
+          className="instructions-button"
+          type="button"
+          onClick={this.displayInstructions}
+        >
+          Instructions
+        </button>
       </div>
     )
   }

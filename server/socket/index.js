@@ -107,5 +107,18 @@ module.exports = io => {
         io.in(room).emit('finished')
       }
     })
+
+    socket.on('time', room => {
+      let countDown = 120000
+      setInterval(function() {
+        countDown -= 1000
+        io.in(room).emit('timer', countDown)
+      }, 1000)
+
+      //after the two minutes
+      setTimeout(room => {})
+
+      //
+    })
   })
 }

@@ -11,6 +11,7 @@ import {UsersBar} from './users-bar'
 import {FinalMonster} from './finalMonster'
 import swal from '@sweetalert/with-react'
 import ChatWindow from './chat-window'
+import Timer from './timer'
 
 export class PartyRoom extends React.Component {
   constructor() {
@@ -128,6 +129,8 @@ export class PartyRoom extends React.Component {
             <div>
               It is {userTurn.nickname}'s turn! Drawing the{' '}
               {this.state.bodyParts[this.state.done]}
+              {/* timer here? */}
+              <Timer room={room} />
               {myself.id === userTurn.id ? (
                 <Drawing
                   canvas={this.canvas}
@@ -153,7 +156,7 @@ export class PartyRoom extends React.Component {
                   </button>
                 </div>
               ) : (
-                'Waiting for more players!'
+                `Waiting for ${4 - this.state.users.length} more players!`
               )}
             </div>
           )}

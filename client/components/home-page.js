@@ -33,6 +33,7 @@ export class Home extends React.Component {
     const icon = this.canvas.current.toDataURL()
     setNameAndIcon(this.state.name, icon)
 
+    //swal is a promise
     const room = await swal({
       text: "Enter the room's code!",
       buttons: {

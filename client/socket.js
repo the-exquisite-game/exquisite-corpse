@@ -63,4 +63,13 @@ export function initializeGame(callback) {
   socket.on('gameStart', callback)
 }
 
+export function timer(room, callback) {
+  socket.on('timer', callback)
+  socket.emit('time', room)
+}
+
+export function stopTimer() {
+  socket.off('timer')
+}
+
 export default socket

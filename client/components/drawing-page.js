@@ -38,7 +38,7 @@ class Drawing extends Component {
   }
 
   handleMouseMove(e) {
-    if (!this.props.hasClicked) {
+    if (!this.props.hasClicked || this.props.clickLocation !== 'CANVAS') {
       return
     }
     const stage = e.target.getStage()
@@ -46,10 +46,6 @@ class Drawing extends Component {
 
     //gets lastLine
     let lastLine = this.state.lines[this.state.lines.length - 1]
-
-    if (this.props.clickLocation !== 'CANVAS') {
-      return
-    }
     //setting points - adding length to line
     lastLine.points = lastLine.points.concat([point.x, point.y])
 

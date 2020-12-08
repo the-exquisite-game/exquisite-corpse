@@ -150,9 +150,6 @@ class Drawing extends Component {
         <button type="button" onClick={() => this.handleDoneClick()}>
           Done!
         </button>
-        <button type="button" onClick={() => this.handleDoneClick()}>
-          ?
-        </button>
       </div>
     )
   }

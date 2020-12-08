@@ -38,6 +38,7 @@ export class PartyRoom extends React.Component {
     this.handleFinish = this.handleFinish.bind(this)
     this.handleTooManyPlayers = this.handleTooManyPlayers.bind(this)
     this.addMessage = this.addMessage.bind(this)
+    this.displayInstructions = this.displayInstructions(this)
   }
 
   componentDidMount() {
@@ -65,6 +66,10 @@ export class PartyRoom extends React.Component {
     this.props.history.push(`/home`)
     //third argument here is the image
     swal('Sorry, room is full!', 'Only four players allowed :(', 'warning')
+  }
+
+  displayInstructions() {
+    swal(<Instructions />)
   }
 
   handleUsers(users) {
@@ -170,6 +175,9 @@ export class PartyRoom extends React.Component {
             me={this.state.me}
           />
         </div>
+        <button type="button" onClick={() => this.displayInstructions}>
+          ?
+        </button>
       </div>
     )
   }

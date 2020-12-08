@@ -125,10 +125,23 @@ button:focus {
 
 #party-room {
   display: flex;
-  /* flex-direction: column;
-  align-items: center; */
+  flex-direction: column;
+  align-items: center;
   justify-content: center;
   margin-top: 5em;
+}
+
+#room-name {
+  padding: 15px;
+  margin-bottom: 40px;
+  font-size: x-large;
+  background-color: #fbf9f9;
+  border: #c7d66d 2px solid;
+  border-radius: 8px;
+}
+
+#main-party-room-area {
+  display: flex;
 }
 
 #users-bar {
@@ -147,6 +160,14 @@ button:focus {
   display: flex;
   font-size: x-large;
   align-items: center;
+}
+
+#indiv-user-sidebar-selected {
+  display: flex;
+  font-size: x-large;
+  align-items: center;
+  background-color: #dde99d;
+  border-radius: 8px;
 }
 
 #image-sidebar {

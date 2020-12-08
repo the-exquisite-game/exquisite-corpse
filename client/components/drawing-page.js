@@ -55,7 +55,6 @@ class Drawing extends Component {
     lineList.splice(this.state.lines.length - 1, 1, lastLine)
 
     this.setState({lines: lineList})
-    console.log('lines', this.state.lines)
   }
 
   handleDone(numberFinished) {

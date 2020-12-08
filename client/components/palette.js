@@ -4,7 +4,6 @@ import {lightColors, darkColors, tools} from '../utility/utilityProperties.js'
 class Palette extends React.Component {
   constructor(props) {
     super(props)
-    this.state = {}
   }
 
   render() {

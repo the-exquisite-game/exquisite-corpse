@@ -202,3 +202,13 @@ span {
   font-size: 30px;
   margin-top: 10px;
 }
+
+#chat-messages {
+  height: 500px;
+  width: 350px;
+  overflow-y: scroll;
+}
+
+#party-room-canvas {
+  width: 600px;
+}

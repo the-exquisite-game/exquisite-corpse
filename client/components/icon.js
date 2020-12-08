@@ -6,7 +6,7 @@ import {
   iconBackgrounds,
   leftArrow,
   rightArrow
-} from '../../script/utilityProperties'
+} from '../utility/utilityProperties'
 
 class Icon extends Component {
   constructor() {
@@ -20,7 +20,6 @@ class Icon extends Component {
 
   handleChange(event) {
     //cycles through background colors array and matches to key in lightColors
-
     if (event.target.name === 'rightarrow') {
       if (this.colorIdx === iconBackgrounds.length - 1) {
         this.colorIdx = -1

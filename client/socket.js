@@ -19,8 +19,10 @@ export function leaveRoom(callback) {
   socket.off('roomCreated', callback)
 }
 
-export function joinRoom(room) {
+export function joinRoom(room, messages, playerHandler) {
   socket.emit('joinedRoom', room)
+  socket.on('tooMany', playerHandler)
+  socket.on('messageToState', messages)
 }
 
 export function getUsers(callback, room) {
@@ -40,6 +42,10 @@ export function newLine(arr, room) {
 //broadcast all lines
 export function broadcastLines(callback) {
   socket.on('linesToState', callback)
+}
+
+export function sendMessage(message, room) {
+  socket.emit('sentMessage', message, room)
 }
 
 //listen for turns

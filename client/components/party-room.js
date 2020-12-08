@@ -9,6 +9,8 @@ import {
 } from '../socket'
 import {UsersBar} from './users-bar'
 import {FinalMonster} from './finalMonster'
+import swal from '@sweetalert/with-react'
+import ChatWindow from './chat-window'
 
 export class PartyRoom extends React.Component {
   constructor() {
@@ -24,8 +26,10 @@ export class PartyRoom extends React.Component {
       gamePlay: false,
       finished: false,
       hasClicked: false,
-      clickLocation: ''
+      clickLocation: '',
+      chatMessages: []
     }
+
     this.canvas = React.createRef()
     this.handleDownload = this.handleDownload.bind(this)
     this.handleTurn = this.handleTurn.bind(this)
@@ -35,11 +39,17 @@ export class PartyRoom extends React.Component {
     this.handleFinish = this.handleFinish.bind(this)
     this.handleMouseDown = this.handleMouseDown.bind(this)
     this.handleMouseUp = this.handleMouseUp.bind(this)
+    this.handleTooManyPlayers = this.handleTooManyPlayers.bind(this)
+    this.addMessage = this.addMessage.bind(this)
   }
 
   componentDidMount() {
-    //joins the room via link (do we want to change this?)
-    joinRoom(this.props.match.params.room)
+    //joins the room via link
+    joinRoom(
+      this.props.match.params.room,
+      this.addMessage,
+      this.handleTooManyPlayers
+    )
 
     //gets all users + listens for more
     getUsers(this.handleUsers, this.props.match.params.room)
@@ -52,6 +62,12 @@ export class PartyRoom extends React.Component {
 
     //listening for Game Start
     initializeGame(this.gameStart)
+  }
+
+  handleTooManyPlayers() {
+    this.props.history.push(`/home`)
+    //third argument here is the image
+    swal('Sorry, room is full!', 'Only four players allowed :(', 'warning')
   }
 
   handleUsers(users) {
@@ -108,9 +124,17 @@ export class PartyRoom extends React.Component {
     })
   }
 
+  addMessage(message) {
+    this.setState(prevState => ({
+      chatMessages: [...prevState.chatMessages, message]
+    }))
+  }
+
   render() {
-    const myself = this.state.me || ''
-    const userTurn = this.state.userTurn || ''
+    const myself = this.state.me
+    const userTurn = this.state.userTurn || {}
+    const room = this.props.match.params.room
+
     return (
       <div
         id="party-room"
@@ -130,7 +154,7 @@ export class PartyRoom extends React.Component {
                   canvas={this.canvas}
                   handleTurn={this.handleTurn}
                   userTurn={this.state.done}
-                  room={this.props.match.params.room}
+                  room={room}
                   connectingLines={this.state.connectingLines}
                   hasClicked={this.state.hasClicked}
                   clickLocation={this.state.clickLocation}
@@ -160,6 +184,11 @@ export class PartyRoom extends React.Component {
         {/* <button type="button" onClick={this.handleClick}>
           Save to Gallery
         </button> */}
+        <ChatWindow
+          messages={this.state.chatMessages}
+          room={room}
+          me={this.state.me}
+        />
       </div>
     )
   }

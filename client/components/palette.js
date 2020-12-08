@@ -1,5 +1,5 @@
 import React from 'react'
-import {lightColors, darkColors, tools} from '../../script/utilityProperties.js'
+import {lightColors, darkColors, tools} from '../utility/utilityProperties.js'
 
 class Palette extends React.Component {
   constructor(props) {

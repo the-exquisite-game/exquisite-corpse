@@ -62,7 +62,7 @@ class Drawing extends Component {
     const bodyPart = this.canvas.current.toDataURL()
 
     const leadingLines = this.canvas.current.toDataURL({
-      y: 400,
+      y: 450,
       x: 0,
       width: 600,
       height: 50

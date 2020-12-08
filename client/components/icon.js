@@ -1,7 +1,12 @@
 import React, {Component} from 'react'
 import {Stage, Layer, Rect} from 'react-konva'
 import IconImage from './icon-image.js'
-import {lightColors} from '../../script/paletteProperties'
+import {
+  lightColors,
+  iconBackgrounds,
+  leftArrow,
+  rightArrow
+} from '../utility/utilityProperties'
 
 class Icon extends Component {
   constructor() {
@@ -9,7 +14,6 @@ class Icon extends Component {
     this.state = {
       color: lightColors.red
     }
-    this.backgrounds = ['red', 'orange', 'yellow', 'green', 'blue', 'purple']
     this.colorIdx = 0
     this.handleChange = this.handleChange.bind(this)
   }
@@ -17,20 +21,20 @@ class Icon extends Component {
   handleChange(event) {
     //cycles through background colors array and matches to key in lightColors
     if (event.target.name === 'rightarrow') {
-      if (this.colorIdx === this.backgrounds.length - 1) {
+      if (this.colorIdx === iconBackgrounds.length - 1) {
         this.colorIdx = -1
       }
       this.colorIdx += 1
       this.setState({
-        color: lightColors[this.backgrounds[this.colorIdx]]
+        color: lightColors[iconBackgrounds[this.colorIdx]]
       })
     } else {
       if (this.colorIdx === 0) {
-        this.colorIdx = this.backgrounds.length
+        this.colorIdx = iconBackgrounds.length
       }
       this.colorIdx -= 1
       this.setState({
-        color: lightColors[this.backgrounds[this.colorIdx]]
+        color: lightColors[iconBackgrounds[this.colorIdx]]
       })
     }
   }
@@ -42,7 +46,8 @@ class Icon extends Component {
           className="arrowButton tool"
           type="button"
           style={{
-            backgroundImage: `url(/images/arrowleft.png)`
+            backgroundImage: `url(/images/arrowleft.png)`,
+            backgroundColor: lightColors[leftArrow[this.colorIdx]]
           }}
           name="leftarrow"
           onClick={this.handleChange}
@@ -62,7 +67,8 @@ class Icon extends Component {
           className="arrowButton tool"
           type="button"
           style={{
-            backgroundImage: `url(/images/arrowright.png)`
+            backgroundImage: `url(/images/arrowright.png)`,
+            backgroundColor: lightColors[rightArrow[this.colorIdx]]
           }}
           name="rightarrow"
           onClick={this.handleChange}

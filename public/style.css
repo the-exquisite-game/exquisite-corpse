@@ -30,11 +30,6 @@ nav a {
 }
 
 #navbar {
-  /* padding-top: 25px;
-  background-color: #d1d2f9;
-  padding-left: 2em;
-  border-bottom: 1px dotted #576490; */
-
   background-image: linear-gradient(#a6a8e0, #d1d2f9);
   display: grid;
   grid-template-columns: repeat(1, 1fr);
@@ -73,12 +68,12 @@ button {
   transition: all 50ms;
 }
 
-#palette-button {
+#palette button {
   border: none;
-  padding: 10px 10px;
+  padding: 15px;
   margin: 5px;
   display: inline-block;
-  border-radius: 8px;
+  border-radius: 10px;
   cursor: pointer;
   transition: all 50ms;
 }
@@ -125,22 +120,22 @@ button:focus {
 
 #party-room {
   display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
+  flex-direction: row;
   margin-top: 5em;
 }
 
 #users-bar {
   border-radius: 9px;
-  padding: 12px;
+  padding: 8px;
   margin-right: 12px;
   margin-left: 12px;
   background-color: #fbf9f9;
   border: solid #c7d66d;
   border-width: 2px;
   align-content: center;
-  height: 250px;
+  min-width: 185px;
 }
 
 .indiv-user-sidebar {
@@ -170,7 +165,8 @@ div.konvajs-content {
   flex-direction: column;
   align-items: center;
   flex-grow: 1;
-  padding-top: 10em;
+  padding-top: 200px;
+  padding-bottom: 75px;
   font-size: 25px;
 }
 
@@ -214,16 +210,6 @@ span {
   margin-left: 20px;
 }
 
-/* #party-room-canvas {
-  width: 600px;
-} */
-
-#chat-user-container {
-  display: flex;
-  flex-direction: row;
-  margin-top: 2em;
-}
-
 #instructions {
   border-radius: 9px;
   padding: 8px;
@@ -235,6 +221,5 @@ span {
 
 .instructions-button {
   position: absolute;
-  right: 60px;
-  bottom: 60px;
+  bottom: 200px;
 }

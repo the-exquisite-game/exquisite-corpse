@@ -9,7 +9,7 @@ export class Home extends React.Component {
   constructor() {
     super()
     this.state = {
-      name: 'User',
+      name: 'Frankenstein',
       joinRoom: ''
     }
     this.canvas = React.createRef()

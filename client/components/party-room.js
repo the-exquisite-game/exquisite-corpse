@@ -26,6 +26,8 @@ export class PartyRoom extends React.Component {
       connectingLines: '',
       gamePlay: false,
       finished: false,
+      hasClicked: false,
+      clickLocation: '',
       chatMessages: []
     }
 
@@ -36,6 +38,8 @@ export class PartyRoom extends React.Component {
     this.handleMyself = this.handleMyself.bind(this)
     this.gameStart = this.gameStart.bind(this)
     this.handleFinish = this.handleFinish.bind(this)
+    this.handleMouseDown = this.handleMouseDown.bind(this)
+    this.handleMouseUp = this.handleMouseUp.bind(this)
     this.handleTooManyPlayers = this.handleTooManyPlayers.bind(this)
     this.addMessage = this.addMessage.bind(this)
     this.displayInstructions = this.displayInstructions.bind(this)
@@ -115,6 +119,19 @@ export class PartyRoom extends React.Component {
   handleFinish() {
     this.setState({gamePlay: false, finished: true})
   }
+  //click functions to stop line runoff while drawing on drawing-page
+  handleMouseDown(e) {
+    this.setState({
+      hasClicked: true,
+      clickLocation: e.target.nodeName
+    })
+  }
+
+  handleMouseUp() {
+    this.setState({
+      hasClicked: false
+    })
+  }
 
   addMessage(message) {
     this.setState(prevState => ({
@@ -128,55 +145,59 @@ export class PartyRoom extends React.Component {
     const room = this.props.match.params.room
 
     return (
-      <div id="party-room">
-        <div id="chat-user-container">
-          <div id="users-section">
-            <UsersBar users={this.state.users} id="users-bar" />
-          </div>
-          <div id="party-room-canvas">
-            {this.state.gamePlay ? (
-              <div>
-                It is {userTurn.nickname}'s turn! Drawing the{' '}
-                {this.state.bodyParts[this.state.done]}
-                {myself.id === userTurn.id ? (
-                  <Drawing
+      <div
+        id="party-room"
+        onMouseDown={this.handleMouseDown}
+        onMouseUp={this.handleMouseUp}
+      >
+        <div id="users-section">
+          <UsersBar users={this.state.users} id="users-bar" />
+        </div>
+        <div id="party-room-canvas">
+          {this.state.gamePlay ? (
+            <div>
+              It is {userTurn.nickname}'s turn! Drawing the{' '}
+              {this.state.bodyParts[this.state.done]}
+              {myself.id === userTurn.id ? (
+                <Drawing
+                  canvas={this.canvas}
+                  handleTurn={this.handleTurn}
+                  userTurn={this.state.done}
+                  room={room}
+                  connectingLines={this.state.connectingLines}
+                  hasClicked={this.state.hasClicked}
+                  clickLocation={this.state.clickLocation}
+                />
+              ) : (
+                ''
+              )}
+            </div>
+          ) : (
+            <div>
+              {this.state.finished ? (
+                <div id="finalMonster">
+                  <FinalMonster
+                    bodyParts={this.state.bodyPartsImage}
                     canvas={this.canvas}
-                    handleTurn={this.handleTurn}
-                    userTurn={this.state.done}
-                    room={room}
-                    connectingLines={this.state.connectingLines}
                   />
-                ) : (
-                  ''
-                )}
-              </div>
-            ) : (
-              <div>
-                {this.state.finished ? (
-                  <div id="finalMonster">
-                    <FinalMonster
-                      bodyParts={this.state.bodyPartsImage}
-                      canvas={this.canvas}
-                    />
-                    <button type="button" onClick={this.handleDownload}>
-                      Download
-                    </button>
-                  </div>
-                ) : (
-                  'Waiting for more players!'
-                )}
-              </div>
-            )}
-          </div>
-          {/* <button type="button" onClick={this.handleClick}>
+                  <button type="button" onClick={this.handleDownload}>
+                    Download
+                  </button>
+                </div>
+              ) : (
+                'Waiting for more players!'
+              )}
+            </div>
+          )}
+        </div>
+        {/* <button type="button" onClick={this.handleClick}>
           Save to Gallery
         </button> */}
-          <ChatWindow
-            messages={this.state.chatMessages}
-            room={room}
-            me={this.state.me}
-          />
-        </div>
+        <ChatWindow
+          messages={this.state.chatMessages}
+          room={room}
+          me={this.state.me}
+        />
         <button
           className="instructions-button"
           type="button"

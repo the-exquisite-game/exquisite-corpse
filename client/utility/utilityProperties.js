@@ -1,3 +1,4 @@
+//palette
 export const lightColors = {
   red: '#FE797B',
   orange: '#FFB750',
@@ -61,3 +62,15 @@ export const tools = {
     icon: '/images/undo.png'
   }
 }
+
+//icon
+export const iconBackgrounds = [
+  'red',
+  'orange',
+  'yellow',
+  'green',
+  'blue',
+  'purple'
+]
+export const leftArrow = ['purple', 'red', 'orange', 'yellow', 'green', 'blue']
+export const rightArrow = ['orange', 'yellow', 'green', 'blue', 'purple', 'red']

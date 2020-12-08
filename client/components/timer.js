@@ -7,19 +7,28 @@ class Timer extends Component {
     this.state = {
       time: '2:00'
     }
+    this.handleTime = this.handleTime.bind(this)
   }
 
   //listen for timer
   componentDidMount() {
-    timer(this.props.room, time => {
-      const display = this.msToTime(time)
-      this.setState({time: display})
-    })
+    //reset timer here and listen for it
+    timer(this.props.room, this.handleTime)
+
+    setTimeout(() => {
+      this.props.handleDone()
+    }, 120000)
   }
 
   //unsubscribes from timer
   componentWillUnmount() {
+    clearTimeout()
     stopTimer()
+  }
+
+  handleTime(time) {
+    const display = this.msToTime(time)
+    this.setState({time: display})
   }
 
   msToTime(time) {

@@ -8,7 +8,7 @@ export class Home extends React.Component {
   constructor() {
     super()
     this.state = {
-      name: 'User'
+      name: 'Frankenstein'
     }
     this.canvas = React.createRef()
     this.handleClick = this.handleClick.bind(this)

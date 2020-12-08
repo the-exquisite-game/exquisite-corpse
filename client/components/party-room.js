@@ -26,6 +26,8 @@ export class PartyRoom extends React.Component {
       connectingLines: '',
       gamePlay: false,
       finished: false,
+      hasClicked: false,
+      clickLocation: '',
       chatMessages: []
     }
 
@@ -36,6 +38,8 @@ export class PartyRoom extends React.Component {
     this.handleMyself = this.handleMyself.bind(this)
     this.gameStart = this.gameStart.bind(this)
     this.handleFinish = this.handleFinish.bind(this)
+    this.handleMouseDown = this.handleMouseDown.bind(this)
+    this.handleMouseUp = this.handleMouseUp.bind(this)
     this.handleTooManyPlayers = this.handleTooManyPlayers.bind(this)
     this.addMessage = this.addMessage.bind(this)
   }
@@ -107,6 +111,19 @@ export class PartyRoom extends React.Component {
   handleFinish() {
     this.setState({gamePlay: false, finished: true})
   }
+  //click functions to stop line runoff while drawing on drawing-page
+  handleMouseDown(e) {
+    this.setState({
+      hasClicked: true,
+      clickLocation: e.target.nodeName
+    })
+  }
+
+  handleMouseUp() {
+    this.setState({
+      hasClicked: false
+    })
+  }
 
   addMessage(message) {
     this.setState(prevState => ({
@@ -120,7 +137,11 @@ export class PartyRoom extends React.Component {
     const room = this.props.match.params.room
 
     return (
-      <div id="party-room">
+      <div
+        id="party-room"
+        onMouseDown={this.handleMouseDown}
+        onMouseUp={this.handleMouseUp}
+      >
         <div id="users-section">
           <UsersBar users={this.state.users} id="users-bar" />
         </div>
@@ -130,7 +151,7 @@ export class PartyRoom extends React.Component {
               It is {userTurn.nickname}'s turn! Drawing the{' '}
               {this.state.bodyParts[this.state.done]}
               {/* timer here? */}
-              <Timer room={room} />
+              {/* <Timer room={room} /> */}
               {myself.id === userTurn.id ? (
                 <Drawing
                   canvas={this.canvas}
@@ -138,6 +159,8 @@ export class PartyRoom extends React.Component {
                   userTurn={this.state.done}
                   room={room}
                   connectingLines={this.state.connectingLines}
+                  hasClicked={this.state.hasClicked}
+                  clickLocation={this.state.clickLocation}
                 />
               ) : (
                 ''

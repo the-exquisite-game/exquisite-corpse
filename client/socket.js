@@ -1,6 +1,9 @@
 import io from 'socket.io-client'
 
-const socket = io(window.location.origin)
+//edit the argument here
+const socket = io({
+  transports: ['websocket']
+})
 
 socket.on('connect', () => {
   console.log('Connected!')
@@ -69,6 +72,7 @@ export function timer(room, callback) {
 }
 
 export function stopTimer() {
+  socket.off('time')
   socket.off('timer')
 }
 

@@ -2,13 +2,13 @@ import React, {Component} from 'react'
 import {Stage, Layer, Line} from 'react-konva'
 import {doneDrawing} from '../socket'
 import Palette from './palette'
+import Timer from './timer'
 
 class Drawing extends Component {
   constructor(props) {
     super(props)
     this.canvas = React.createRef()
     this.state = {
-      isDrawing: false,
       tool: 'pen',
       lines: [],
       color: 'black',
@@ -16,17 +16,13 @@ class Drawing extends Component {
     }
     this.handleMouseMove = this.handleMouseMove.bind(this)
     this.handleMouseDown = this.handleMouseDown.bind(this)
-    this.handleMouseUp = this.handleMouseUp.bind(this)
     this.handleDone = this.handleDone.bind(this)
     this.handleDoneClick = this.handleDoneClick.bind(this)
     this.handleChange = this.handleChange.bind(this)
   }
 
   handleMouseDown(e) {
-    this.setState({isDrawing: true})
-
     const position = e.target.getStage().getPointerPosition()
-
     this.setState(prevState => {
       return {
         lines: [
@@ -43,17 +39,15 @@ class Drawing extends Component {
   }
 
   handleMouseMove(e) {
-    if (!this.state.isDrawing) {
+    if (!this.props.hasClicked || this.props.clickLocation !== 'CANVAS') {
       return
     }
-
     const stage = e.target.getStage()
     const point = stage.getPointerPosition()
 
     //gets lastLine
     let lastLine = this.state.lines[this.state.lines.length - 1]
-
-    //setting points
+    //setting points - adding length to line
     lastLine.points = lastLine.points.concat([point.x, point.y])
 
     //replace last one
@@ -62,11 +56,6 @@ class Drawing extends Component {
     lineList.splice(this.state.lines.length - 1, 1, lastLine)
 
     this.setState({lines: lineList})
-  }
-
-  //on Mouse Up sets state of paint to false
-  handleMouseUp() {
-    this.setState({isDrawing: false})
   }
 
   handleDone(numberFinished) {
@@ -118,6 +107,11 @@ class Drawing extends Component {
     const connectingLines = this.props.connectingLines || ''
     return (
       <div className="drawing-page">
+        <Timer
+          room={this.props.room}
+          handleDone={this.handleDoneClick}
+          userTurn={this.props.userTurn}
+        />
         <img src={connectingLines} />
         <Stage
           width={600}

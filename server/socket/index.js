@@ -19,6 +19,11 @@ module.exports = io => {
   io.on('connection', socket => {
     console.log(`A socket connection to the server has been made: ${socket.id}`)
 
+    socket.on('disconnecting', () => {
+      console.log(socket.rooms)
+      console.log(`Connection ${socket.id} has left the building`)
+    })
+
     socket.on('disconnect', () => {
       console.log(`Connection ${socket.id} has left the building`)
     })
@@ -30,7 +35,7 @@ module.exports = io => {
         length: 2,
         separator: '-'
       })
-      io.emit('roomCreated', room) //problem child!!!
+      io.emit('roomCreated', room)
     })
 
     //setting nickname + icon for users
@@ -108,17 +113,16 @@ module.exports = io => {
       }
     })
 
-    socket.on('time', room => {
+    socket.on('time', () => {
+      //120000 is two minutes
       let countDown = 120000
+
       setInterval(function() {
         countDown -= 1000
-        io.in(room).emit('timer', countDown)
+        if (countDown > 0) {
+          io.to(socket.id).emit('timer', countDown)
+        }
       }, 1000)
-
-      //after the two minutes
-      setTimeout(room => {})
-
-      //
     })
   })
 }

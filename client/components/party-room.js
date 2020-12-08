@@ -23,7 +23,8 @@ export class PartyRoom extends React.Component {
       connectingLines: '',
       gamePlay: false,
       finished: false,
-      hasClicked: false
+      hasClicked: false,
+      clickLocation: ''
     }
     this.canvas = React.createRef()
     this.handleDownload = this.handleDownload.bind(this)
@@ -93,10 +94,11 @@ export class PartyRoom extends React.Component {
   handleFinish() {
     this.setState({gamePlay: false, finished: true})
   }
-  //click functions to stop line runoff while drawing
-  handleMouseDown() {
+  //click functions to stop line runoff while drawing on drawing-page
+  handleMouseDown(e) {
     this.setState({
-      hasClicked: true
+      hasClicked: true,
+      clickLocation: e.target.nodeName
     })
   }
 
@@ -109,7 +111,6 @@ export class PartyRoom extends React.Component {
   render() {
     const myself = this.state.me || ''
     const userTurn = this.state.userTurn || ''
-    console.log('pr, hitt')
     return (
       <div
         id="party-room"
@@ -132,6 +133,7 @@ export class PartyRoom extends React.Component {
                   room={this.props.match.params.room}
                   connectingLines={this.state.connectingLines}
                   hasClicked={this.state.hasClicked}
+                  clickLocation={this.state.clickLocation}
                 />
               ) : (
                 ''

@@ -8,7 +8,6 @@ class Drawing extends Component {
     super(props)
     this.canvas = React.createRef()
     this.state = {
-      // isDrawing: false,
       tool: 'pen',
       lines: [],
       color: 'black',
@@ -16,17 +15,13 @@ class Drawing extends Component {
     }
     this.handleMouseMove = this.handleMouseMove.bind(this)
     this.handleMouseDown = this.handleMouseDown.bind(this)
-    // this.handleMouseUp = this.handleMouseUp.bind(this)
     this.handleDone = this.handleDone.bind(this)
     this.handleDoneClick = this.handleDoneClick.bind(this)
     this.handleChange = this.handleChange.bind(this)
   }
 
   handleMouseDown(e) {
-    // this.setState({isDrawing: true})
-
     const position = e.target.getStage().getPointerPosition()
-
     this.setState(prevState => {
       return {
         lines: [
@@ -52,7 +47,10 @@ class Drawing extends Component {
     //gets lastLine
     let lastLine = this.state.lines[this.state.lines.length - 1]
 
-    //setting points
+    if (this.props.clickLocation !== 'CANVAS') {
+      return
+    }
+    //setting points - adding length to line
     lastLine.points = lastLine.points.concat([point.x, point.y])
 
     //replace last one
@@ -61,12 +59,8 @@ class Drawing extends Component {
     lineList.splice(this.state.lines.length - 1, 1, lastLine)
 
     this.setState({lines: lineList})
+    console.log('lines', this.state.lines)
   }
-
-  //on Mouse Up sets state of paint to false
-  // handleMouseUp() {
-  //   // this.setState({isDrawing: false})
-  // }
 
   handleDone(numberFinished) {
     const bodyPart = this.canvas.current.toDataURL()
@@ -114,7 +108,6 @@ class Drawing extends Component {
   }
 
   render() {
-    // console.log('hit', this.props.hasClicked)
     const connectingLines = this.props.connectingLines || ''
     return (
       <div className="drawing-page">
@@ -125,7 +118,6 @@ class Drawing extends Component {
           onMouseDown={this.handleMouseDown}
           onMouseMove={this.handleMouseMove}
           onMouseUp={this.handleMouseUp}
-          // onMouseLeave={this.handleMouseLeave}
           ref={this.canvas}
         >
           <Layer>

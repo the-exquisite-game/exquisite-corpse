@@ -11,6 +11,7 @@ import {UsersBar} from './users-bar'
 import {FinalMonster} from './finalMonster'
 import swal from '@sweetalert/with-react'
 import ChatWindow from './chat-window'
+import {Instructions} from './instructions'
 
 export class PartyRoom extends React.Component {
   constructor() {
@@ -41,6 +42,7 @@ export class PartyRoom extends React.Component {
     this.handleMouseUp = this.handleMouseUp.bind(this)
     this.handleTooManyPlayers = this.handleTooManyPlayers.bind(this)
     this.addMessage = this.addMessage.bind(this)
+    this.displayInstructions = this.displayInstructions.bind(this)
   }
 
   componentDidMount() {
@@ -63,12 +65,19 @@ export class PartyRoom extends React.Component {
 
     //listening for Game Start
     initializeGame(this.gameStart)
+
+    //displays instructions
+    this.displayInstructions()
   }
 
   handleTooManyPlayers() {
     this.props.history.push(`/home`)
     //third argument here is the image
     swal('Sorry, room is full!', 'Only four players allowed :(', 'warning')
+  }
+
+  displayInstructions() {
+    this.state.users.length <= 4 && swal(<Instructions />)
   }
 
   handleUsers(users) {
@@ -81,7 +90,7 @@ export class PartyRoom extends React.Component {
 
   handleDownload() {
     const img = this.canvas.current.toDataURL()
-    this.downloadURI(img, 'corpse.png')
+    this.downloadURI(img, `${this.props.match.params.room}-corpse.png`)
   }
 
   downloadURI(uri, name) {
@@ -150,10 +159,17 @@ export class PartyRoom extends React.Component {
               userTurn={this.state.userTurn}
               id="users-bar"
             />
+            <button
+              className="instructions-button"
+              type="button"
+              onClick={this.displayInstructions}
+            >
+              Instructions
+            </button>
           </div>
-          <div id="party-room-canvas">
+          <div id="party-room-center">
             {this.state.gamePlay ? (
-              <div>
+              <div id="party-room-canvas">
                 It is {userTurn.nickname}'s turn! Drawing the{' '}
                 {this.state.bodyParts[this.state.done]}
                 {myself.id === userTurn.id ? (
@@ -183,7 +199,7 @@ export class PartyRoom extends React.Component {
                     </button>
                   </div>
                 ) : (
-                  'Waiting for more players!'
+                  <div id="party-room-canvas">Waiting for more players!</div>
                 )}
               </div>
             )}
@@ -191,11 +207,13 @@ export class PartyRoom extends React.Component {
           {/* <button type="button" onClick={this.handleClick}>
           Save to Gallery
         </button> */}
-          <ChatWindow
-            messages={this.state.chatMessages}
-            room={room}
-            me={this.state.me}
-          />
+          <div id="chat-window">
+            <ChatWindow
+              messages={this.state.chatMessages}
+              room={room}
+              me={this.state.me}
+            />
+          </div>
         </div>
       </div>
     )

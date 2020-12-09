@@ -30,11 +30,6 @@ nav a {
 }
 
 #navbar {
-  /* padding-top: 25px;
-  background-color: #d1d2f9;
-  padding-left: 2em;
-  border-bottom: 1px dotted #576490; */
-
   background-image: linear-gradient(#a6a8e0, #d1d2f9);
   display: grid;
   grid-template-columns: repeat(1, 1fr);
@@ -58,6 +53,7 @@ form div {
   background-color: #f1e5eb;
   border-radius: 12px;
   width: 350px;
+  margin: 12px;
 }
 
 button {
@@ -74,7 +70,17 @@ button {
 }
 
 #palette button {
-  border: none;
+  /* border: none; */
+  padding: 15px;
+  margin: 5px;
+  display: inline-block;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 50ms;
+}
+
+.palette-button-selected {
+  box-shadow: 0 0 0 1.5pt #353535;
   padding: 15px;
   margin: 5px;
   display: inline-block;
@@ -125,10 +131,10 @@ button:focus {
 
 #party-room {
   display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
-  margin-top: 5em;
+  flex-direction: column;
+  margin-top: 3em;
 }
 
 #room-name {
@@ -144,11 +150,21 @@ button:focus {
   display: flex;
 }
 
+#party-room-canvas {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  font-size: 20px;
+  min-width: 300px;
+}
+
+#users-section {
+  padding: 12px;
+}
+
 #users-bar {
   border-radius: 9px;
   padding: 8px;
-  margin-right: 12px;
-  margin-left: 12px;
   background-color: #fbf9f9;
   border: solid #c7d66d;
   border-width: 2px;
@@ -175,6 +191,10 @@ button:focus {
   margin: 8px;
 }
 
+#party-room-center {
+  min-width: 600px;
+}
+
 .drawing-page {
   display: flex;
   flex-direction: column;
@@ -191,8 +211,8 @@ div.konvajs-content {
   flex-direction: column;
   align-items: center;
   flex-grow: 1;
-  padding-top: 75px;
-  padding-bottom: 75px;
+  padding-top: 150px;
+  padding-bottom: 100px;
   font-size: 25px;
 }
 
@@ -224,12 +244,48 @@ span {
   margin-top: 10px;
 }
 
-#chat-messages {
-  height: 500px;
-  width: 350px;
-  overflow-y: scroll;
+#chat-window {
+  background-color: #c7d66d;
+  border-radius: 12px;
+  margin: 12px;
 }
 
-#party-room-canvas {
-  width: 600px;
+#chat-messages {
+  height: 500px;
+  width: 260px;
+  border-radius: 9px;
+  padding: 8px;
+  background-color: #fbf9f9;
+  border: solid #c7d66d;
+  border-width: 2px;
+  overflow-y: scroll;
+  margin: 8px;
+}
+
+#chat-message-entry {
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+}
+
+#chat-message-entry input {
+  padding: 20px;
+  border-radius: 8px;
+  margin-bottom: 8px;
+  border: 2px gray solid;
+}
+
+#instructions {
+  border-radius: 9px;
+  padding: 8px;
+  background-color: #fbf9f9;
+  border: solid #c7d66d;
+  border-width: 2px;
+  align-content: center;
+}
+
+.instructions-button {
+  /* position: absolute; */
+  bottom: 200px;
+  font-size: medium;
 }

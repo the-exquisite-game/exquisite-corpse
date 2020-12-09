@@ -2,6 +2,7 @@ import React from 'react'
 // import {default as socket} from '../socket'
 import {createRoom, leaveRoom, setNameAndIcon} from '../socket'
 import Icon from './icon'
+import {Instructions} from './instructions'
 import swal from '@sweetalert/with-react'
 
 export class Home extends React.Component {
@@ -15,6 +16,7 @@ export class Home extends React.Component {
     this.onRoomCreated = this.onRoomCreated.bind(this)
     this.handleChange = this.handleChange.bind(this)
     this.handleJoin = this.handleJoin.bind(this)
+    this.displayInstructions = this.displayInstructions.bind(this)
   }
 
   onRoomCreated(room) {
@@ -27,6 +29,10 @@ export class Home extends React.Component {
 
   handleChange(event) {
     this.setState({[event.target.name]: event.target.value})
+  }
+
+  displayInstructions() {
+    swal(<Instructions />)
   }
 
   async handleJoin() {
@@ -76,6 +82,13 @@ export class Home extends React.Component {
             Join a Room!
           </button>
         </div>
+        <button
+          className="instructions-button"
+          type="button"
+          onClick={this.displayInstructions}
+        >
+          Instructions
+        </button>
       </div>
     )
   }

@@ -9,8 +9,7 @@ export class Home extends React.Component {
   constructor() {
     super()
     this.state = {
-      name: 'Frankenstein',
-      joinRoom: ''
+      name: 'Frankenstein'
     }
     this.canvas = React.createRef()
     this.handleClick = this.handleClick.bind(this)
@@ -36,10 +35,31 @@ export class Home extends React.Component {
     swal(<Instructions />)
   }
 
-  handleJoin() {
+  async handleJoin() {
     const icon = this.canvas.current.toDataURL()
     setNameAndIcon(this.state.name, icon)
-    this.props.history.push(`/partyroom/${this.state.joinRoom}`)
+
+    //swal is a promise
+    const room = await swal({
+      text: "Enter the room's code!",
+      buttons: {
+        cancel: 'Cancel',
+        confirm: {
+          text: 'Enter'
+        }
+      },
+      content: 'input'
+    })
+
+    if (room !== null) {
+      this.props.history.push(`/partyroom/${room}`)
+    }
+  }
+
+  handleClick() {
+    const icon = this.canvas.current.toDataURL()
+    setNameAndIcon(this.state.name, icon)
+    createRoom(this.onRoomCreated)
   }
 
   render() {
@@ -51,12 +71,6 @@ export class Home extends React.Component {
           <input
             name="name"
             value={this.state.name}
-            onChange={this.handleChange}
-          />
-          <label>Join an Existing Room</label>
-          <input
-            name="joinRoom"
-            value={this.state.joinRoom}
             onChange={this.handleChange}
           />
         </span>
@@ -77,11 +91,5 @@ export class Home extends React.Component {
         </button>
       </div>
     )
-  }
-
-  handleClick() {
-    const icon = this.canvas.current.toDataURL()
-    setNameAndIcon(this.state.name, icon)
-    createRoom(this.onRoomCreated)
   }
 }

@@ -17,7 +17,7 @@ export const Instructions = () => (
         The third player draws the legs and the fourth draws the feet, always
         making sure to leave connecting lines for the next player.
       </li>
-      <li>Once everyone is done drawing, a mounstrosity will come to life! </li>
+      <li>Once everyone is done drawing, a monstrosity will come to life! </li>
     </ol>
   </div>
 )

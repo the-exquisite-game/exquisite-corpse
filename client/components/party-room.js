@@ -1,6 +1,7 @@
 import React from 'react'
 import Drawing from './drawing-page'
 import {
+  controlSockets,
   getMe,
   getUsers,
   initializeGame,
@@ -199,7 +200,7 @@ export class PartyRoom extends React.Component {
                   </button>
                 </div>
               ) : (
-                'Waiting for more players!'
+                `Waiting for ${4 - this.state.users.length} more players!`
               )}
             </div>
           )}

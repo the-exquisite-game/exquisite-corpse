@@ -2,6 +2,7 @@ import React, {Component} from 'react'
 import {Stage, Layer, Line} from 'react-konva'
 import {doneDrawing} from '../socket'
 import Palette from './palette'
+import Timer from './timer'
 
 class Drawing extends Component {
   constructor(props) {
@@ -55,7 +56,6 @@ class Drawing extends Component {
     lineList.splice(this.state.lines.length - 1, 1, lastLine)
 
     this.setState({lines: lineList})
-    console.log('lines', this.state.lines)
   }
 
   handleDone(numberFinished) {
@@ -107,6 +107,11 @@ class Drawing extends Component {
     const connectingLines = this.props.connectingLines || ''
     return (
       <div className="drawing-page">
+        <Timer
+          room={this.props.room}
+          handleDone={this.handleDoneClick}
+          userTurn={this.props.userTurn}
+        />
         <img src={connectingLines} />
         <Stage
           width={600}

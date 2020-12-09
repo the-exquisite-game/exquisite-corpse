@@ -20,26 +20,30 @@ export class Gallery extends React.Component {
     const monsters = this.state.monsters
     return (
       <div id="gallery">
-        {/* <div className="slides">
+        <div className="slides">
           <Splide
             ref={this.primaryRef}
             options={{
               type: 'fade',
-              heightRatio: 0.5,
+              speed: 5,
+              rewind: true,
+              direction: 'ttb',
+              height: '1200',
+              width: '700',
+              heightRatio: 1,
               pagination: false,
-              arrows: true,
-              cover: true,
+              arrows: false,
+              cover: false,
+              autoplay: 'playing'
             }}
           >
-            {monsters
-              .filter((monster) => monster.id < 5)
-              .map((monster) => (
-                <SplideSlide key={monster.id}>
-                  <img src={monster.imageUrl} />
-                </SplideSlide>
-              ))}
+            {monsters.map(monster => (
+              <SplideSlide key={monster.id}>
+                <img src={monster.imageUrl} />
+              </SplideSlide>
+            ))}
           </Splide>
-        </div> */}
+        </div>
         <div id="monsters-container">
           {monsters.map(monster => (
             <div className="monster" key={monster.id}>

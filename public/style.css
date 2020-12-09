@@ -226,7 +226,7 @@ span {
 
 #gallery {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   justify-content: center;
 }
 
@@ -237,7 +237,8 @@ span {
   grid-template-columns: repeat(auto-fit, 300px);
   grid-template-rows: repeat(5, 450px);
   margin: 50px;
-  padding: 0px 170px;
+  /* padding: 0px 150px; */
+  flex: 0 0 60%;
 }
 
 #monsters-container .monster {
@@ -254,12 +255,17 @@ span {
 }
 
 .slides {
-  padding: 200px;
-  width: 600px;
-  height: 700px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 700px;
+  height: 1000px;
+  flex: 0 0 40%;
+  margin: 50px;
 }
 
 .slides img {
-  width: 600px;
-  height: 700px;
+  border-radius: 20px;
+  border: solid #c7d66d;
+  border-width: 2px;
 }

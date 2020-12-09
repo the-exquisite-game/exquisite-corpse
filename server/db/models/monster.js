@@ -10,7 +10,7 @@ const Monster = db.define('monster', {
     }
   },
   imageUrl: {
-    type: Sequelize.STRING,
+    type: Sequelize.TEXT,
     defaultValue: '../images/first_born'
   }
 })

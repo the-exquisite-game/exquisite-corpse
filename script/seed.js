@@ -6,15 +6,43 @@ const {Monster} = require('../server/db/models')
 const monsters = [
   {
     name: 'Fisrt Born',
-    imageUrl: '../images/first_born.png'
+    imageUrl: '../images/monsters/first_born.png'
   },
   {
     name: 'Baby Boy',
-    imageUrl: '../images/baby_boy.png'
+    imageUrl: '../images/monsters/baby_boy.png'
   },
   {
     name: 'Bloody Boob',
-    imageUrl: '../images/bloody_boob.png'
+    imageUrl: '../images/monsters/bloody_boob.png'
+  },
+  {
+    name: 'Babe',
+    imageUrl: '../images/monsters/babe.png'
+  },
+  {
+    name: 'Cutie Pie',
+    imageUrl: '../images/monsters/cutie_pie.png'
+  },
+  {
+    name: 'Dr Abs',
+    imageUrl: '../images/monsters/dr_abs.png'
+  },
+  {
+    name: 'La Cosa',
+    imageUrl: '../images/monsters/la_cosa.png'
+  },
+  {
+    name: 'Nice Lady',
+    imageUrl: '../images/monsters/nice_lady.png'
+  },
+  {
+    name: 'Beta Monster',
+    imageUrl: '../images/monsters/beta_monster.png'
+  },
+  {
+    name: 'Another Beta Monster',
+    imageUrl: '../images/monsters/another_beta_monster.png'
   }
 ]
 

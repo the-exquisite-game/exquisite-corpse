@@ -223,3 +223,43 @@ span {
   position: absolute;
   bottom: 200px;
 }
+
+#gallery {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+#monsters-container {
+  display: grid;
+  grid-gap: 60px;
+  justify-items: center;
+  grid-template-columns: repeat(auto-fit, 300px);
+  grid-template-rows: repeat(5, 450px);
+  margin: 50px;
+  padding: 0px 170px;
+}
+
+#monsters-container .monster {
+  text-align: center;
+  font-size: 30px;
+}
+
+.monster img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 20px;
+  border: solid #c7d66d;
+  border-width: 2px;
+}
+
+.slides {
+  padding: 200px;
+  width: 600px;
+  height: 700px;
+}
+
+.slides img {
+  width: 600px;
+  height: 700px;
+}

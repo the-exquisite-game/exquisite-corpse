@@ -5,10 +5,18 @@ module.exports = router
 router.get('/', async (req, res, next) => {
   try {
     const monsters = await Monster.findAll()
-    console.log(monsters)
     res.json(monsters)
   } catch (err) {
     next(err)
+  }
+})
+
+router.post('/', (req, res, next) => {
+  try {
+    Monster.create(req.body)
+    res.json('success')
+  } catch (error) {
+    next(error)
   }
 })
 

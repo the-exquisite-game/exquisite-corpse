@@ -11,9 +11,14 @@ router.get('/', async (req, res, next) => {
   }
 })
 
-router.post('/', (req, res, next) => {
+router.post('/', async (req, res, next) => {
   try {
-    Monster.create(req.body)
+    await Monster.findOrCreate({
+      where: {
+        name: req.body.name,
+        imageUrl: req.body.imageUrl
+      }
+    })
     res.json('success')
   } catch (error) {
     next(error)

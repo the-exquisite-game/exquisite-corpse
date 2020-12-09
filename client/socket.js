@@ -76,9 +76,4 @@ export function stopTimer() {
   socket.off('timer')
 }
 
-export function controlSockets() {
-  socket.on('stopFoolin')
-  socket.emit('stillAlive')
-}
-
 export default socket

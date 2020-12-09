@@ -66,8 +66,6 @@ export class PartyRoom extends React.Component {
     //listening for Game Start
     initializeGame(this.gameStart)
 
-    controlSockets()
-
     //displays instructions
     this.displayInstructions()
   }

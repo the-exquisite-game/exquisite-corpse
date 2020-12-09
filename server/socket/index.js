@@ -130,11 +130,5 @@ module.exports = io => {
         }, 1000)
       }
     })
-
-    socket.on('stillAlive', () => {
-      setInterval(function() {
-        socket.emit('stopFooling')
-      }, 1000)
-    })
   })
 }

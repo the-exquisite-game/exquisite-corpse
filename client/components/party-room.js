@@ -1,6 +1,7 @@
 import React from 'react'
 import Drawing from './drawing-page'
 import {
+  controlSockets,
   getMe,
   getUsers,
   initializeGame,
@@ -63,6 +64,8 @@ export class PartyRoom extends React.Component {
 
     //listening for Game Start
     initializeGame(this.gameStart)
+
+    controlSockets()
   }
 
   handleTooManyPlayers() {
@@ -150,8 +153,6 @@ export class PartyRoom extends React.Component {
             <div>
               It is {userTurn.nickname}'s turn! Drawing the{' '}
               {this.state.bodyParts[this.state.done]}
-              {/* timer here? */}
-              {/* <Timer room={room} /> */}
               {myself.id === userTurn.id ? (
                 <Drawing
                   canvas={this.canvas}

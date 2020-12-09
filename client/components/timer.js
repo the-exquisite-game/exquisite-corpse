@@ -5,7 +5,7 @@ class Timer extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      time: '2:00'
+      time: 120000
     }
     this.handleTime = this.handleTime.bind(this)
   }
@@ -15,20 +15,24 @@ class Timer extends Component {
     //reset timer here and listen for it
     timer(this.props.room, this.handleTime)
 
-    setTimeout(() => {
-      this.props.handleDone()
-    }, 120000)
+    if (this.props.handleDone) {
+      setTimeout(() => {
+        this.props.handleDone()
+      }, 120000)
+    }
   }
 
   //unsubscribes from timer
   componentWillUnmount() {
     clearTimeout()
-    stopTimer()
+
+    if (this.props.handleDone) {
+      stopTimer()
+    }
   }
 
   handleTime(time) {
-    const display = this.msToTime(time)
-    this.setState({time: display})
+    this.setState({time: time})
   }
 
   msToTime(time) {
@@ -43,7 +47,7 @@ class Timer extends Component {
   }
 
   render() {
-    return <div> {this.state.time}</div>
+    return <div> {this.msToTime(this.state.time)}</div>
   }
 }
 

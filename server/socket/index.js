@@ -113,15 +113,27 @@ module.exports = io => {
       }
     })
 
-    socket.on('time', () => {
+    let timeCount = null
+
+    socket.on('time', room => {
       //120000 is two minutes
       let countDown = 120000
 
+      if (timeCount === null) {
+        timeCount = setInterval(function() {
+          countDown -= 1000
+          if (countDown >= 0) {
+            io.to(socket.id).emit('timer', countDown)
+          } else {
+            clearInterval(timeCount)
+          }
+        }, 1000)
+      }
+    })
+
+    socket.on('stillAlive', () => {
       setInterval(function() {
-        countDown -= 1000
-        if (countDown > 0) {
-          io.to(socket.id).emit('timer', countDown)
-        }
+        socket.emit('stopFooling')
       }, 1000)
     })
   })

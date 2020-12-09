@@ -13,6 +13,7 @@ import {FinalMonster} from './finalMonster'
 import swal from '@sweetalert/with-react'
 import ChatWindow from './chat-window'
 import {Instructions} from './instructions'
+import axios from 'axios'
 
 export class PartyRoom extends React.Component {
   constructor() {
@@ -29,7 +30,8 @@ export class PartyRoom extends React.Component {
       finished: false,
       hasClicked: false,
       clickLocation: '',
-      chatMessages: []
+      chatMessages: [],
+      saved: false
     }
 
     this.canvas = React.createRef()
@@ -44,6 +46,7 @@ export class PartyRoom extends React.Component {
     this.handleTooManyPlayers = this.handleTooManyPlayers.bind(this)
     this.addMessage = this.addMessage.bind(this)
     this.displayInstructions = this.displayInstructions.bind(this)
+    this.handleSave = this.handleSave.bind(this)
   }
 
   componentDidMount() {
@@ -139,12 +142,20 @@ export class PartyRoom extends React.Component {
       chatMessages: [...prevState.chatMessages, message]
     }))
   }
+  async handleSave() {
+    if (this.state.saved) return
+    this.setState({saved: true})
+    const img = this.canvas.current.toDataURL()
+    await axios.post('/api/', {
+      name: this.props.match.params.room,
+      imageUrl: img
+    })
+  }
 
   render() {
     const myself = this.state.me
     const userTurn = this.state.userTurn || {}
     const room = this.props.match.params.room
-
     return (
       <div
         id="party-room"
@@ -184,6 +195,9 @@ export class PartyRoom extends React.Component {
                   <button type="button" onClick={this.handleDownload}>
                     Download
                   </button>
+                  <button type="button" onClick={this.handleSave}>
+                    {this.state.saved ? 'Saved!' : 'Save to Gallery'}
+                  </button>
                 </div>
               ) : (
                 `Waiting for ${4 - this.state.users.length} more players!`
@@ -191,9 +205,6 @@ export class PartyRoom extends React.Component {
             </div>
           )}
         </div>
-        {/* <button type="button" onClick={this.handleClick}>
-          Save to Gallery
-        </button> */}
         <ChatWindow
           messages={this.state.chatMessages}
           room={room}

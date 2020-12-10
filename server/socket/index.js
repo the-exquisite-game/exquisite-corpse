@@ -34,6 +34,7 @@ module.exports = io => {
         length: 2,
         separator: '-'
       })
+
       io.emit('roomCreated', room)
     })
 
@@ -88,12 +89,20 @@ module.exports = io => {
       socket.to(room).broadcast.emit('linesToState', arr)
     })
 
-    socket.on('joinedRoom', room => {
+    socket.on('joinedRoom', (room, time) => {
       //room info, and users sockets names!
       const roomInfo = io.sockets.adapter.rooms[room] || []
 
       if (roomInfo.length < 4) {
         socket.join(room)
+
+        if (time) {
+          io.sockets.adapter.rooms[room].timer = time
+        }
+
+        io
+          .in(room)
+          .emit('timerInitialize', io.sockets.adapter.rooms[room].timer)
       } else {
         socket.emit('tooMany')
       }

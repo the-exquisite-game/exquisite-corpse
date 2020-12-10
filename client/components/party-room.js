@@ -30,7 +30,8 @@ export class PartyRoom extends React.Component {
       hasClicked: false,
       clickLocation: '',
       chatMessages: [],
-      saved: false
+      saved: false,
+      timer: true
     }
 
     this.canvas = React.createRef()
@@ -46,6 +47,7 @@ export class PartyRoom extends React.Component {
     this.addMessage = this.addMessage.bind(this)
     this.displayInstructions = this.displayInstructions.bind(this)
     this.handleSave = this.handleSave.bind(this)
+    this.handleTimer = this.handleTimer.bind(this)
   }
 
   componentDidMount() {
@@ -53,7 +55,9 @@ export class PartyRoom extends React.Component {
     joinRoom(
       this.props.match.params.room,
       this.addMessage,
-      this.handleTooManyPlayers
+      this.handleTooManyPlayers,
+      this.props.location.state,
+      this.handleTimer
     )
 
     //gets all users + listens for more
@@ -67,9 +71,6 @@ export class PartyRoom extends React.Component {
 
     //listening for Game Start
     initializeGame(this.gameStart)
-
-    //displays instructions
-    this.displayInstructions()
   }
 
   handleTooManyPlayers() {
@@ -151,6 +152,10 @@ export class PartyRoom extends React.Component {
     })
   }
 
+  handleTimer(time) {
+    this.setState(time)
+  }
+
   render() {
     const myself = this.state.me
     const userTurn = this.state.userTurn || {}
@@ -191,6 +196,7 @@ export class PartyRoom extends React.Component {
                     connectingLines={this.state.connectingLines}
                     hasClicked={this.state.hasClicked}
                     clickLocation={this.state.clickLocation}
+                    timer={this.state.timer}
                   />
                 ) : (
                   ''
@@ -225,13 +231,6 @@ export class PartyRoom extends React.Component {
               room={room}
               me={this.state.me}
             />
-            {/* <button
-              className="instructions-button"
-              type="button"
-              onClick={this.displayInstructions}
-            >
-              Instructions
-            </button> */}
           </div>
         </div>
       </div>

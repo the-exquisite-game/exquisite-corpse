@@ -9,7 +9,8 @@ export class Home extends React.Component {
   constructor() {
     super()
     this.state = {
-      name: 'Frankenstein'
+      name: 'Frankenstein',
+      timer: true
     }
     this.canvas = React.createRef()
     this.handleClick = this.handleClick.bind(this)
@@ -20,7 +21,10 @@ export class Home extends React.Component {
   }
 
   onRoomCreated(room) {
-    this.props.history.push(`/partyroom/${room}`)
+    this.props.history.push({
+      pathname: `/partyroom/${room}`,
+      state: {timer: this.state.timer}
+    })
   }
 
   componentWillUnmount() {
@@ -28,7 +32,11 @@ export class Home extends React.Component {
   }
 
   handleChange(event) {
-    this.setState({[event.target.name]: event.target.value})
+    const value =
+      event.target.type === 'checkbox'
+        ? event.target.checked
+        : event.target.value
+    this.setState({[event.target.name]: value})
   }
 
   displayInstructions() {
@@ -73,7 +81,18 @@ export class Home extends React.Component {
             value={this.state.name}
             onChange={this.handleChange}
           />
+
+          <label>
+            Timed Game?
+            <input
+              name="timer"
+              type="checkbox"
+              checked={this.state.timer}
+              onChange={this.handleChange}
+            />
+          </label>
         </span>
+
         <div id="buttons-container">
           <button type="button" id="createRoom" onClick={this.handleClick}>
             Create a Room!

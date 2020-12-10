@@ -47,7 +47,6 @@ export class PartyRoom extends React.Component {
 
   componentDidMount() {
     //joins the room via link
-
     joinRoom(
       this.props.match.params.room,
       this.addMessage,

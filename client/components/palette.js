@@ -6,7 +6,7 @@ class Palette extends React.Component {
     super(props)
 
     this.state = {
-      selected: 'red'
+      selected: 'black'
     }
     this.colorSelect = this.colorSelect.bind(this)
   }

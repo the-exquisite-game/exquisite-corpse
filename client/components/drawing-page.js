@@ -107,11 +107,15 @@ class Drawing extends Component {
     const connectingLines = this.props.connectingLines || ''
     return (
       <div className="drawing-page">
-        <Timer
-          room={this.props.room}
-          handleDone={this.handleDoneClick}
-          userTurn={this.props.userTurn}
-        />
+        {this.props.timer ? (
+          <Timer
+            room={this.props.room}
+            handleDone={this.handleDoneClick}
+            userTurn={this.props.userTurn}
+          />
+        ) : (
+          ''
+        )}
         <img src={connectingLines} />
         <Stage
           width={600}

@@ -13,6 +13,10 @@ socket.on('connect', () => {
   }, 15 * 1000)
 })
 
+socket.on('disconnect', () => {
+  console.log(`Connection ${socket.id} has left the building`)
+})
+
 export function createRoom(callback) {
   socket.emit('roomCreate')
   socket.on('roomCreated', callback)
@@ -26,8 +30,9 @@ export function leaveRoom(callback) {
   socket.off('roomCreated', callback)
 }
 
-export function joinRoom(room, messages, playerHandler) {
-  socket.emit('joinedRoom', room)
+export function joinRoom(room, messages, playerHandler, time, timerCallback) {
+  socket.emit('joinedRoom', room, time)
+  socket.on('timerInitialize', timerCallback)
   socket.on('tooMany', playerHandler)
   socket.on('messageToState', messages)
 }

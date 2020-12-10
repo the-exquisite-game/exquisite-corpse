@@ -20,7 +20,6 @@ module.exports = io => {
     console.log(`A socket connection to the server has been made: ${socket.id}`)
 
     socket.on('disconnecting', () => {
-      console.log(socket.rooms)
       console.log(`Connection ${socket.id} has left the building`)
     })
 
@@ -49,7 +48,7 @@ module.exports = io => {
       const roomInfo = io.sockets.adapter.rooms[room]
       let users = []
 
-      for (socketID in roomInfo.sockets) {
+      for (let socketID in roomInfo.sockets) {
         if (io.sockets.connected[socketID].hasOwnProperty('nickname')) {
           const nickname = io.sockets.connected[socketID].nickname
 

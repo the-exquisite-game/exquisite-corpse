@@ -15,20 +15,15 @@ class Timer extends Component {
     //reset timer here and listen for it
     timer(this.props.room, this.handleTime)
 
-    if (this.props.handleDone) {
-      setTimeout(() => {
-        this.props.handleDone()
-      }, 120000)
-    }
+    this.time = setTimeout(() => {
+      this.props.handleDone()
+    }, 120000)
   }
 
   //unsubscribes from timer
   componentWillUnmount() {
-    clearTimeout()
-
-    if (this.props.handleDone) {
-      stopTimer()
-    }
+    clearTimeout(this.time)
+    stopTimer()
   }
 
   handleTime(time) {

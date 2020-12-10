@@ -1,7 +1,6 @@
 import React from 'react'
 import Drawing from './drawing-page'
 import {
-  controlSockets,
   getMe,
   getUsers,
   initializeGame,
@@ -75,7 +74,7 @@ export class PartyRoom extends React.Component {
 
   handleTooManyPlayers() {
     this.props.history.push(`/home`)
-    //third argument here is the image
+    //third argument here is the image //move this swal to the homePage or change order AMANDA
     swal('Sorry, room is full!', 'Only four players allowed :(', 'warning')
   }
 
@@ -142,6 +141,7 @@ export class PartyRoom extends React.Component {
       chatMessages: [...prevState.chatMessages, message]
     }))
   }
+
   async handleSave() {
     if (this.state.saved) return
     this.setState({saved: true})

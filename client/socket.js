@@ -9,8 +9,13 @@ socket.on('connect', () => {
   console.log('Connected!')
 
   setInterval(() => {
+    // console.log('ping') //this works when console logging a ping because it's sending something actively but not when emitting the ping bc nothing is catching it
     socket.emit('ping')
   }, 15 * 1000)
+})
+
+socket.on('disconnect', () => {
+  console.log(`Connection ${socket.id} has left the building`)
 })
 
 export function createRoom(callback) {

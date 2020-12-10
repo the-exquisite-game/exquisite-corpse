@@ -299,11 +299,10 @@ span {
   display: grid;
   grid-gap: 60px;
   justify-items: center;
-  grid-template-columns: repeat(auto-fit, 300px);
-  grid-template-rows: repeat(5, 450px);
+  grid-template-columns: repeat(4, 250px);
+  grid-template-rows: repeat(2, 350px);
   margin: 50px;
-  /* padding: 0px 150px; */
-  flex: 0 0 60%;
+  flex: 0 0 50%;
 }
 
 #monsters-container .monster {
@@ -322,15 +321,28 @@ span {
 .slides {
   display: flex;
   justify-content: center;
-  align-items: center;
+
   width: 700px;
   height: 1000px;
   flex: 0 0 40%;
-  margin: 50px;
+  padding-left: 50px;
+  margin-left: 100px;
+  margin-top: 50px;
 }
 
 .slides img {
   border-radius: 20px;
   border: solid #c7d66d;
   border-width: 2px;
+}
+
+.splide__slide {
+  width: 640px !important;
+}
+
+#monsters {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex-grow: 1;
 }

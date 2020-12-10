@@ -7,7 +7,8 @@ import {
   joinRoom,
   turnListener,
   newGameListener,
-  newGame
+  newGame,
+  replaceUser
 } from '../socket'
 import {UsersBar} from './users-bar'
 import {FinalMonster} from './finalMonster'
@@ -51,6 +52,8 @@ export class PartyRoom extends React.Component {
     this.handleSave = this.handleSave.bind(this)
     this.handleNewGame = this.handleNewGame.bind(this)
     this.handleTimer = this.handleTimer.bind(this)
+    this.handlePlayerDisconnecting = this.handlePlayerDisconnecting.bind(this)
+    this.setNewUsers = this.setNewUsers.bind(this)
   }
 
   componentDidMount() {
@@ -60,7 +63,8 @@ export class PartyRoom extends React.Component {
       this.addMessage,
       this.handleTooManyPlayers,
       this.props.location.state,
-      this.handleTimer
+      this.handleTimer,
+      this.handlePlayerDisconnecting
     )
 
     //gets all users + listens for more
@@ -156,6 +160,24 @@ export class PartyRoom extends React.Component {
   handleMouseUp() {
     this.setState({
       hasClicked: false
+    })
+  }
+
+  handlePlayerDisconnecting(socketId) {
+    const room = this.props.match.params.room
+    replaceUser(room, this.state.users, socketId, this.setNewUsers)
+    /*this.setState(prevState => {
+      let newUsers = [...prevState.users]
+      newUsers[droppedPlayerIdX] = newUsers[randomPlayerIdX]
+      return {
+        users: newUsers
+      }
+    })*/
+  }
+
+  setNewUsers(users) {
+    this.setState({
+      users: users
     })
   }
 

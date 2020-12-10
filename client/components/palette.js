@@ -4,7 +4,18 @@ import {lightColors, darkColors, tools} from '../utility/utilityProperties.js'
 class Palette extends React.Component {
   constructor(props) {
     super(props)
-    this.state = {}
+
+    this.state = {
+      selected: 'black'
+    }
+    this.colorSelect = this.colorSelect.bind(this)
+  }
+
+  colorSelect(e) {
+    this.props.handleChange(e)
+    this.setState({
+      selected: e.target.value
+    })
   }
 
   render() {
@@ -19,10 +30,14 @@ class Palette extends React.Component {
                   key={element}
                   type="button"
                   style={{backgroundColor: lightColors[element]}}
-                  className={element}
+                  className={`palette-button${
+                    this.state.selected === lightColors[element]
+                      ? '-selected'
+                      : ''
+                  }`}
                   name="color"
                   value={lightColors[element]}
-                  onClick={this.props.handleChange}
+                  onClick={this.colorSelect}
                 />
               )
             })}
@@ -34,10 +49,14 @@ class Palette extends React.Component {
                   key={element}
                   type="button"
                   style={{backgroundColor: darkColors[element]}}
-                  className={element}
+                  className={`palette-button${
+                    this.state.selected === darkColors[element]
+                      ? '-selected'
+                      : ''
+                  }`}
                   name="color"
                   value={darkColors[element]}
-                  onClick={this.props.handleChange}
+                  onClick={this.colorSelect}
                 />
               )
             })}

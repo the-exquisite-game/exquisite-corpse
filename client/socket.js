@@ -7,6 +7,10 @@ const socket = io({
 
 socket.on('connect', () => {
   console.log('Connected!')
+
+  setInterval(() => {
+    socket.emit('ping')
+  }, 15 * 1000)
 })
 
 export function createRoom(callback) {

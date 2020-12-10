@@ -73,9 +73,8 @@ export class PartyRoom extends React.Component {
   }
 
   handleTooManyPlayers() {
-    this.props.history.push(`/home`)
-
     swal('Sorry, room is full!', 'Only four players allowed :(', 'warning')
+    this.props.history.push(`/home`)
   }
 
   displayInstructions() {

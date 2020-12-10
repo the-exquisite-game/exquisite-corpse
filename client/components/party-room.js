@@ -74,7 +74,7 @@ export class PartyRoom extends React.Component {
 
   handleTooManyPlayers() {
     this.props.history.push(`/home`)
-    //third argument here is the image //move this swal to the homePage or change order AMANDA
+
     swal('Sorry, room is full!', 'Only four players allowed :(', 'warning')
   }
 

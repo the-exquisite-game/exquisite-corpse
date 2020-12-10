@@ -26,8 +26,8 @@ export function setNameAndIcon(name, icon) {
   socket.emit('set-nickname', name, icon)
 }
 
-export function replaceUser(room, users, socketId, callback) {
-  socket.emit('replaceUser', room, users, socketId)
+export function replaceUser(room, users, droppedPlayerId, callback) {
+  socket.emit('replaceUser', room, users, droppedPlayerId)
   socket.on('newUsers', callback)
 }
 

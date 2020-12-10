@@ -19,19 +19,20 @@ module.exports = io => {
   io.on('connection', socket => {
     console.log(`A socket connection to the server has been made: ${socket.id}`)
 
-    socket.on('disconnecting', () => {
-      console.log(`Connection ${socket.id} has left the building`)
-    })
-
     socket.on('disconnect', () => {
       console.log(`Connection ${socket.id} has left the building`)
     })
 
     //handles player dropping out of game
     socket.on('disconnecting', () => {
-      const socketId = Object.values(socket.rooms)[0]
+      const playerThatLeft = Object.values(socket.rooms)[0]
       const room = Object.values(socket.rooms)[1]
-      socket.to(room).emit('playerDisconnected', socketId)
+      const socketsInRoom =
+        Object.keys(io.sockets.adapter.rooms[room].sockets) || []
+      const remainingPlayer = socketsInRoom.find(
+        socketId => playerThatLeft !== socketId
+      )
+      socket.to(remainingPlayer).emit('playerDisconnected', playerThatLeft)
     })
 
     //create the room
@@ -146,16 +147,14 @@ module.exports = io => {
       io.in(room).emit('newgamestart')
     })
 
-    socket.on('replaceUser', (room, users, socketId) => {
-      const droppedPlayerIdX = users.indexOf(
-        users.find(user => user.id === socketId)
-      )
-      let randomPlayerIdX = Math.floor(Math.random() * 4)
-      while (randomPlayerIdX === droppedPlayerIdX) {
-        randomPlayerIdX = Math.floor(Math.random() * 4)
+    socket.on('replaceUser', (room, users, droppedPlayerId) => {
+      const remainingPlayers = users.filter(user => user.id !== droppedPlayerId)
+      while (remainingPlayers.length < 4) {
+        remainingPlayers.push(
+          remainingPlayers[Math.floor(Math.random() * users.length - 2)]
+        )
       }
-      users[droppedPlayerIdX] = users[randomPlayerIdX]
-      io.in(room).emit('newUsers', users)
+      io.in(room).emit('newUsers', remainingPlayers)
     })
   })
 }

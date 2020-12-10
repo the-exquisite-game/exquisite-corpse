@@ -163,16 +163,9 @@ export class PartyRoom extends React.Component {
     })
   }
 
-  handlePlayerDisconnecting(socketId) {
+  handlePlayerDisconnecting(droppedPlayerId) {
     const room = this.props.match.params.room
-    replaceUser(room, this.state.users, socketId, this.setNewUsers)
-    /*this.setState(prevState => {
-      let newUsers = [...prevState.users]
-      newUsers[droppedPlayerIdX] = newUsers[randomPlayerIdX]
-      return {
-        users: newUsers
-      }
-    })*/
+    replaceUser(room, this.state.users, droppedPlayerId, this.setNewUsers)
   }
 
   setNewUsers(users) {

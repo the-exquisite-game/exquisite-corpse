@@ -1,7 +1,9 @@
 import io from 'socket.io-client'
 
-// const socket = io(window.location.origin)
-const socket = io({transports: ['websocket']})
+//edit the argument here
+const socket = io({
+  transports: ['websocket']
+})
 
 socket.on('connect', () => {
   console.log('Connected!')
@@ -66,6 +68,16 @@ export function doneDrawing(num, room, limbs, leadingLines) {
 
 export function initializeGame(callback) {
   socket.on('gameStart', callback)
+}
+
+export function timer(room, callback) {
+  socket.on('timer', callback)
+  socket.emit('time', room)
+}
+
+export function stopTimer() {
+  socket.off('time')
+  socket.off('timer')
 }
 
 export default socket

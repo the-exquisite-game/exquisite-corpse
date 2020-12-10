@@ -1,18 +1,62 @@
 'use strict'
 
 const db = require('../server/db')
-const {User} = require('../server/db/models')
+const {Monster} = require('../server/db/models')
+
+const monsters = [
+  {
+    name: 'Fisrt Born',
+    imageUrl: '../images/monsters/first_born.png'
+  },
+  {
+    name: 'Baby Boy',
+    imageUrl: '../images/monsters/baby_boy.png'
+  },
+  {
+    name: 'Bloody Boob',
+    imageUrl: '../images/monsters/bloody_boob.png'
+  },
+  {
+    name: 'Babe',
+    imageUrl: '../images/monsters/babe.png'
+  },
+  {
+    name: 'Cutie Pie',
+    imageUrl: '../images/monsters/cutie_pie.png'
+  },
+  {
+    name: 'Dr Abs',
+    imageUrl: '../images/monsters/dr_abs.png'
+  },
+  {
+    name: 'La Cosa',
+    imageUrl: '../images/monsters/la_cosa.png'
+  },
+  {
+    name: 'Nice Lady',
+    imageUrl: '../images/monsters/nice_lady.png'
+  },
+  {
+    name: 'Beta Monster',
+    imageUrl: '../images/monsters/beta_monster.png'
+  },
+  {
+    name: 'Another Beta Monster',
+    imageUrl: '../images/monsters/another_beta_monster.png'
+  }
+]
 
 async function seed() {
   await db.sync({force: true})
   console.log('db synced!')
 
-  const users = await Promise.all([
-    User.create({email: 'cody@email.com', password: '123'}),
-    User.create({email: 'murphy@email.com', password: '123'})
-  ])
+  await Promise.all(
+    monsters.map(monster => {
+      return Monster.create(monster)
+    })
+  )
 
-  console.log(`seeded ${users.length} users`)
+  console.log(`seeded ${monsters.length} monsters`)
   console.log(`seeded successfully`)
 }
 

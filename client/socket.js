@@ -26,15 +26,21 @@ export function setNameAndIcon(name, icon) {
   socket.emit('set-nickname', name, icon)
 }
 
+export function replaceUser(room, users, socketId, callback) {
+  socket.emit('replaceUser', room, users, socketId)
+  socket.on('newUsers', callback)
+}
+
 export function leaveRoom(callback) {
   socket.off('roomCreated', callback)
 }
 
-export function joinRoom(room, messages, playerHandler, time, timerCallback) {
+export function joinRoom(room, messages, playerHandler, time, timerCallback, playerDisconnected) {
   socket.emit('joinedRoom', room, time)
   socket.on('timerInitialize', timerCallback)
   socket.on('tooMany', playerHandler)
   socket.on('messageToState', messages)
+  socket.on('playerDisconnected', playerDisconnected)
 }
 
 export function getUsers(callback, room) {

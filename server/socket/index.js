@@ -27,6 +27,13 @@ module.exports = io => {
       console.log(`Connection ${socket.id} has left the building`)
     })
 
+    //handles player dropping out of game
+    socket.on('disconnecting', () => {
+      const socketId = Object.values(socket.rooms)[0]
+      const room = Object.values(socket.rooms)[1]
+      socket.to(room).emit('playerDisconnected', socketId)
+    })
+
     //create the room
     socket.on('roomCreate', () => {
       const room = uniqueNamesGenerator({
@@ -50,6 +57,7 @@ module.exports = io => {
       let users = []
 
       for (let socketID in roomInfo.sockets) {
+        //console.log(Object.keys(io.sockets.connected[socketID]))
         if (io.sockets.connected[socketID].hasOwnProperty('nickname')) {
           const nickname = io.sockets.connected[socketID].nickname
 
@@ -131,6 +139,18 @@ module.exports = io => {
           io.to(socket.id).emit('timer', countDown)
         }
       }, 1000)
+    })
+
+    socket.on('replaceUser', (room, users, socketId) => {
+      const droppedPlayerIdX = users.indexOf(
+        users.find(user => user.id === socketId)
+      )
+      let randomPlayerIdX = Math.floor(Math.random() * 4)
+      while (randomPlayerIdX === droppedPlayerIdX) {
+        randomPlayerIdX = Math.floor(Math.random() * 4)
+      }
+      users[droppedPlayerIdX] = users[randomPlayerIdX]
+      io.in(room).emit('newUsers', users)
     })
   })
 }

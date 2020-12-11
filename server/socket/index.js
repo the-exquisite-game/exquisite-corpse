@@ -121,17 +121,18 @@ module.exports = io => {
       }
     })
 
-    socket.on('time', () => {
-      //120000 is two minutes
-      let countDown = 120000
+    //timer for broadcast (maybe?)
+    // socket.on('time', (room, time) => {
+    //   //120000 is two minutes
+    //   // let countDown = time
 
-      setInterval(function() {
-        countDown -= 1000
-        if (countDown >= 0) {
-          io.to(socket.id).emit('timer', countDown)
-        }
-      }, 1000)
-    })
+    //   setInterval(function () {
+    //     time -= 1000
+    //     if (time >= 0) {
+    //       io.to(socket.id).emit('timer', time)
+    //     }
+    //   }, 1000)
+    // })
 
     socket.on('newgame', room => {
       io.in(room).emit('newgamestart')

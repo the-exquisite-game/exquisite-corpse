@@ -77,9 +77,11 @@ export class PartyRoom extends React.Component {
 
     //listening for New Game
     newGameListener(this.handleNewGame)
+  }
 
-    //displays instructions
-    this.displayInstructions()
+  //displays instructions
+  displayInstructions() {
+    this.state.users.length <= 4 && swal(<Instructions />)
   }
 
   handleTooManyPlayers() {

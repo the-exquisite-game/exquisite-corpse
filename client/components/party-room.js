@@ -170,9 +170,12 @@ export class PartyRoom extends React.Component {
     replaceUser(room, this.state.users, droppedPlayerId)
   }
 
-  setNewUsers(users) {
-    this.setState({
-      users: users
+  setNewUsers(remainingUsers) {
+    this.setState(prevState => {
+      return {
+        users: remainingUsers,
+        userTurn: remainingUsers[prevState.done]
+      }
     })
   }
 

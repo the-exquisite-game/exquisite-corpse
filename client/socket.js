@@ -27,6 +27,7 @@ export function setNameAndIcon(name, icon) {
 }
 
 export function replaceUser(room, users, droppedPlayerId) {
+  console.log('replacing users')
   socket.emit('replaceUser', room, users, droppedPlayerId)
 }
 

@@ -117,7 +117,7 @@ export class PartyRoom extends React.Component {
     this.setState(prevState => {
       return {
         done: numberFinished,
-        userTurn: prevState.users[numberFinished],
+        userTurn: prevState.users[numberFinished % prevState.users.length],
         bodyPartsImage: [...prevState.bodyPartsImage, limbs],
         connectingLines: leadingLines
       }
@@ -177,6 +177,7 @@ export class PartyRoom extends React.Component {
     const myself = this.state.me
     const userTurn = this.state.userTurn || {}
     const room = this.props.match.params.room
+    const usersLength = this.state.users.length
     return (
       <div
         id="party-room"
@@ -214,6 +215,7 @@ export class PartyRoom extends React.Component {
                     hasClicked={this.state.hasClicked}
                     clickLocation={this.state.clickLocation}
                     timer={this.state.timer}
+                    length={usersLength}
                   />
                 ) : (
                   ''

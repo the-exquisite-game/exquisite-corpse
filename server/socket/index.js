@@ -25,13 +25,25 @@ module.exports = io => {
 
     //handles player dropping out of game
     socket.on('disconnecting', () => {
-      const playerThatLeft = Object.values(socket.rooms)[0]
-      const room = Object.values(socket.rooms)[1]
-      const socketsInRoom = Object.keys(io.sockets.adapter.rooms[room].sockets)
-      const remainingPlayer = socketsInRoom.find(
-        socketId => playerThatLeft !== socketId
-      )
-      socket.to(remainingPlayer).emit('playerDisconnected', playerThatLeft)
+      //can this be Object[socket.id] ??? since only one player is leaving?
+      const playerThatLeft = socket.id
+
+      //filtering out the thing that is the person's id
+      const room = Object.values(socket.rooms).filter(
+        roomName => roomName !== playerThatLeft
+      )[0]
+
+      if (room) {
+        const socketsInRoom = Object.keys(
+          io.sockets.adapter.rooms[room].sockets
+        )
+
+        // const remainingPlayers = socketsInRoom.filter(
+        // socketId => socketId !== playerThatLeft
+        // )
+
+        socket.in(room).emit('playerDisconnected', playerThatLeft)
+      }
     })
 
     //create the room
@@ -57,7 +69,6 @@ module.exports = io => {
       let users = []
 
       for (let socketID in roomInfo.sockets) {
-        //console.log(Object.keys(io.sockets.connected[socketID]))
         if (io.sockets.connected[socketID].hasOwnProperty('nickname')) {
           const nickname = io.sockets.connected[socketID].nickname
 
@@ -143,12 +154,10 @@ module.exports = io => {
 
     socket.on('replaceUser', (room, users, droppedPlayerId) => {
       const remainingPlayers = users.filter(user => user.id !== droppedPlayerId)
-      while (remainingPlayers.length < 4) {
-        let randomIdx = Math.floor(Math.random() * remainingPlayers.length)
-        remainingPlayers.push(remainingPlayers[randomIdx])
-      }
-      //Keep this console.log to debug room leaving stuff
-      console.log(remainingPlayers.map(x => x.id))
+
+      // //Keep this console.log to debug room leaving stuff
+      // console.log(remainingPlayers.map(x => x.id))
+
       io.in(room).emit('newUsers', remainingPlayers)
     })
   })

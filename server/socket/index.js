@@ -27,8 +27,7 @@ module.exports = io => {
     socket.on('disconnecting', () => {
       const playerThatLeft = Object.values(socket.rooms)[0]
       const room = Object.values(socket.rooms)[1]
-      const socketsInRoom =
-        Object.keys(io.sockets.adapter.rooms[room].sockets) || []
+      const socketsInRoom = Object.keys(io.sockets.adapter.rooms[room].sockets)
       const remainingPlayer = socketsInRoom.find(
         socketId => playerThatLeft !== socketId
       )
@@ -145,10 +144,11 @@ module.exports = io => {
     socket.on('replaceUser', (room, users, droppedPlayerId) => {
       const remainingPlayers = users.filter(user => user.id !== droppedPlayerId)
       while (remainingPlayers.length < 4) {
-        remainingPlayers.push(
-          remainingPlayers[Math.floor(Math.random() * users.length - 2)]
-        )
+        let randomIdx = Math.floor(Math.random() * remainingPlayers.length - 1)
+        remainingPlayers.push(remainingPlayers[randomIdx])
       }
+      //Keep this console.log to debug room leaving stuff
+      console.log(remainingPlayers.map(x => x.id))
       io.in(room).emit('newUsers', remainingPlayers)
     })
   })

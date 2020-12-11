@@ -61,7 +61,8 @@ export class PartyRoom extends React.Component {
       this.handleTooManyPlayers,
       this.props.location.state,
       this.handleTimer,
-      this.handlePlayerDisconnecting
+      this.handlePlayerDisconnecting,
+      this.setNewUsers
     )
 
     //gets all users + listens for more
@@ -141,8 +142,9 @@ export class PartyRoom extends React.Component {
   }
 
   handlePlayerDisconnecting(droppedPlayerId) {
+    console.log('GOT DISCONNECT FOR: ', droppedPlayerId)
     const room = this.props.match.params.room
-    replaceUser(room, this.state.users, droppedPlayerId, this.setNewUsers)
+    replaceUser(room, this.state.users, droppedPlayerId)
   }
 
   setNewUsers(users) {

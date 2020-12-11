@@ -189,7 +189,6 @@ export class PartyRoom extends React.Component {
         onMouseDown={this.handleMouseDown}
         onMouseUp={this.handleMouseUp}
       >
-        {console.log('top', this.state)}
         <div id="room-name">Room: {this.props.match.params.room}</div>
         <div id="main-party-room-area">
           <div id="users-section">

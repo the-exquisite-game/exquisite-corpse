@@ -213,7 +213,6 @@ export class PartyRoom extends React.Component {
                 {myself.id === userTurn.id ? (
                   <Drawing
                     canvas={this.canvas}
-                    // handleTurn={this.handleTurn}
                     userTurn={this.state.done}
                     room={room}
                     connectingLines={this.state.connectingLines}

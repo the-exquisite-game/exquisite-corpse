@@ -144,7 +144,7 @@ module.exports = io => {
     socket.on('replaceUser', (room, users, droppedPlayerId) => {
       const remainingPlayers = users.filter(user => user.id !== droppedPlayerId)
       while (remainingPlayers.length < 4) {
-        let randomIdx = Math.floor(Math.random() * remainingPlayers.length - 1)
+        let randomIdx = Math.floor(Math.random() * remainingPlayers.length)
         remainingPlayers.push(remainingPlayers[randomIdx])
       }
       //Keep this console.log to debug room leaving stuff

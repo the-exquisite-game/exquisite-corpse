@@ -13,12 +13,22 @@ export class UsersBar extends React.Component {
         {users.map(
           username =>
             username.hasOwnProperty('id') && username.id === userTurn.id ? (
-              <div key={username.id} id="indiv-user-sidebar-selected">
+              <div
+                key={Math.random()
+                  .toString(36)
+                  .substring(7)}
+                id="indiv-user-sidebar-selected"
+              >
                 <img id="image-sidebar" src={username.icon} />
                 <div id="username-sidebar">{username.nickname}</div>
               </div>
             ) : (
-              <div key={username.id} className="indiv-user-sidebar">
+              <div
+                key={Math.random()
+                  .toString(36)
+                  .substring(7)}
+                className="indiv-user-sidebar"
+              >
                 <img id="image-sidebar" src={username.icon} />
                 <div id="username-sidebar">{username.nickname}</div>
               </div>

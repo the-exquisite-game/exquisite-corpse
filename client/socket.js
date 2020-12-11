@@ -80,4 +80,14 @@ export function stopTimer() {
   socket.off('timer')
 }
 
+//new game
+export function newGameListener(callback) {
+  socket.on('newgamestart', callback)
+}
+
+export function newGame(room) {
+  socket.emit('users', room)
+  socket.emit('newgame', room)
+}
+
 export default socket

@@ -49,7 +49,7 @@ module.exports = io => {
       const roomInfo = io.sockets.adapter.rooms[room]
       let users = []
 
-      for (socketID in roomInfo.sockets) {
+      for (let socketID in roomInfo.sockets) {
         if (io.sockets.connected[socketID].hasOwnProperty('nickname')) {
           const nickname = io.sockets.connected[socketID].nickname
 
@@ -58,8 +58,8 @@ module.exports = io => {
           const userInfo = {nickname: nickname, id: socketID, icon: icon}
           users.push(userInfo)
         } else {
-          socket.nickname = `User`
-          socket.icon = '/images/unamusedMonster_blue.png'
+          socket.nickname = `Frankenstein`
+          socket.icon = '/images/defaultIcon.png'
           const userInfo = {
             nickname: socket.nickname,
             id: socketID,
@@ -129,6 +129,10 @@ module.exports = io => {
           }
         }, 1000)
       }
+    })
+
+    socket.on('newgame', room => {
+      io.in(room).emit('newgamestart')
     })
   })
 }

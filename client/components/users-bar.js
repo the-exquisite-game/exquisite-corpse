@@ -12,7 +12,7 @@ export class UsersBar extends React.Component {
       <div id="users-bar">
         {users.map(
           username =>
-            username.id === userTurn.id ? (
+            username.hasOwnProperty('id') && username.id === userTurn.id ? (
               <div key={username.id} id="indiv-user-sidebar-selected">
                 <img id="image-sidebar" src={username.icon} />
                 <div id="username-sidebar">{username.nickname}</div>

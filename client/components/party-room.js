@@ -1,7 +1,6 @@
 import React from 'react'
 import Drawing from './drawing-page'
 import {
-  controlSockets,
   getMe,
   getUsers,
   initializeGame,
@@ -33,7 +32,8 @@ export class PartyRoom extends React.Component {
       hasClicked: false,
       clickLocation: '',
       chatMessages: [],
-      saved: false
+      saved: false,
+      timer: true
     }
 
     this.canvas = React.createRef()
@@ -50,6 +50,7 @@ export class PartyRoom extends React.Component {
     this.displayInstructions = this.displayInstructions.bind(this)
     this.handleSave = this.handleSave.bind(this)
     this.handleNewGame = this.handleNewGame.bind(this)
+    this.handleTimer = this.handleTimer.bind(this)
   }
 
   componentDidMount() {
@@ -57,7 +58,9 @@ export class PartyRoom extends React.Component {
     joinRoom(
       this.props.match.params.room,
       this.addMessage,
-      this.handleTooManyPlayers
+      this.handleTooManyPlayers,
+      this.props.location.state,
+      this.handleTimer
     )
 
     //gets all users + listens for more
@@ -80,9 +83,8 @@ export class PartyRoom extends React.Component {
   }
 
   handleTooManyPlayers() {
-    this.props.history.push(`/home`)
-    //third argument here is the image
     swal('Sorry, room is full!', 'Only four players allowed :(', 'warning')
+    this.props.history.push(`/home`)
   }
 
   displayInstructions() {
@@ -160,6 +162,7 @@ export class PartyRoom extends React.Component {
       chatMessages: [...prevState.chatMessages, message]
     }))
   }
+
   async handleSave() {
     if (this.state.saved) return
     this.setState({saved: true})
@@ -168,6 +171,10 @@ export class PartyRoom extends React.Component {
       name: this.props.match.params.room,
       imageUrl: img
     })
+  }
+
+  handleTimer(time) {
+    this.setState(time)
   }
 
   render() {
@@ -211,6 +218,7 @@ export class PartyRoom extends React.Component {
                     connectingLines={this.state.connectingLines}
                     hasClicked={this.state.hasClicked}
                     clickLocation={this.state.clickLocation}
+                    timer={this.state.timer}
                   />
                 ) : (
                   ''

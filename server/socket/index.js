@@ -20,7 +20,6 @@ module.exports = io => {
     console.log(`A socket connection to the server has been made: ${socket.id}`)
 
     socket.on('disconnecting', () => {
-      console.log(socket.rooms)
       console.log(`Connection ${socket.id} has left the building`)
     })
 
@@ -35,6 +34,7 @@ module.exports = io => {
         length: 2,
         separator: '-'
       })
+
       io.emit('roomCreated', room)
     })
 
@@ -89,12 +89,20 @@ module.exports = io => {
       socket.to(room).broadcast.emit('linesToState', arr)
     })
 
-    socket.on('joinedRoom', room => {
+    socket.on('joinedRoom', (room, time) => {
       //room info, and users sockets names!
       const roomInfo = io.sockets.adapter.rooms[room] || []
 
       if (roomInfo.length < 4) {
         socket.join(room)
+
+        if (time) {
+          io.sockets.adapter.rooms[room].timer = time
+        }
+
+        io
+          .in(room)
+          .emit('timerInitialize', io.sockets.adapter.rooms[room].timer)
       } else {
         socket.emit('tooMany')
       }
@@ -113,22 +121,16 @@ module.exports = io => {
       }
     })
 
-    let timeCount = null
-
-    socket.on('time', room => {
+    socket.on('time', () => {
       //120000 is two minutes
       let countDown = 120000
 
-      if (timeCount === null) {
-        timeCount = setInterval(function() {
-          countDown -= 1000
-          if (countDown >= 0) {
-            io.to(socket.id).emit('timer', countDown)
-          } else {
-            clearInterval(timeCount)
-          }
-        }, 1000)
-      }
+      setInterval(function() {
+        countDown -= 1000
+        if (countDown >= 0) {
+          io.to(socket.id).emit('timer', countDown)
+        }
+      }, 1000)
     })
 
     socket.on('newgame', room => {

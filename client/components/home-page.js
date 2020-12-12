@@ -84,7 +84,7 @@ export class Home extends React.Component {
             />
           </span>
           <Icon canvas={this.canvas} />
-          <span id="createARoom">
+          <span className="roomButtons">
             <button type="button" id="createRoom" onClick={this.handleClick}>
               Create a Room!
             </button>
@@ -98,7 +98,7 @@ export class Home extends React.Component {
               />
             </label>
           </span>
-          <span id="joinRoom">
+          <span className="roomButtons">
             <button type="button" id="joinRoom" onClick={this.handleJoin}>
               Join a Room!
             </button>

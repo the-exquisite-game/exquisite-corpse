@@ -57,6 +57,40 @@ nav a {
   font-size: 20px;
 }
 
+/* Swal styling! */
+.swal-overlay {
+  background-color: rgba(47, 32, 50, 0.45);
+}
+
+.swal-modal {
+  background-color: #def1be;
+  border: 3px solid #9b89b1;
+  border-radius: 15px;
+}
+
+.swal-text {
+  padding: 17px;
+  border-radius: 15px;
+  display: block;
+  margin: 22px;
+  text-align: center;
+  color: black;
+  font-size: 30px;
+}
+
+.swal-button {
+  padding: 7px 19px;
+  border-radius: 15px;
+  background-color: #f9f6f6;
+  font-size: 30px;
+  color: black;
+  border: 1px solid #9b89b1;
+}
+
+.swal-content {
+  border-radius: 15px;
+}
+
 form div {
   margin: 1em;
   display: inline-block;
@@ -82,12 +116,15 @@ button {
   border-radius: 15px;
   cursor: pointer;
   font-family: 'Gamja Flower', cursive;
-  background-color: #f9f6f6;
+  background-color: #dcdcdc;
   transition: all 50ms;
 }
 
-.home-div button {
+.roomButtons button {
   width: 170px;
+  border: solid #9b89b1;
+  border-width: 1px;
+  background-color: #f9f6f6;
 }
 
 #palette button {
@@ -232,7 +269,7 @@ div.konvajs-content {
   font-size: 25px;
   background-color: white;
   background-image:
-  /* linear-gradient(to bottom, rgba(222, 241, 190, 0.73),  rgba(192, 212, 78, 0.52)), */ url('/images/backgroundTEST2.png');
+  /* linear-gradient(to bottom, rgba(222, 241, 190, 0.73),  rgba(192, 212, 78, 0.52)), */ url('/images/backgroundTEST2opacitychange.png');
 }
 
 .home-div {
@@ -242,6 +279,7 @@ div.konvajs-content {
   align-items: center;
   flex: 1 2 auto;
   background-image: linear-gradient(#def1be, #c0d44e);
+  border: solid #9b89b1;
   width: 45%;
   height: 45%;
   border-radius: 15px;
@@ -267,9 +305,19 @@ span {
   margin-top: 10px;
 }
 
+.roomButtons {
+  width: 65%;
+}
+
+.roomButtons label {
+  width: 200px;
+}
+
 #nicknameInput input {
   margin: 5px;
   border-radius: 15px;
+  border: solid #9b89b1;
+  border-width: 1px;
   font-family: 'Gamja Flower', cursive;
   width: 75%;
   height: 35px;
@@ -277,13 +325,9 @@ span {
   text-align: center;
 }
 
-#createARoom input {
+.roomButtons input {
   height: 20px;
   width: 20px;
-}
-
-#createARoom input:checked {
-  background-color: #c0d44e;
 }
 
 input:focus {

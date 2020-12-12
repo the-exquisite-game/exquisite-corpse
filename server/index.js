@@ -45,7 +45,7 @@ const createApp = () => {
   app.use(morgan('dev'))
 
   // body parsing middleware
-  app.use(express.json())
+  app.use(express.json({limit: '10MB'}))
   app.use(express.urlencoded({extended: true}))
 
   // compression middleware

@@ -25,8 +25,10 @@ module.exports = io => {
 
     //handles player dropping out of game
     socket.on('disconnecting', () => {
-      const playerThatLeft = Object.values(socket.rooms)[0]
-      const room = Object.values(socket.rooms)[1]
+      const playerThatLeft = socket.id
+      const room = Object.values(socket.rooms).filter(
+        roomName => roomName !== playerThatLeft
+      )[0]
       const socketsInRoom = Object.keys(io.sockets.adapter.rooms[room].sockets)
       const remainingPlayer = socketsInRoom.find(
         socketId => playerThatLeft !== socketId

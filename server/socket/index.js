@@ -29,11 +29,15 @@ module.exports = io => {
       const room = Object.values(socket.rooms).filter(
         roomName => roomName !== playerThatLeft
       )[0]
-      const socketsInRoom = Object.keys(io.sockets.adapter.rooms[room].sockets)
-      const remainingPlayer = socketsInRoom.find(
-        socketId => playerThatLeft !== socketId
-      )
-      socket.to(remainingPlayer).emit('playerDisconnected', playerThatLeft)
+      if (room) {
+        const socketsInRoom = Object.keys(
+          io.sockets.adapter.rooms[room].sockets
+        )
+        const remainingPlayer = socketsInRoom.find(
+          socketId => playerThatLeft !== socketId
+        )
+        socket.to(remainingPlayer).emit('playerDisconnected', playerThatLeft)
+      }
     })
 
     //create the room
@@ -154,8 +158,6 @@ module.exports = io => {
         let randomIdx = Math.floor(Math.random() * remainingPlayers.length)
         remainingPlayers.push(remainingPlayers[randomIdx])
       }
-      //Keep this console.log to debug room leaving stuff
-      console.log(remainingPlayers.map(x => x.id))
       io.in(room).emit('newUsers', remainingPlayers)
     })
   })

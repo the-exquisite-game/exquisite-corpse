@@ -13,16 +13,6 @@ a {
   color: #153243;
 }
 
-label {
-  display: block;
-}
-
-nav a {
-  display: inline-block;
-  padding: 1em;
-  font-size: 30px;
-}
-
 #app {
   min-height: 100vh;
   display: flex;
@@ -30,14 +20,41 @@ nav a {
 }
 
 #navbar {
-  background-image: linear-gradient(#a6a8e0, #d1d2f9);
+  background-image: linear-gradient(#c0d44e, #def1be);
+  width: 100%;
+  display: flex;
+  flex: 0 1 auto;
+  align-items: center;
+  align-content: center;
+  justify-content: center;
+  box-shadow: 4px 5px 5px 1px rgba(0, 0, 0, 0.24);
+}
+
+#navbarGrid {
   display: grid;
   grid-template-columns: repeat(1, 1fr);
   grid-template-rows: repeat(1, 1fr);
   justify-items: center;
   align-items: center;
   z-index: 2;
-  box-shadow: 4px 5px 5px 1px rgba(0, 0, 0, 0.24);
+}
+
+#navbar h1 {
+  text-align: center;
+  font-family: 'Fredericka the Great', cursive;
+  color: #000000;
+  font-weight: 400;
+  text-shadow: -1px 0 0 #def1be, 1px 1px 0 #9b89b1, 2px -1px 0 #def1be,
+    3px 0 0 #9b89b1;
+  font-size: 75px;
+}
+
+nav a {
+  display: inline-block;
+  font-family: 'Karla', sans-serif;
+  font-weight: 300;
+  padding: 1em;
+  font-size: 20px;
 }
 
 form div {
@@ -62,11 +79,15 @@ button {
   margin: 5px;
   display: inline-block;
   font-size: 25px;
-  border-radius: 25px;
+  border-radius: 15px;
   cursor: pointer;
   font-family: 'Gamja Flower', cursive;
-  background-color: #dcdcdc;
+  background-color: #f9f6f6;
   transition: all 50ms;
+}
+
+.home-div button {
+  width: 170px;
 }
 
 #palette button {
@@ -92,7 +113,7 @@ button {
 button:hover {
   background-color: #a9a9a9;
   transform: scale(1.1);
-  border-radius: 25px;
+  border-radius: 15px;
 }
 
 button:focus {
@@ -103,11 +124,6 @@ button:focus {
   background-color: #dcdcdc;
   background-repeat: no-repeat;
   background-position: center;
-}
-
-.iconCanvas {
-  display: flex;
-  align-items: center;
 }
 
 .arrowButton {
@@ -211,37 +227,67 @@ div.konvajs-content {
   flex-direction: column;
   align-items: center;
   flex-grow: 1;
-  padding-top: 150px;
+  padding-top: 100px;
   padding-bottom: 100px;
   font-size: 25px;
+  background-color: white;
+  background-image:
+  /* linear-gradient(to bottom, rgba(222, 241, 190, 0.73),  rgba(192, 212, 78, 0.52)), */ url('/images/backgroundTEST2.png');
 }
 
-#buttons-container {
+.home-div {
   display: flex;
-  width: 400px;
-  justify-content: space-evenly;
-  padding: 15px;
-}
-
-span input {
+  padding: 25px;
+  flex-direction: column;
+  align-items: center;
+  flex: 1 2 auto;
+  background-image: linear-gradient(#def1be, #c0d44e);
+  width: 45%;
+  height: 45%;
   border-radius: 15px;
-  font-family: 'Gamja Flower', cursive;
-  width: 200px;
-  height: 30px;
-  font-size: 20px;
-  text-align: center;
 }
 
-input:focus {
-  outline: none;
+.iconCanvas {
+  display: flex;
+  width: 100%;
+  padding: 15px;
+  justify-content: center;
+  align-items: center;
 }
 
 span {
   display: flex;
-  flex-direction: column;
+  padding: 10px;
+  justify-content: space-between;
+  text-align: center;
+  align-content: center;
   align-items: center;
-  font-size: 30px;
+  width: 90%;
+  font-size: 25px;
   margin-top: 10px;
+}
+
+#nicknameInput input {
+  margin: 5px;
+  border-radius: 15px;
+  font-family: 'Gamja Flower', cursive;
+  width: 75%;
+  height: 35px;
+  font-size: 25px;
+  text-align: center;
+}
+
+#createARoom input {
+  height: 20px;
+  width: 20px;
+}
+
+#createARoom input:checked {
+  background-color: #c0d44e;
+}
+
+input:focus {
+  outline: none;
 }
 
 #chat-window {

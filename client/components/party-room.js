@@ -5,7 +5,9 @@ import {
   getUsers,
   initializeGame,
   joinRoom,
-  turnListener
+  turnListener,
+  newGameListener,
+  newGame
 } from '../socket'
 import {UsersBar} from './users-bar'
 import {FinalMonster} from './finalMonster'
@@ -47,6 +49,7 @@ export class PartyRoom extends React.Component {
     this.addMessage = this.addMessage.bind(this)
     this.displayInstructions = this.displayInstructions.bind(this)
     this.handleSave = this.handleSave.bind(this)
+    this.handleNewGame = this.handleNewGame.bind(this)
     this.handleTimer = this.handleTimer.bind(this)
   }
 
@@ -71,6 +74,14 @@ export class PartyRoom extends React.Component {
 
     //listening for Game Start
     initializeGame(this.gameStart)
+
+    //listening for New Game
+    newGameListener(this.handleNewGame)
+  }
+
+  //displays instructions
+  displayInstructions() {
+    this.state.users.length <= 4 && swal(<Instructions />)
   }
 
   handleTooManyPlayers() {
@@ -121,6 +132,18 @@ export class PartyRoom extends React.Component {
 
   handleFinish() {
     this.setState({gamePlay: false, finished: true})
+  }
+
+  handleNewGame() {
+    this.setState({
+      // users: users,
+      // userTurn: users[0],
+      finished: false,
+      gamePlay: true,
+      connectingLines: '',
+      done: 0,
+      bodyPartsImage: []
+    })
   }
   //click functions to stop line runoff while drawing on drawing-page
   handleMouseDown(e) {
@@ -190,7 +213,6 @@ export class PartyRoom extends React.Component {
                 {myself.id === userTurn.id ? (
                   <Drawing
                     canvas={this.canvas}
-                    handleTurn={this.handleTurn}
                     userTurn={this.state.done}
                     room={room}
                     connectingLines={this.state.connectingLines}
@@ -215,6 +237,14 @@ export class PartyRoom extends React.Component {
                     </button>
                     <button type="button" onClick={this.handleSave}>
                       {this.state.saved ? 'Saved!' : 'Save to Gallery'}
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        newGame(room)
+                      }}
+                    >
+                      New Game
                     </button>
                   </div>
                 ) : (

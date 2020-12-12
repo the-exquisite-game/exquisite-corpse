@@ -75,14 +75,25 @@ export function initializeGame(callback) {
   socket.on('gameStart', callback)
 }
 
-export function timer(room, callback) {
-  socket.on('timer', callback)
-  socket.emit('time', room)
+//socket timer for broadcast to room (maybe?)
+// export function timer(room, callback, time) {
+//   socket.on('timer', callback)
+//   socket.emit('time', room, time)
+// }
+
+// export function stopTimer() {
+//   socket.off('time')
+//   socket.off('timer')
+// }
+
+//new game
+export function newGameListener(callback) {
+  socket.on('newgamestart', callback)
 }
 
-export function stopTimer() {
-  socket.off('time')
-  socket.off('timer')
+export function newGame(room) {
+  socket.emit('users', room)
+  socket.emit('newgame', room)
 }
 
 export default socket

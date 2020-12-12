@@ -154,11 +154,36 @@ module.exports = io => {
 
     socket.on('replaceUser', (room, users, droppedPlayerId) => {
       const remainingPlayers = users.filter(user => user.id !== droppedPlayerId)
-      while (remainingPlayers.length < 4) {
-        let randomIdx = Math.floor(Math.random() * remainingPlayers.length)
-        remainingPlayers.push(remainingPlayers[randomIdx])
-      }
-      io.in(room).emit('newUsers', remainingPlayers)
+      const playerPool = unique(remainingPlayers)
+      const indicesToReplace = indicesOfDroppedPlayer(users, droppedPlayerId)
+      indicesToReplace.forEach(index => {
+        const randomIdx = Math.floor(Math.random() * playerPool.length)
+        users[index] = playerPool[randomIdx]
+      })
+      io.in(room).emit('newUsers', users)
     })
   })
+}
+
+function unique(arr) {
+  let seenIds = []
+  let result = []
+  for (let i = 0; i < arr.length; i++) {
+    let currId = arr[i].id
+    if (seenIds.indexOf(currId) === -1) {
+      seenIds.push(currId)
+      result.push(arr[i])
+    }
+  }
+  return result
+}
+
+function indicesOfDroppedPlayer(users, droppedPlayerId) {
+  const droppedIndices = []
+  users.forEach((user, idx) => {
+    if (user.id === droppedPlayerId) {
+      droppedIndices.push(idx)
+    }
+  })
+  return droppedIndices
 }

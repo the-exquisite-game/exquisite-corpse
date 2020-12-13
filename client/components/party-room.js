@@ -54,6 +54,7 @@ export class PartyRoom extends React.Component {
     this.handleTimer = this.handleTimer.bind(this)
     this.handlePlayerDisconnecting = this.handlePlayerDisconnecting.bind(this)
     this.setNewUsers = this.setNewUsers.bind(this)
+    this.handlePlayerLeavingEarly = this.handlePlayerLeavingEarly.bind(this)
   }
 
   componentDidMount() {
@@ -82,6 +83,16 @@ export class PartyRoom extends React.Component {
 
     //listening for New Game
     newGameListener(this.handleNewGame)
+
+    window.addEventListener('unload', this.handlePlayerLeavingEarly)
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('unload', this.handlePlayerLeavingEarly)
+  }
+
+  handlePlayerLeavingEarly() {
+    this.props.history.push('/home')
   }
 
   //displays instructions

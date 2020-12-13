@@ -63,7 +63,6 @@ module.exports = io => {
       let users = []
 
       for (let socketID in roomInfo.sockets) {
-        //console.log(Object.keys(io.sockets.connected[socketID]))
         if (io.sockets.connected[socketID].hasOwnProperty('nickname')) {
           const nickname = io.sockets.connected[socketID].nickname
 

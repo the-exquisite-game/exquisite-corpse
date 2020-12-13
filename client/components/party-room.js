@@ -84,15 +84,16 @@ export class PartyRoom extends React.Component {
     //listening for New Game
     newGameListener(this.handleNewGame)
 
-    window.addEventListener('unload', this.handlePlayerLeavingEarly)
+    window.addEventListener('beforeunload', this.handlePlayerLeavingEarly)
   }
 
   componentWillUnmount() {
-    window.removeEventListener('unload', this.handlePlayerLeavingEarly)
+    window.removeEventListener('beforeunload', this.handlePlayerLeavingEarly)
   }
 
-  handlePlayerLeavingEarly() {
-    this.props.history.push('/home')
+  handlePlayerLeavingEarly(e) {
+    e.preventDefault()
+    e.returnValue = ''
   }
 
   //displays instructions

@@ -229,8 +229,12 @@ export class PartyRoom extends React.Component {
               : `It's ${userTurn.nickname}'s turn! Drawing the 
             ${this.state.bodyParts[this.state.done]}...`}
           </div>
-        ) : (
+        ) : this.state.finished ? (
           ''
+        ) : (
+          <div className="header-turn-info">
+            Waiting for {4 - this.state.users.length} more players!
+          </div>
         )}
 
         <div id="main-party-room-area">
@@ -241,7 +245,7 @@ export class PartyRoom extends React.Component {
               id="users-bar"
             />
             <button
-              className="instructions-button"
+              className="instructions-button-party-room"
               type="button"
               onClick={this.displayInstructions}
             >
@@ -274,27 +278,27 @@ export class PartyRoom extends React.Component {
                     <FinalMonster
                       bodyParts={this.state.bodyPartsImage}
                       canvas={this.canvas}
+                      className="final-monster"
                     />
-                    <button type="button" onClick={this.handleDownload}>
-                      Download
-                    </button>
-                    <button type="button" onClick={this.handleSave}>
-                      {this.state.saved ? 'Saved!' : 'Save to Gallery'}
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => {
-                        newGame(room)
-                      }}
-                    >
-                      New Game
-                    </button>
+                    <div id="buttons-below-canvas">
+                      <button type="button" onClick={this.handleDownload}>
+                        Download
+                      </button>
+                      <button type="button" onClick={this.handleSave}>
+                        {this.state.saved ? 'Saved!' : 'Save to Gallery'}
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => {
+                          newGame(room)
+                        }}
+                      >
+                        New Game
+                      </button>
+                    </div>
                   </div>
                 ) : (
                   <div id="party-room-canvas">
-                    <div className="header-turn-info">
-                      Waiting for {4 - this.state.users.length} more players!
-                    </div>
                     <Instructions />
                   </div>
                 )}

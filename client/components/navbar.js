@@ -7,10 +7,8 @@ const Navbar = () => (
       <h1 className="gradient-text">Exquisite Corpse!</h1>
       <nav>
         <div>
-          <img src="/images/brush.png" />
           <Link to="/home">Home</Link>
           <Link to="/gallery">Gallery</Link>
-          <img src="/images/brush.png" />
         </div>
       </nav>
     </div>

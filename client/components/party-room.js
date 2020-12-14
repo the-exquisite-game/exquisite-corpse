@@ -8,7 +8,8 @@ import {
   turnListener,
   newGameListener,
   newGame,
-  replaceUser
+  replaceUser,
+  partyRoomUnmounted
 } from '../socket'
 import {UsersBar} from './users-bar'
 import {FinalMonster} from './finalMonster'
@@ -89,6 +90,7 @@ export class PartyRoom extends React.Component {
 
   componentWillUnmount() {
     window.removeEventListener('beforeunload', this.handlePlayerLeavingEarly)
+    partyRoomUnmounted()
   }
 
   handlePlayerLeavingEarly(e) {

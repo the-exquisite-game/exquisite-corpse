@@ -227,9 +227,9 @@ export class PartyRoom extends React.Component {
         {this.state.gamePlay ? (
           <div className="header-turn-info">
             {this.state.me.id === userTurn.id
-              ? `It's your turn! Draw the 
+              ? `It's your turn! Draw the
             ${this.state.bodyParts[this.state.done]}!`
-              : `It's ${userTurn.nickname}'s turn! Drawing the 
+              : `It's ${userTurn.nickname}'s turn! Drawing the
             ${this.state.bodyParts[this.state.done]}...`}
           </div>
         ) : (
@@ -287,7 +287,7 @@ export class PartyRoom extends React.Component {
                     <button
                       type="button"
                       onClick={() => {
-                        newGame(room)
+                        newGame(room, this.state.users)
                       }}
                     >
                       New Game

@@ -325,13 +325,22 @@ div.konvajs-content {
 
 .home-div {
   display: flex;
+  width: 400px;
+  justify-content: space-evenly;
   padding: 25px;
   font-family: 'Karla', sans-serif;
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
   flex: 1 2 auto;
-  background-image: linear-gradient(#def1be, #9b89b1);
+  /* background-image: linear-gradient(#def1be, #9b89b1); */
+  background-image: linear-gradient(
+    to bottom right,
+    /* #efecec, */ #ffe6c2,
+    #def1be,
+    #dfd4ec,
+    #aaa4b1
+  );
   border: solid #9b89b1;
   color: #2f2032;
   width: 45%;
@@ -341,6 +350,7 @@ div.konvajs-content {
 .iconCanvas {
   display: flex;
   width: 100%;
+
   padding: 15px;
   justify-content: center;
   align-items: center;

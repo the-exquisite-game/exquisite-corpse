@@ -140,7 +140,7 @@ export class PartyRoom extends React.Component {
     this.setState(prevState => {
       return {
         done: numberFinished,
-        userTurn: prevState.users[numberFinished % prevState.users.length],
+        userTurn: prevState.users[numberFinished],
         bodyPartsImage: [...prevState.bodyPartsImage, limbs],
         connectingLines: leadingLines
       }

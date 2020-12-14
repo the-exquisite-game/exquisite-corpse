@@ -73,6 +73,9 @@ class Drawing extends Component {
   handleDoneClick() {
     const turn = this.props.userTurn + 1
     this.handleDone(turn)
+    this.setState({
+      lines: []
+    })
   }
 
   handleChange(event) {
@@ -107,15 +110,19 @@ class Drawing extends Component {
     const connectingLines = this.props.connectingLines || ''
     return (
       <div className="drawing-page">
-        {this.props.timer ? (
-          <Timer
-            room={this.props.room}
-            handleDone={this.handleDoneClick}
-            userTurn={this.props.userTurn}
-          />
-        ) : (
-          ''
-        )}
+        <div id="timer">
+          {this.props.timer ? (
+            <div>
+              <Timer
+                room={this.props.room}
+                handleDone={this.handleDoneClick}
+                userTurn={this.props.userTurn}
+              />
+            </div>
+          ) : (
+            ''
+          )}
+        </div>
         <img src={connectingLines} />
         <Stage
           width={600}

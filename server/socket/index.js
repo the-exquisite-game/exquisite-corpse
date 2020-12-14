@@ -1,8 +1,5 @@
-const {
-  uniqueNamesGenerator,
-  adjectives,
-  animals
-} = require('unique-names-generator')
+const {uniqueNamesGenerator} = require('unique-names-generator')
+const {adjectives, animals} = require('../dictionary')
 
 //shuffling using Durstenfeld shuffle
 const shuffle = arr => {
@@ -25,24 +22,34 @@ module.exports = io => {
 
     //handles player dropping out of game
     socket.on('disconnecting', () => {
-      //can this be Object[socket.id] ??? since only one player is leaving?
       const playerThatLeft = socket.id
-
-      //filtering out the thing that is the person's id
       const room = Object.values(socket.rooms).filter(
         roomName => roomName !== playerThatLeft
       )[0]
-
       if (room) {
         const socketsInRoom = Object.keys(
           io.sockets.adapter.rooms[room].sockets
         )
+        const remainingPlayer = socketsInRoom.find(
+          socketId => playerThatLeft !== socketId
+        )
+        socket.to(remainingPlayer).emit('playerDisconnected', playerThatLeft)
+      }
+    })
 
-        // const remainingPlayers = socketsInRoom.filter(
-        // socketId => socketId !== playerThatLeft
-        // )
-
-        socket.in(room).emit('playerDisconnected', playerThatLeft)
+    socket.on('playerLeaving', () => {
+      const playerThatLeft = socket.id
+      const room = Object.values(socket.rooms).filter(
+        roomName => roomName !== playerThatLeft
+      )[0]
+      if (room) {
+        const socketsInRoom = Object.keys(
+          io.sockets.adapter.rooms[room].sockets
+        )
+        const remainingPlayer = socketsInRoom.find(
+          socketId => playerThatLeft !== socketId
+        )
+        socket.to(remainingPlayer).emit('playerDisconnected', playerThatLeft)
       }
     })
 
@@ -64,31 +71,35 @@ module.exports = io => {
     })
 
     //getting all users
-    socket.on('users', room => {
+    socket.on('users', (room, user) => {
       const roomInfo = io.sockets.adapter.rooms[room]
       let users = []
 
-      for (let socketID in roomInfo.sockets) {
-        if (io.sockets.connected[socketID].hasOwnProperty('nickname')) {
-          const nickname = io.sockets.connected[socketID].nickname
+      if (!user) {
+        for (let socketID in roomInfo.sockets) {
+          if (io.sockets.connected[socketID].hasOwnProperty('nickname')) {
+            const nickname = io.sockets.connected[socketID].nickname
 
-          const icon = io.sockets.connected[socketID].icon
+            const icon = io.sockets.connected[socketID].icon
 
-          const userInfo = {nickname: nickname, id: socketID, icon: icon}
-          users.push(userInfo)
-        } else {
-          socket.nickname = `User`
-          socket.icon = '/images/unamusedMonster_blue.png'
-          const userInfo = {
-            nickname: socket.nickname,
-            id: socketID,
-            icon: socket.icon
+            const userInfo = {nickname: nickname, id: socketID, icon: icon}
+            users.push(userInfo)
+          } else {
+            socket.nickname = `Frankenstein`
+            socket.icon = '/images/defaultIcon.png'
+            const userInfo = {
+              nickname: socket.nickname,
+              id: socketID,
+              icon: socket.icon
+            }
+            users.push(userInfo)
           }
-          users.push(userInfo)
         }
-      }
 
-      io.in(room).emit('getUsers', users)
+        io.in(room).emit('getUsers', users)
+      } else {
+        users = [...user]
+      }
 
       if (users.length === 4) {
         users = shuffle(users)
@@ -140,25 +151,55 @@ module.exports = io => {
       }
     })
 
-    socket.on('time', () => {
-      //120000 is two minutes
-      let countDown = 120000
+    //timer for broadcast (maybe?)
+    // socket.on('time', (room, time) => {
+    //   //120000 is two minutes
+    //   // let countDown = time
 
-      setInterval(function() {
-        countDown -= 1000
-        if (countDown >= 0) {
-          io.to(socket.id).emit('timer', countDown)
-        }
-      }, 1000)
+    //   setInterval(function () {
+    //     time -= 1000
+    //     if (time >= 0) {
+    //       io.to(socket.id).emit('timer', time)
+    //     }
+    //   }, 1000)
+    // })
+
+    socket.on('newgame', room => {
+      io.in(room).emit('newgamestart')
     })
 
     socket.on('replaceUser', (room, users, droppedPlayerId) => {
       const remainingPlayers = users.filter(user => user.id !== droppedPlayerId)
-
-      // //Keep this console.log to debug room leaving stuff
-      // console.log(remainingPlayers.map(x => x.id))
-
-      io.in(room).emit('newUsers', remainingPlayers)
+      const playerPool = unique(remainingPlayers)
+      const indicesToReplace = indicesOfDroppedPlayer(users, droppedPlayerId)
+      indicesToReplace.forEach(index => {
+        const randomIdx = Math.floor(Math.random() * playerPool.length)
+        users[index] = playerPool[randomIdx]
+      })
+      io.in(room).emit('newUsers', users)
     })
   })
+}
+
+function unique(arr) {
+  let seenIds = []
+  let result = []
+  for (let i = 0; i < arr.length; i++) {
+    let currId = arr[i].id
+    if (seenIds.indexOf(currId) === -1) {
+      seenIds.push(currId)
+      result.push(arr[i])
+    }
+  }
+  return result
+}
+
+function indicesOfDroppedPlayer(users, droppedPlayerId) {
+  const droppedIndices = []
+  users.forEach((user, idx) => {
+    if (user.id === droppedPlayerId) {
+      droppedIndices.push(idx)
+    }
+  })
+  return droppedIndices
 }

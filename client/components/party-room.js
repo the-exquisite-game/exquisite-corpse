@@ -6,7 +6,10 @@ import {
   initializeGame,
   joinRoom,
   turnListener,
-  replaceUser
+  newGameListener,
+  newGame,
+  replaceUser,
+  partyRoomUnmounted
 } from '../socket'
 import {UsersBar} from './users-bar'
 import {FinalMonster} from './finalMonster'
@@ -48,9 +51,11 @@ export class PartyRoom extends React.Component {
     this.addMessage = this.addMessage.bind(this)
     this.displayInstructions = this.displayInstructions.bind(this)
     this.handleSave = this.handleSave.bind(this)
+    this.handleNewGame = this.handleNewGame.bind(this)
     this.handleTimer = this.handleTimer.bind(this)
     this.handlePlayerDisconnecting = this.handlePlayerDisconnecting.bind(this)
     this.setNewUsers = this.setNewUsers.bind(this)
+    this.handlePlayerLeavingEarly = this.handlePlayerLeavingEarly.bind(this)
   }
 
   componentDidMount() {
@@ -76,6 +81,26 @@ export class PartyRoom extends React.Component {
 
     //listening for Game Start
     initializeGame(this.gameStart)
+
+    //listening for New Game
+    newGameListener(this.handleNewGame)
+
+    window.addEventListener('beforeunload', this.handlePlayerLeavingEarly)
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('beforeunload', this.handlePlayerLeavingEarly)
+    partyRoomUnmounted()
+  }
+
+  handlePlayerLeavingEarly(e) {
+    e.preventDefault()
+    e.returnValue = ''
+  }
+
+  //displays instructions
+  displayInstructions() {
+    this.state.users.length <= 4 && swal(<Instructions />)
   }
 
   handleTooManyPlayers() {
@@ -117,7 +142,7 @@ export class PartyRoom extends React.Component {
     this.setState(prevState => {
       return {
         done: numberFinished,
-        userTurn: prevState.users[numberFinished % prevState.users.length],
+        userTurn: prevState.users[numberFinished],
         bodyPartsImage: [...prevState.bodyPartsImage, limbs],
         connectingLines: leadingLines
       }
@@ -126,6 +151,16 @@ export class PartyRoom extends React.Component {
 
   handleFinish() {
     this.setState({gamePlay: false, finished: true})
+  }
+
+  handleNewGame() {
+    this.setState({
+      finished: false,
+      gamePlay: true,
+      connectingLines: '',
+      done: 0,
+      bodyPartsImage: []
+    })
   }
   //click functions to stop line runoff while drawing on drawing-page
   handleMouseDown(e) {
@@ -147,9 +182,12 @@ export class PartyRoom extends React.Component {
     replaceUser(room, this.state.users, droppedPlayerId)
   }
 
-  setNewUsers(users) {
-    this.setState({
-      users: users
+  setNewUsers(remainingUsers) {
+    this.setState(prevState => {
+      return {
+        users: remainingUsers,
+        userTurn: remainingUsers[prevState.done]
+      }
     })
   }
 
@@ -177,7 +215,7 @@ export class PartyRoom extends React.Component {
     const myself = this.state.me
     const userTurn = this.state.userTurn || {}
     const room = this.props.match.params.room
-    const usersLength = this.state.users.length
+
     return (
       <div
         id="party-room"
@@ -185,6 +223,19 @@ export class PartyRoom extends React.Component {
         onMouseUp={this.handleMouseUp}
       >
         <div id="room-name">Room: {this.props.match.params.room}</div>
+
+        {this.state.gamePlay ? (
+          <div className="header-turn-info">
+            {this.state.me.id === userTurn.id
+              ? `It's your turn! Draw the
+            ${this.state.bodyParts[this.state.done]}!`
+              : `It's ${userTurn.nickname}'s turn! Drawing the
+            ${this.state.bodyParts[this.state.done]}...`}
+          </div>
+        ) : (
+          ''
+        )}
+
         <div id="main-party-room-area">
           <div id="users-section">
             <UsersBar
@@ -203,19 +254,17 @@ export class PartyRoom extends React.Component {
           <div id="party-room-center">
             {this.state.gamePlay ? (
               <div id="party-room-canvas">
-                It is {userTurn.nickname}'s turn! Drawing the{' '}
-                {this.state.bodyParts[this.state.done]}
+                {/* It is {userTurn.nickname}'s turn! Drawing the{' '}
+                {this.state.bodyParts[this.state.done]} */}
                 {myself.id === userTurn.id ? (
                   <Drawing
                     canvas={this.canvas}
-                    handleTurn={this.handleTurn}
                     userTurn={this.state.done}
                     room={room}
                     connectingLines={this.state.connectingLines}
                     hasClicked={this.state.hasClicked}
                     clickLocation={this.state.clickLocation}
                     timer={this.state.timer}
-                    length={usersLength}
                   />
                 ) : (
                   ''
@@ -235,16 +284,27 @@ export class PartyRoom extends React.Component {
                     <button type="button" onClick={this.handleSave}>
                       {this.state.saved ? 'Saved!' : 'Save to Gallery'}
                     </button>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        newGame(room, this.state.users)
+                      }}
+                    >
+                      New Game
+                    </button>
                   </div>
                 ) : (
                   <div id="party-room-canvas">
-                    Waiting for {4 - this.state.users.length} more players!
+                    <div className="header-turn-info">
+                      Waiting for {4 - this.state.users.length} more players!
+                    </div>
+                    <Instructions />
                   </div>
                 )}
               </div>
             )}
           </div>
-          <div id="chat-window">
+          <div>
             <ChatWindow
               messages={this.state.chatMessages}
               room={room}

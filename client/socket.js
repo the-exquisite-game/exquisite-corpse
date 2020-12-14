@@ -27,12 +27,21 @@ export function setNameAndIcon(name, icon) {
 }
 
 export function replaceUser(room, users, droppedPlayerId) {
-  console.log('replacing users')
   socket.emit('replaceUser', room, users, droppedPlayerId)
 }
 
 export function leaveRoom(callback) {
   socket.off('roomCreated', callback)
+}
+
+export function partyRoomUnmounted() {
+  socket.emit('playerLeaving')
+  socket.off('messageToState')
+  socket.off('timerInitialize')
+  socket.off('playerDisconnected')
+  socket.off('getUsers')
+  socket.off('newUsers')
+  socket.off('done')
 }
 
 export function joinRoom(
@@ -90,14 +99,25 @@ export function initializeGame(callback) {
   socket.on('gameStart', callback)
 }
 
-export function timer(room, callback) {
-  socket.on('timer', callback)
-  socket.emit('time', room)
+//socket timer for broadcast to room (maybe?)
+// export function timer(room, callback, time) {
+//   socket.on('timer', callback)
+//   socket.emit('time', room, time)
+// }
+
+// export function stopTimer() {
+//   socket.off('time')
+//   socket.off('timer')
+// }
+
+//new game
+export function newGameListener(callback) {
+  socket.on('newgamestart', callback)
 }
 
-export function stopTimer() {
-  socket.off('time')
-  socket.off('timer')
+export function newGame(room, users) {
+  socket.emit('users', room, users)
+  socket.emit('newgame', room)
 }
 
 export default socket

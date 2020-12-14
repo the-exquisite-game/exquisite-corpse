@@ -278,7 +278,6 @@ export class PartyRoom extends React.Component {
                     <FinalMonster
                       bodyParts={this.state.bodyPartsImage}
                       canvas={this.canvas}
-                      className="final-monster"
                     />
                     <div id="buttons-below-canvas">
                       <button type="button" onClick={this.handleDownload}>

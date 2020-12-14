@@ -13,16 +13,6 @@ a {
   color: #153243;
 }
 
-label {
-  display: block;
-}
-
-nav a {
-  display: inline-block;
-  padding: 1em;
-  font-size: 30px;
-}
-
 #app {
   min-height: 100vh;
   display: flex;
@@ -31,14 +21,103 @@ nav a {
 }
 
 #navbar {
-  background-image: linear-gradient(#a6a8e0, #d1d2f9);
+  background-image: linear-gradient(#c0d44e, #def1be);
+  width: 100%;
+  display: flex;
+  flex: 0 1 auto;
+  align-items: center;
+  align-content: center;
+  justify-content: center;
+  box-shadow: 4px 5px 5px 1px rgba(0, 0, 0, 0.24);
+}
+
+#navbarGrid {
   display: grid;
   grid-template-columns: repeat(1, 1fr);
   grid-template-rows: repeat(1, 1fr);
   justify-items: center;
   align-items: center;
   z-index: 2;
-  box-shadow: 4px 5px 5px 1px rgba(0, 0, 0, 0.24);
+}
+
+.gradient-text {
+  /* Fallback: Set a background color. */
+  background-color: #ca4246;
+  background-image: linear-gradient(
+    65deg,
+    #9b89b1 16.666%,
+    #fe797b 16.666%,
+    #ffb750 33.333%,
+    #ffb750 33.333%,
+    #ffb750 50%,
+    #fe797b 66.666%,
+    #fe797b 66.666%,
+    #a587ca 83.333%,
+    #a587ca 83.333%
+  );
+
+  /* Set the background size and repeat properties. */
+  background-size: 100%;
+  background-repeat: repeat;
+
+  /* Use the text as a mask for the background. */
+  /* This will show the gradient as a text color rather than element bg. */
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+#navbar h1 {
+  text-align: center;
+  font-family: 'Fredericka the Great', cursive;
+  color: #9b89b1;
+  -webkit-text-fill-color: transparent;
+  font-weight: 200;
+  text-shadow: 1px 1px 0 rgba(47, 32, 50, 0.15);
+  font-size: 75px;
+}
+
+nav a {
+  display: inline-block;
+  font-family: 'Karla', sans-serif;
+  color: #2f2032;
+  font-weight: 300;
+  padding: 1em;
+  font-size: 20px;
+}
+
+/* Swal styling! */
+.swal-overlay {
+  background-color: rgba(47, 32, 50, 0.45);
+}
+
+.swal-modal {
+  background-color: #def1be;
+  border: 3px solid #9b89b1;
+  border-radius: 15px;
+}
+
+.swal-text {
+  padding: 17px;
+  border-radius: 15px;
+  display: block;
+  margin: 22px;
+  text-align: center;
+  color: black;
+  font-size: 30px;
+}
+
+.swal-button {
+  padding: 7px 19px;
+  border-radius: 15px;
+  background-color: #f9f6f6;
+  font-size: 30px;
+  color: black;
+  border: 1px solid #9b89b1;
+}
+
+.swal-content {
+  border-radius: 15px;
 }
 
 form div {
@@ -63,15 +142,13 @@ button {
   margin: 5px;
   display: inline-block;
   font-size: 25px;
-  border-radius: 25px;
+  border-radius: 15px;
   cursor: pointer;
-  font-family: 'Gamja Flower', cursive;
   background-color: #dcdcdc;
   transition: all 50ms;
 }
 
 #palette button {
-  /* border: none; */
   padding: 15px;
   margin: 5px;
   display: inline-block;
@@ -93,7 +170,7 @@ button {
 button:hover {
   background-color: #a9a9a9;
   transform: scale(1.1);
-  border-radius: 25px;
+  border-radius: 15px;
 }
 
 button:focus {
@@ -104,11 +181,6 @@ button:focus {
   background-color: #dcdcdc;
   background-repeat: no-repeat;
   background-position: center;
-}
-
-.iconCanvas {
-  display: flex;
-  align-items: center;
 }
 
 .arrowButton {
@@ -213,37 +285,86 @@ div.konvajs-content {
   flex-direction: column;
   align-items: center;
   flex-grow: 1;
-  padding-top: 150px;
+  padding-top: 100px;
   padding-bottom: 100px;
   font-size: 25px;
+  background-color: white;
+  background-image: url('/images/backgroundTEST2opacitychange.png');
 }
 
-#buttons-container {
+.home-div {
   display: flex;
-  width: 400px;
-  justify-content: space-evenly;
-  padding: 15px;
-}
-
-span input {
+  padding: 25px;
+  font-family: 'Karla', sans-serif;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  flex: 1 2 auto;
+  background-image: linear-gradient(#def1be, #9b89b1);
+  border: solid #9b89b1;
+  color: #2f2032;
+  width: 45%;
   border-radius: 15px;
-  font-family: 'Gamja Flower', cursive;
-  width: 200px;
-  height: 30px;
-  font-size: 20px;
-  text-align: center;
 }
 
-input:focus {
-  outline: none;
+.iconCanvas {
+  display: flex;
+  width: 100%;
+  padding: 15px;
+  justify-content: center;
+  align-items: center;
 }
 
 span {
   display: flex;
-  flex-direction: column;
+  justify-content: space-between;
+  text-align: center;
+  align-content: center;
   align-items: center;
-  font-size: 30px;
-  margin-top: 10px;
+  width: 90%;
+  font-size: 25px;
+}
+
+.roomButtons {
+  width: 85%;
+}
+
+.roomButtons button {
+  font-family: 'Karla', sans-serif;
+  width: 250px;
+  border: solid #9b89b1;
+  border-width: 1px;
+  background-color: #f9f6f6;
+}
+
+.roomButtons button:hover {
+  color: #fe797b;
+}
+
+.roomButtons label {
+  width: 250px;
+}
+
+#nicknameInput input {
+  margin: 5px;
+  border-radius: 15px;
+  border: solid #9b89b1;
+  color: #2f2032;
+  border-width: 1px;
+  font-family: 'Karla', sans-serif;
+  width: 75%;
+  height: 35px;
+  font-size: 25px;
+  text-align: center;
+}
+
+.roomButtons input {
+  height: 20px;
+  width: 20px;
+}
+
+input:focus {
+  outline: none;
 }
 
 #chat-window {
@@ -310,7 +431,7 @@ span {
   grid-template-columns: repeat(auto-fit, 250px);
   grid-template-rows: repeat(2, 350px);
   margin: 50px;
-  max-width: 65vw;
+  flex: 0 0 60%;
 }
 
 #monsters-container .monster {

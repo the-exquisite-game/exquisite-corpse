@@ -73,41 +73,45 @@ export class Home extends React.Component {
   render() {
     return (
       <div className="home-page">
-        <Icon canvas={this.canvas} />
-        <span>
-          <label>Enter a nickname:</label>
-          <input
-            name="name"
-            value={this.state.name}
-            onChange={this.handleChange}
-          />
-
-          <label>
-            Timed Game?
+        <div className="home-div">
+          Welcome to Exquisite Corpse!
+          <Icon canvas={this.canvas} />
+          <span id="nicknameInput">
+            <label>Nickname:</label>
             <input
-              name="timer"
-              type="checkbox"
-              checked={this.state.timer}
+              name="name"
+              value={this.state.name}
               onChange={this.handleChange}
             />
-          </label>
-        </span>
-
-        <div id="buttons-container">
-          <button type="button" id="createRoom" onClick={this.handleClick}>
-            Create a Room!
-          </button>
-          <button type="button" id="joinRoom" onClick={this.handleJoin}>
-            Join a Room!
+          </span>
+          <span className="roomButtons">
+            <label>
+              Timed Game?
+              <input
+                name="timer"
+                type="checkbox"
+                checked={this.state.timer}
+                onChange={this.handleChange}
+              />
+            </label>
+            <label> Enter a code from a buddy!</label>
+          </span>
+          <span className="roomButtons">
+            <button type="button" id="createRoom" onClick={this.handleClick}>
+              Create a Room!
+            </button>
+            <button type="button" id="joinRoom" onClick={this.handleJoin}>
+              Join a Room!
+            </button>
+          </span>
+          <button
+            className="instructions-button"
+            type="button"
+            onClick={this.displayInstructions}
+          >
+            Instructions
           </button>
         </div>
-        <button
-          className="instructions-button"
-          type="button"
-          onClick={this.displayInstructions}
-        >
-          Instructions
-        </button>
       </div>
     )
   }

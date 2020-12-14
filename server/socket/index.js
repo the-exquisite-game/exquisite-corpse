@@ -161,11 +161,13 @@ module.exports = io => {
 
     socket.on('replaceUser', (room, users, droppedPlayerId) => {
       const remainingPlayers = users.filter(user => user.id !== droppedPlayerId)
-
-      // //Keep this console.log to debug room leaving stuff
-      // console.log(remainingPlayers.map(x => x.id))
-
-      io.in(room).emit('newUsers', remainingPlayers)
+      const playerPool = unique(remainingPlayers)
+      const indicesToReplace = indicesOfDroppedPlayer(users, droppedPlayerId)
+      indicesToReplace.forEach(index => {
+        const randomIdx = Math.floor(Math.random() * playerPool.length)
+        users[index] = playerPool[randomIdx]
+      })
+      io.in(room).emit('newUsers', users)
     })
   })
 }

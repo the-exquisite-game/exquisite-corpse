@@ -47,6 +47,7 @@
     "compression": "^1.7.3",
     "connect-session-sequelize": "^6.0.0",
     "css-loader": "^5.0.1",
+    "csshake": "^1.5.3",
     "express": "^4.16.4",
     "express-session": "^1.15.1",
     "history": "^4.9.0",

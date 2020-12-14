@@ -421,7 +421,6 @@ input:focus {
   align-items: center;
   flex-wrap: wrap;
   flex-grow: 1;
-  background-color: #795a80;
 }
 
 #monsters-container {
@@ -431,7 +430,7 @@ input:focus {
   grid-template-columns: repeat(auto-fit, 250px);
   grid-template-rows: repeat(2, 350px);
   margin: 50px;
-  flex: 0 0 60%;
+  max-width: 65vw;
 }
 
 #monsters-container .monster {

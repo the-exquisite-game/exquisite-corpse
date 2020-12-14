@@ -75,6 +75,7 @@ export class Home extends React.Component {
       <div className="home-page">
         <div className="home-div">
           Welcome to Exquisite Corpse!
+          <Icon canvas={this.canvas} />
           <span id="nicknameInput">
             <label>Nickname:</label>
             <input
@@ -83,11 +84,7 @@ export class Home extends React.Component {
               onChange={this.handleChange}
             />
           </span>
-          <Icon canvas={this.canvas} />
           <span className="roomButtons">
-            <button type="button" id="createRoom" onClick={this.handleClick}>
-              Create a Room!
-            </button>
             <label>
               Timed Game?
               <input
@@ -97,12 +94,15 @@ export class Home extends React.Component {
                 onChange={this.handleChange}
               />
             </label>
+            <label> Enter a code from a buddy!</label>
           </span>
           <span className="roomButtons">
+            <button type="button" id="createRoom" onClick={this.handleClick}>
+              Create a Room!
+            </button>
             <button type="button" id="joinRoom" onClick={this.handleJoin}>
               Join a Room!
             </button>
-            <label> Enter a room code from a buddy!</label>
           </span>
           <button
             className="instructions-button"

@@ -182,16 +182,8 @@ button {
   font-size: 25px;
   border-radius: 15px;
   cursor: pointer;
-  font-family: 'Gamja Flower', cursive;
   background-color: #dcdcdc;
   transition: all 50ms;
-}
-
-.roomButtons button {
-  width: 170px;
-  border: solid #9b89b1;
-  border-width: 1px;
-  background-color: #f9f6f6;
 }
 
 #palette button {
@@ -344,12 +336,13 @@ div.konvajs-content {
   padding: 25px;
   font-family: 'Karla', sans-serif;
   flex-direction: column;
+  justify-content: space-between;
   align-items: center;
   flex: 1 2 auto;
   background-image: linear-gradient(#def1be, #9b89b1);
   border: solid #9b89b1;
+  color: #2f2032;
   width: 45%;
-  height: 45%;
   border-radius: 15px;
 }
 
@@ -363,32 +356,39 @@ div.konvajs-content {
 
 span {
   display: flex;
-  padding: 10px;
   justify-content: space-between;
   text-align: center;
   align-content: center;
   align-items: center;
   width: 90%;
   font-size: 25px;
-  margin-top: 10px;
 }
 
 .roomButtons {
-  width: 65%;
+  width: 85%;
 }
 
 .roomButtons button {
   font-family: 'Karla', sans-serif;
+  width: 250px;
+  border: solid #9b89b1;
+  border-width: 1px;
+  background-color: #f9f6f6;
 }
 
 .roomButtons label {
-  width: 200px;
+  width: 250px;
+}
+
+#nicknameInput {
+  margin-bottom: ;
 }
 
 #nicknameInput input {
   margin: 5px;
   border-radius: 15px;
   border: solid #9b89b1;
+  color: #2f2032;
   border-width: 1px;
   font-family: 'Karla', sans-serif;
   width: 75%;

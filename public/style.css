@@ -421,6 +421,13 @@ input:focus {
   align-items: center;
   flex-wrap: wrap;
   flex-grow: 1;
+  background-image: linear-gradient(
+    to bottom right,
+    /* #efecec, */ #ffe6c2,
+    #def1be,
+    #dfd4ec,
+    #aaa4b1
+  );
 }
 
 #monsters-container {
@@ -454,7 +461,8 @@ input:focus {
 }
 
 #frame {
-  background: url(./images/gold.png);
+  /* background: url(./images/light-wood.jpg); */
+  background: #ffb750;
   margin-left: auto;
   margin-right: auto;
   display: table-cell;

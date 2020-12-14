@@ -1,8 +1,5 @@
-const {
-  uniqueNamesGenerator,
-  adjectives,
-  animals
-} = require('unique-names-generator')
+const {uniqueNamesGenerator} = require('unique-names-generator')
+const {adjectives, animals} = require('../dictionary')
 
 //shuffling using Durstenfeld shuffle
 const shuffle = arr => {
@@ -40,6 +37,22 @@ module.exports = io => {
       }
     })
 
+    socket.on('playerLeaving', () => {
+      const playerThatLeft = socket.id
+      const room = Object.values(socket.rooms).filter(
+        roomName => roomName !== playerThatLeft
+      )[0]
+      if (room) {
+        const socketsInRoom = Object.keys(
+          io.sockets.adapter.rooms[room].sockets
+        )
+        const remainingPlayer = socketsInRoom.find(
+          socketId => playerThatLeft !== socketId
+        )
+        socket.to(remainingPlayer).emit('playerDisconnected', playerThatLeft)
+      }
+    })
+
     //create the room
     socket.on('roomCreate', () => {
       const room = uniqueNamesGenerator({
@@ -58,31 +71,35 @@ module.exports = io => {
     })
 
     //getting all users
-    socket.on('users', room => {
+    socket.on('users', (room, user) => {
       const roomInfo = io.sockets.adapter.rooms[room]
       let users = []
 
-      for (let socketID in roomInfo.sockets) {
-        if (io.sockets.connected[socketID].hasOwnProperty('nickname')) {
-          const nickname = io.sockets.connected[socketID].nickname
+      if (!user) {
+        for (let socketID in roomInfo.sockets) {
+          if (io.sockets.connected[socketID].hasOwnProperty('nickname')) {
+            const nickname = io.sockets.connected[socketID].nickname
 
-          const icon = io.sockets.connected[socketID].icon
+            const icon = io.sockets.connected[socketID].icon
 
-          const userInfo = {nickname: nickname, id: socketID, icon: icon}
-          users.push(userInfo)
-        } else {
-          socket.nickname = `Frankenstein`
-          socket.icon = '/images/defaultIcon.png'
-          const userInfo = {
-            nickname: socket.nickname,
-            id: socketID,
-            icon: socket.icon
+            const userInfo = {nickname: nickname, id: socketID, icon: icon}
+            users.push(userInfo)
+          } else {
+            socket.nickname = `Frankenstein`
+            socket.icon = '/images/defaultIcon.png'
+            const userInfo = {
+              nickname: socket.nickname,
+              id: socketID,
+              icon: socket.icon
+            }
+            users.push(userInfo)
           }
-          users.push(userInfo)
         }
-      }
 
-      io.in(room).emit('getUsers', users)
+        io.in(room).emit('getUsers', users)
+      } else {
+        users = [...user]
+      }
 
       if (users.length === 4) {
         users = shuffle(users)

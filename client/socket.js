@@ -34,6 +34,16 @@ export function leaveRoom(callback) {
   socket.off('roomCreated', callback)
 }
 
+export function partyRoomUnmounted() {
+  socket.emit('playerLeaving')
+  socket.off('messageToState')
+  socket.off('timerInitialize')
+  socket.off('playerDisconnected')
+  socket.off('getUsers')
+  socket.off('newUsers')
+  socket.off('done')
+}
+
 export function joinRoom(
   room,
   messages,
@@ -105,8 +115,8 @@ export function newGameListener(callback) {
   socket.on('newgamestart', callback)
 }
 
-export function newGame(room) {
-  socket.emit('users', room)
+export function newGame(room, users) {
+  socket.emit('users', room, users)
   socket.emit('newgame', room)
 }
 

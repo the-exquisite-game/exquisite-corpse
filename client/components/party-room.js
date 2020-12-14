@@ -8,7 +8,8 @@ import {
   turnListener,
   newGameListener,
   newGame,
-  replaceUser
+  replaceUser,
+  partyRoomUnmounted
 } from '../socket'
 import {UsersBar} from './users-bar'
 import {FinalMonster} from './finalMonster'
@@ -89,6 +90,7 @@ export class PartyRoom extends React.Component {
 
   componentWillUnmount() {
     window.removeEventListener('beforeunload', this.handlePlayerLeavingEarly)
+    partyRoomUnmounted()
   }
 
   handlePlayerLeavingEarly(e) {
@@ -213,6 +215,7 @@ export class PartyRoom extends React.Component {
     const myself = this.state.me
     const userTurn = this.state.userTurn || {}
     const room = this.props.match.params.room
+
     return (
       <div
         id="party-room"
@@ -224,9 +227,9 @@ export class PartyRoom extends React.Component {
         {this.state.gamePlay ? (
           <div className="header-turn-info">
             {this.state.me.id === userTurn.id
-              ? `It's your turn! Draw the 
+              ? `It's your turn! Draw the
             ${this.state.bodyParts[this.state.done]}!`
-              : `It's ${userTurn.nickname}'s turn! Drawing the 
+              : `It's ${userTurn.nickname}'s turn! Drawing the
             ${this.state.bodyParts[this.state.done]}...`}
           </div>
         ) : this.state.finished ? (

@@ -6,7 +6,17 @@ export class Gallery extends React.Component {
     super()
     this.state = {
       monsters: [],
-      pageNum: 0
+      pageNum: 0,
+      // colors : ['#EE7A7C', '#C0D44E', '#9B89B1', '#FFB750', '#2F2032']
+      colors: [
+        '#FE797B',
+        '#FFB750',
+        '#FFEA56',
+        '#C0D44E',
+        '#36CEDC',
+        '#A587CA',
+        '#9B89B1'
+      ]
     }
     this.nextPage = this.nextPage.bind(this)
     this.previousPage = this.previousPage.bind(this)
@@ -22,7 +32,7 @@ export class Gallery extends React.Component {
     this.setState(oldState => ({pageNum: oldState.pageNum - 1}))
   }
   render() {
-    const {monsters, pageNum} = this.state
+    const {monsters, pageNum, colors} = this.state
     return (
       <div id="gallery">
         <div id="monsters-container">
@@ -30,6 +40,9 @@ export class Gallery extends React.Component {
             <div className="monster shake-trigger" key={monster.id}>
               <div
                 id="frame"
+                style={{
+                  background: colors[Math.floor(Math.random() * colors.length)]
+                }}
                 className={
                   monster.id % 2
                     ? 'shake-slow shake-constant--hover'

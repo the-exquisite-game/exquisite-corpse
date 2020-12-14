@@ -217,6 +217,7 @@ export class PartyRoom extends React.Component {
     const myself = this.state.me
     const userTurn = this.state.userTurn || {}
     const room = this.props.match.params.room
+
     return (
       <div
         id="party-room"

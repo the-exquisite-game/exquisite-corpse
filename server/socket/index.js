@@ -1,8 +1,5 @@
-const {
-  uniqueNamesGenerator,
-  adjectives,
-  animals
-} = require('unique-names-generator')
+const {uniqueNamesGenerator} = require('unique-names-generator')
+const {adjectives, animals} = require('../dictionary')
 
 //shuffling using Durstenfeld shuffle
 const shuffle = arr => {
@@ -149,6 +146,17 @@ module.exports = io => {
 
     socket.on('newgame', room => {
       io.in(room).emit('newgamestart')
+    })
+
+    socket.on('replaceUser', (room, users, droppedPlayerId) => {
+      const remainingPlayers = users.filter(user => user.id !== droppedPlayerId)
+      const playerPool = unique(remainingPlayers)
+      const indicesToReplace = indicesOfDroppedPlayer(users, droppedPlayerId)
+      indicesToReplace.forEach(index => {
+        const randomIdx = Math.floor(Math.random() * playerPool.length)
+        users[index] = playerPool[randomIdx]
+      })
+      io.in(room).emit('newUsers', users)
     })
 
     socket.on('replaceUser', (room, users, droppedPlayerId) => {

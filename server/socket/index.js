@@ -19,12 +19,25 @@ module.exports = io => {
   io.on('connection', socket => {
     console.log(`A socket connection to the server has been made: ${socket.id}`)
 
-    socket.on('disconnecting', () => {
+    socket.on('disconnect', () => {
       console.log(`Connection ${socket.id} has left the building`)
     })
 
-    socket.on('disconnect', () => {
-      console.log(`Connection ${socket.id} has left the building`)
+    //handles player dropping out of game
+    socket.on('disconnecting', () => {
+      const playerThatLeft = socket.id
+      const room = Object.values(socket.rooms).filter(
+        roomName => roomName !== playerThatLeft
+      )[0]
+      if (room) {
+        const socketsInRoom = Object.keys(
+          io.sockets.adapter.rooms[room].sockets
+        )
+        const remainingPlayer = socketsInRoom.find(
+          socketId => playerThatLeft !== socketId
+        )
+        socket.to(remainingPlayer).emit('playerDisconnected', playerThatLeft)
+      }
     })
 
     //create the room
@@ -137,5 +150,39 @@ module.exports = io => {
     socket.on('newgame', room => {
       io.in(room).emit('newgamestart')
     })
+
+    socket.on('replaceUser', (room, users, droppedPlayerId) => {
+      const remainingPlayers = users.filter(user => user.id !== droppedPlayerId)
+      const playerPool = unique(remainingPlayers)
+      const indicesToReplace = indicesOfDroppedPlayer(users, droppedPlayerId)
+      indicesToReplace.forEach(index => {
+        const randomIdx = Math.floor(Math.random() * playerPool.length)
+        users[index] = playerPool[randomIdx]
+      })
+      io.in(room).emit('newUsers', users)
+    })
   })
+}
+
+function unique(arr) {
+  let seenIds = []
+  let result = []
+  for (let i = 0; i < arr.length; i++) {
+    let currId = arr[i].id
+    if (seenIds.indexOf(currId) === -1) {
+      seenIds.push(currId)
+      result.push(arr[i])
+    }
+  }
+  return result
+}
+
+function indicesOfDroppedPlayer(users, droppedPlayerId) {
+  const droppedIndices = []
+  users.forEach((user, idx) => {
+    if (user.id === droppedPlayerId) {
+      droppedIndices.push(idx)
+    }
+  })
+  return droppedIndices
 }

@@ -7,7 +7,8 @@ import {
   joinRoom,
   turnListener,
   newGameListener,
-  newGame
+  newGame,
+  replaceUser
 } from '../socket'
 import {UsersBar} from './users-bar'
 import {FinalMonster} from './finalMonster'
@@ -51,6 +52,9 @@ export class PartyRoom extends React.Component {
     this.handleSave = this.handleSave.bind(this)
     this.handleNewGame = this.handleNewGame.bind(this)
     this.handleTimer = this.handleTimer.bind(this)
+    this.handlePlayerDisconnecting = this.handlePlayerDisconnecting.bind(this)
+    this.setNewUsers = this.setNewUsers.bind(this)
+    this.handlePlayerLeavingEarly = this.handlePlayerLeavingEarly.bind(this)
   }
 
   componentDidMount() {
@@ -60,7 +64,9 @@ export class PartyRoom extends React.Component {
       this.addMessage,
       this.handleTooManyPlayers,
       this.props.location.state,
-      this.handleTimer
+      this.handleTimer,
+      this.handlePlayerDisconnecting,
+      this.setNewUsers
     )
 
     //gets all users + listens for more
@@ -77,6 +83,17 @@ export class PartyRoom extends React.Component {
 
     //listening for New Game
     newGameListener(this.handleNewGame)
+
+    window.addEventListener('beforeunload', this.handlePlayerLeavingEarly)
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('beforeunload', this.handlePlayerLeavingEarly)
+  }
+
+  handlePlayerLeavingEarly(e) {
+    e.preventDefault()
+    e.returnValue = ''
   }
 
   //displays instructions
@@ -156,6 +173,21 @@ export class PartyRoom extends React.Component {
   handleMouseUp() {
     this.setState({
       hasClicked: false
+    })
+  }
+
+  handlePlayerDisconnecting(droppedPlayerId) {
+    console.log('GOT DISCONNECT FOR: ', droppedPlayerId)
+    const room = this.props.match.params.room
+    replaceUser(room, this.state.users, droppedPlayerId)
+  }
+
+  setNewUsers(remainingUsers) {
+    this.setState(prevState => {
+      return {
+        users: remainingUsers,
+        userTurn: remainingUsers[prevState.done]
+      }
     })
   }
 

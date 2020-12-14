@@ -34,6 +34,10 @@ export function leaveRoom(callback) {
   socket.off('roomCreated', callback)
 }
 
+export function partyRoomUnmounted() {
+  socket.disconnect()
+}
+
 export function joinRoom(
   room,
   messages,

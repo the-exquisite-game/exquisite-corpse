@@ -215,7 +215,7 @@ export class PartyRoom extends React.Component {
     const myself = this.state.me
     const userTurn = this.state.userTurn || {}
     const room = this.props.match.params.room
-    const usersLength = this.state.users.length
+
     return (
       <div
         id="party-room"
@@ -252,7 +252,6 @@ export class PartyRoom extends React.Component {
                     hasClicked={this.state.hasClicked}
                     clickLocation={this.state.clickLocation}
                     timer={this.state.timer}
-                    length={usersLength}
                   />
                 ) : (
                   ''

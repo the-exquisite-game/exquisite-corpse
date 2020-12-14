@@ -18,12 +18,7 @@ export class UsersBar extends React.Component {
                 <div id="username-sidebar">{username.nickname}</div>
               </div>
             ) : (
-              <div
-                key={Math.random()
-                  .toString(36)
-                  .substring(7)}
-                className="indiv-user-sidebar"
-              >
+              <div key={username.id} className="indiv-user-sidebar">
                 <img id="image-sidebar" src={username.icon} />
                 <div id="username-sidebar">{username.nickname}</div>
               </div>

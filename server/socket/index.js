@@ -1,8 +1,5 @@
-const {
-  uniqueNamesGenerator,
-  adjectives,
-  animals
-} = require('unique-names-generator')
+const {uniqueNamesGenerator} = require('unique-names-generator')
+const {adjectives, animals} = require('../dictionary')
 
 //shuffling using Durstenfeld shuffle
 const shuffle = arr => {
@@ -25,24 +22,18 @@ module.exports = io => {
 
     //handles player dropping out of game
     socket.on('disconnecting', () => {
-      //can this be Object[socket.id] ??? since only one player is leaving?
       const playerThatLeft = socket.id
-
-      //filtering out the thing that is the person's id
       const room = Object.values(socket.rooms).filter(
         roomName => roomName !== playerThatLeft
       )[0]
-
       if (room) {
         const socketsInRoom = Object.keys(
           io.sockets.adapter.rooms[room].sockets
         )
-
-        // const remainingPlayers = socketsInRoom.filter(
-        // socketId => socketId !== playerThatLeft
-        // )
-
-        socket.in(room).emit('playerDisconnected', playerThatLeft)
+        const remainingPlayer = socketsInRoom.find(
+          socketId => playerThatLeft !== socketId
+        )
+        socket.to(remainingPlayer).emit('playerDisconnected', playerThatLeft)
       }
     })
 
@@ -77,8 +68,8 @@ module.exports = io => {
           const userInfo = {nickname: nickname, id: socketID, icon: icon}
           users.push(userInfo)
         } else {
-          socket.nickname = `User`
-          socket.icon = '/images/unamusedMonster_blue.png'
+          socket.nickname = `Frankenstein`
+          socket.icon = '/images/defaultIcon.png'
           const userInfo = {
             nickname: socket.nickname,
             id: socketID,
@@ -140,16 +131,32 @@ module.exports = io => {
       }
     })
 
-    socket.on('time', () => {
-      //120000 is two minutes
-      let countDown = 120000
+    //timer for broadcast (maybe?)
+    // socket.on('time', (room, time) => {
+    //   //120000 is two minutes
+    //   // let countDown = time
 
-      setInterval(function() {
-        countDown -= 1000
-        if (countDown >= 0) {
-          io.to(socket.id).emit('timer', countDown)
-        }
-      }, 1000)
+    //   setInterval(function () {
+    //     time -= 1000
+    //     if (time >= 0) {
+    //       io.to(socket.id).emit('timer', time)
+    //     }
+    //   }, 1000)
+    // })
+
+    socket.on('newgame', room => {
+      io.in(room).emit('newgamestart')
+    })
+
+    socket.on('replaceUser', (room, users, droppedPlayerId) => {
+      const remainingPlayers = users.filter(user => user.id !== droppedPlayerId)
+      const playerPool = unique(remainingPlayers)
+      const indicesToReplace = indicesOfDroppedPlayer(users, droppedPlayerId)
+      indicesToReplace.forEach(index => {
+        const randomIdx = Math.floor(Math.random() * playerPool.length)
+        users[index] = playerPool[randomIdx]
+      })
+      io.in(room).emit('newUsers', users)
     })
 
     socket.on('replaceUser', (room, users, droppedPlayerId) => {
@@ -161,4 +168,27 @@ module.exports = io => {
       io.in(room).emit('newUsers', remainingPlayers)
     })
   })
+}
+
+function unique(arr) {
+  let seenIds = []
+  let result = []
+  for (let i = 0; i < arr.length; i++) {
+    let currId = arr[i].id
+    if (seenIds.indexOf(currId) === -1) {
+      seenIds.push(currId)
+      result.push(arr[i])
+    }
+  }
+  return result
+}
+
+function indicesOfDroppedPlayer(users, droppedPlayerId) {
+  const droppedIndices = []
+  users.forEach((user, idx) => {
+    if (user.id === droppedPlayerId) {
+      droppedIndices.push(idx)
+    }
+  })
+  return droppedIndices
 }

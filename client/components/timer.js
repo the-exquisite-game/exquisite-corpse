@@ -1,5 +1,4 @@
 import React, {Component} from 'react'
-import {stopTimer, timer} from '../socket'
 
 class Timer extends Component {
   constructor(props) {
@@ -8,22 +7,34 @@ class Timer extends Component {
       time: 120000
     }
     this.handleTime = this.handleTime.bind(this)
+    this.setTimer = this.setTimer.bind(this)
+    this.countdown = this.countdown.bind(this)
   }
 
   //listen for timer
   componentDidMount() {
-    //reset timer here and listen for it
-    timer(this.props.room, this.handleTime)
+    this.countdown()
 
     this.time = setTimeout(() => {
       this.props.handleDone()
     }, 120000)
   }
 
+  //timer
+  countdown() {
+    this.counter = setInterval(this.setTimer, 1000)
+  }
+
+  setTimer() {
+    if (this.state.time > 0) {
+      this.setState({time: this.state.time - 1000})
+    }
+  }
+
   //unsubscribes from timer
   componentWillUnmount() {
     clearTimeout(this.time)
-    stopTimer()
+    clearInterval(this.counter)
   }
 
   handleTime(time) {

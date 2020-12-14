@@ -1,7 +1,14 @@
 body {
   font-family: 'Gamja Flower', cursive;
   margin: 0;
-  background-color: #f7edf0;
+  /* background-color: #f7edf0; */
+  background-image: linear-gradient(
+    to bottom right,
+    /* #efecec, */ #ffe6c2,
+    #def1be,
+    #dfd4ec,
+    #aaa4b1
+  );
 }
 h1 {
   margin: 0;
@@ -21,6 +28,8 @@ a {
 }
 
 #navbar {
+  /* background-image: linear-gradient(#a6a8e0, #d1d2f9); */
+  /* background-color: #2f2032; */
   background-image: linear-gradient(#c0d44e, #def1be);
   width: 100%;
   display: flex;
@@ -131,6 +140,10 @@ form div {
   justify-content: center;
   flex-direction: column;
   background-color: #f1e5eb;
+  padding: 6px;
+  padding-left: 40px;
+  padding-right: 40px;
+  border: white 2px solid;
   border-radius: 12px;
   width: 350px;
   margin: 12px;
@@ -146,6 +159,7 @@ button {
   cursor: pointer;
   background-color: #dcdcdc;
   transition: all 50ms;
+  color: #2f2032;
 }
 
 #palette button {
@@ -168,9 +182,10 @@ button {
 }
 
 button:hover {
-  background-color: #a9a9a9;
+  /* background-color: #a9a9a9; */
   transform: scale(1.1);
-  border-radius: 15px;
+  color: #def1be;
+  /* border-radius: 25px; */
 }
 
 button:focus {
@@ -181,6 +196,7 @@ button:focus {
   background-color: #dcdcdc;
   background-repeat: no-repeat;
   background-position: center;
+  /* background-size: 75%; */
 }
 
 .arrowButton {
@@ -208,20 +224,26 @@ button:focus {
   justify-content: center;
   flex-direction: column;
   margin-top: 3em;
+  margin-bottom: 3em;
   flex-grow: 1;
 }
 
 #room-name {
   padding: 15px;
-  margin-bottom: 40px;
   font-size: x-large;
-  background-color: #fbf9f9;
-  border: #c7d66d 2px solid;
+  background-color: #dfd4ec;
+  border: #9b89b1 5px solid;
   border-radius: 8px;
+}
+
+.header-turn-info {
+  font-size: x-large;
+  margin: 13px;
 }
 
 #main-party-room-area {
   display: flex;
+  margin-top: 25px;
 }
 
 #party-room-canvas {
@@ -240,10 +262,10 @@ button:focus {
   border-radius: 9px;
   padding: 8px;
   background-color: #fbf9f9;
-  border: solid #c7d66d;
-  border-width: 2px;
+  border: solid #dfd4ec;
+  border-width: 4px;
   align-content: center;
-  min-width: 185px;
+  min-width: 260px;
 }
 
 .indiv-user-sidebar {
@@ -256,7 +278,7 @@ button:focus {
   display: flex;
   font-size: x-large;
   align-items: center;
-  background-color: #dde99d;
+  background-color: #dfd4ec;
   border-radius: 8px;
 }
 
@@ -273,6 +295,15 @@ button:focus {
   display: flex;
   flex-direction: column;
   align-items: center;
+}
+
+#timer {
+  display: flex;
+  justify-content: center;
+  width: 90%;
+  border-radius: 3px;
+  margin-bottom: 5px;
+  font-size: xx-large;
 }
 
 div.konvajs-content {
@@ -369,8 +400,10 @@ input:focus {
 
 #chat-window {
   background-color: #c7d66d;
+  border: white 2px solid;
   border-radius: 12px;
   margin: 12px;
+  padding: 2px;
 }
 
 #chat-messages {

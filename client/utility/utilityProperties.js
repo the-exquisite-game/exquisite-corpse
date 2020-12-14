@@ -23,43 +23,50 @@ export const tools = {
   pen: {
     name: 'tool',
     value: 'pen',
-    icon: '/images/brush.png'
+    icon: '/images/brush.png',
+    size: '80%'
   },
 
   eraser: {
     name: 'tool',
     value: 'eraser',
-    icon: '/images/eraser.png'
+    icon: '/images/eraser.png',
+    size: '80%'
   },
 
   small: {
     name: 'brushSize',
     value: '5',
-    icon: '/images/pt_sm.png'
+    icon: '/images/point.png',
+    size: '35%'
   },
 
   medium: {
     name: 'brushSize',
     value: '10',
-    icon: '/images/pt_med.png'
+    icon: '/images/point.png',
+    size: '60%'
   },
 
   large: {
     name: 'brushSize',
     value: '20',
-    icon: '/images/pt_LG.png'
+    icon: '/images/point.png',
+    size: '95%'
   },
 
   clear: {
     name: 'clear',
     value: 'clear',
-    icon: '/images/trash.png'
+    icon: '/images/trash.png',
+    size: '80%'
   },
 
   undo: {
     name: 'undo',
     value: 'undo',
-    icon: '/images/undo.png'
+    icon: '/images/undo.png',
+    size: '80%'
   }
 }
 

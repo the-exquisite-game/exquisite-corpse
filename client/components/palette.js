@@ -71,7 +71,8 @@ class Palette extends React.Component {
                 type="button"
                 className="tool"
                 style={{
-                  backgroundImage: `url(${tools[element].icon})`
+                  backgroundImage: `url(${tools[element].icon})`,
+                  backgroundSize: `${tools[element].size}`
                 }}
                 name={tools[element].name}
                 value={tools[element].value}

@@ -39,19 +39,86 @@ a {
   z-index: 2;
 }
 
+.gradient-text {
+  /* Fallback: Set a background color. */
+  background-color: #ca4246;
+
+  /* Create the gradient. */
+  background-image: linear-gradient(
+    65deg,
+    #9b89b1 16.666%,
+    #fe797b 16.666%,
+    #ffb750 33.333%,
+    #ffb750 33.333%,
+    #ffb750 50%,
+    #fe797b 66.666%,
+    #fe797b 66.666%,
+    #a587ca 83.333%,
+    #a587ca 83.333%
+  );
+
+  /* #A587CA 16.666%,
+        #FFB750 16.666%,
+        #FFB750 33.333%,
+        #FE797B 33.333%,
+        #FE797B 50%,
+        #FE797B 66.666%,
+        #FE797B 66.666%,
+        #A587CA 83.333%,
+        #A587CA 83.333%) */
+
+  /* rainbow our colors */
+  /* #9B89B1 5%,
+        #FFB750 10%,
+        #EE7A7C 16.666%,
+        #9B89B1 33.33%,
+        #FFB750 20%,
+        #F18F43 20%,
+        #9B89B1 66.666%,
+        #FFB750 83.333%,
+        #EE7A7C 83.333%); */
+
+  /* rainbow colors */
+  /* #CA4246 16.666%,
+        #E16541 16.666%,
+        #E16541 33.333%,
+        #F18F43 33.333%,
+        #F18F43 50%,
+        #8B9862 50%,
+        #8B9862 66.666%,
+        #476098 66.666%,
+        #476098 83.333%,
+        #A7489B 83.333%); */
+
+  /* Set the background size and repeat properties. */
+  background-size: 100%;
+  background-repeat: repeat;
+
+  /* Use the text as a mask for the background. */
+  /* This will show the gradient as a text color rather than element bg. */
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
 #navbar h1 {
   text-align: center;
   font-family: 'Fredericka the Great', cursive;
-  color: #000000;
-  font-weight: 400;
-  text-shadow: -1px 0 0 #def1be, 1px 1px 0 #9b89b1, 2px -1px 0 #def1be,
-    3px 0 0 #9b89b1;
+  color: #9b89b1;
+  -webkit-text-fill-color: transparent;
+  font-weight: 200;
+  text-shadow: 1px 1px 0 rgba(47, 32, 50, 0.15);
+  /* text-shadow: -1px 0 0 #2F2032, 2px 2px 0 #EE7A7C, 2px -1px 0 #FFB750,
+    3px 0 0 #2F2032; */
+  /* text-shadow: 1px 1px 0 #EE7A7C, -1px 1px 0 #FFB750,
+    1px -1px 0 #2F2032, -1px -1px 0 #9b89b1; */
   font-size: 75px;
 }
 
 nav a {
   display: inline-block;
   font-family: 'Karla', sans-serif;
+  color: #2f2032;
   font-weight: 300;
   padding: 1em;
   font-size: 20px;
@@ -275,10 +342,11 @@ div.konvajs-content {
 .home-div {
   display: flex;
   padding: 25px;
+  font-family: 'Karla', sans-serif;
   flex-direction: column;
   align-items: center;
   flex: 1 2 auto;
-  background-image: linear-gradient(#def1be, #c0d44e);
+  background-image: linear-gradient(#def1be, #9b89b1);
   border: solid #9b89b1;
   width: 45%;
   height: 45%;
@@ -309,6 +377,10 @@ span {
   width: 65%;
 }
 
+.roomButtons button {
+  font-family: 'Karla', sans-serif;
+}
+
 .roomButtons label {
   width: 200px;
 }
@@ -318,7 +390,7 @@ span {
   border-radius: 15px;
   border: solid #9b89b1;
   border-width: 1px;
-  font-family: 'Gamja Flower', cursive;
+  font-family: 'Karla', sans-serif;
   width: 75%;
   height: 35px;
   font-size: 25px;

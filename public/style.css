@@ -348,14 +348,6 @@ div.konvajs-content {
   flex: 1 2 auto;
   background-color: #dfd4ec;
   border: solid #2f2032;
-  /* background-image: linear-gradient(#def1be, #9b89b1); */
-  background-image: linear-gradient(
-    to bottom right,
-    /* #efecec, */ #ffe6c2,
-    #def1be,
-    #dfd4ec,
-    #aaa4b1
-  );
   color: #2f2032;
   width: 45%;
   border-radius: 15px;
@@ -568,7 +560,7 @@ input:focus {
 
 .footer-left p {
   color: #2f2032;
-  font-size: 27px;
+  font-size: medium;
   margin: 0px;
 }
 
@@ -600,7 +592,7 @@ input:focus {
 }
 
 .footer-right div {
-  font-size: 20px;
+  font-size: small;
 }
 
 .author img {

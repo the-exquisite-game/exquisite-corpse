@@ -73,6 +73,9 @@ class Drawing extends Component {
   handleDoneClick() {
     const turn = this.props.userTurn + 1
     this.handleDone(turn)
+    this.setState({
+      lines: []
+    })
   }
 
   handleChange(event) {

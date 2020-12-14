@@ -3,13 +3,17 @@ import {Link} from 'react-router-dom'
 
 const Navbar = () => (
   <div id="navbar">
-    <h1>Exquisite Corpse!</h1>
-    <nav>
-      <div>
-        <Link to="/home">Home</Link>
-        <Link to="/gallery">Gallery</Link>
-      </div>
-    </nav>
+    <div id="navbarGrid">
+      <h1 className="gradient-text">Exquisite Corpse!</h1>
+      <nav>
+        <div>
+          <img src="/images/brush.png" />
+          <Link to="/home">Home</Link>
+          <Link to="/gallery">Gallery</Link>
+          <img src="/images/brush.png" />
+        </div>
+      </nav>
+    </div>
   </div>
 )
 

@@ -20,32 +20,113 @@ a {
   color: #153243;
 }
 
-label {
-  display: block;
-}
-
-nav a {
-  display: inline-block;
-  padding: 1em;
-  font-size: 30px;
-}
-
 #app {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
+  position: relative;
 }
 
 #navbar {
   /* background-image: linear-gradient(#a6a8e0, #d1d2f9); */
-  background-color: #2f2032;
+  /* background-color: #2f2032; */
+  background-image: linear-gradient(#c0d44e, #def1be);
+  width: 100%;
+  display: flex;
+  flex: 0 1 auto;
+  align-items: center;
+  align-content: center;
+  justify-content: center;
+  box-shadow: 4px 5px 5px 1px rgba(0, 0, 0, 0.24);
+}
+
+#navbarGrid {
   display: grid;
   grid-template-columns: repeat(1, 1fr);
   grid-template-rows: repeat(1, 1fr);
   justify-items: center;
   align-items: center;
   z-index: 2;
-  box-shadow: 4px 5px 5px 1px rgba(0, 0, 0, 0.24);
+}
+
+.gradient-text {
+  /* Fallback: Set a background color. */
+  background-color: #ca4246;
+  background-image: linear-gradient(
+    65deg,
+    #9b89b1 16.666%,
+    #fe797b 16.666%,
+    #ffb750 33.333%,
+    #ffb750 33.333%,
+    #ffb750 50%,
+    #fe797b 66.666%,
+    #fe797b 66.666%,
+    #a587ca 83.333%,
+    #a587ca 83.333%
+  );
+
+  /* Set the background size and repeat properties. */
+  background-size: 100%;
+  background-repeat: repeat;
+
+  /* Use the text as a mask for the background. */
+  /* This will show the gradient as a text color rather than element bg. */
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+#navbar h1 {
+  text-align: center;
+  font-family: 'Fredericka the Great', cursive;
+  color: #9b89b1;
+  -webkit-text-fill-color: transparent;
+  font-weight: 200;
+  text-shadow: 1px 1px 0 rgba(47, 32, 50, 0.15);
+  font-size: 75px;
+}
+
+nav a {
+  display: inline-block;
+  font-family: 'Karla', sans-serif;
+  color: #2f2032;
+  font-weight: 300;
+  padding: 1em;
+  font-size: 20px;
+}
+
+/* Swal styling! */
+.swal-overlay {
+  background-color: rgba(47, 32, 50, 0.45);
+}
+
+.swal-modal {
+  background-color: #def1be;
+  border: 3px solid #9b89b1;
+  border-radius: 15px;
+}
+
+.swal-text {
+  padding: 17px;
+  border-radius: 15px;
+  display: block;
+  margin: 22px;
+  text-align: center;
+  color: black;
+  font-size: 30px;
+}
+
+.swal-button {
+  padding: 7px 19px;
+  border-radius: 15px;
+  background-color: #f9f6f6;
+  font-size: 30px;
+  color: black;
+  border: 1px solid #9b89b1;
+}
+
+.swal-content {
+  border-radius: 15px;
 }
 
 form div {
@@ -76,8 +157,7 @@ button {
   font-size: 25px;
   border-radius: 15px;
   cursor: pointer;
-  font-family: 'Gamja Flower', cursive;
-  background-color: #9b89b1;
+  background-color: #dcdcdc;
   transition: all 50ms;
   color: #2f2032;
 }
@@ -119,11 +199,6 @@ button:focus {
   /* background-size: 75%; */
 }
 
-.iconCanvas {
-  display: flex;
-  align-items: center;
-}
-
 .arrowButton {
   max-height: 30px;
   max-width: 30px;
@@ -150,6 +225,7 @@ button:focus {
   flex-direction: column;
   margin-top: 3em;
   margin-bottom: 3em;
+  flex-grow: 1;
 }
 
 #room-name {
@@ -240,37 +316,86 @@ div.konvajs-content {
   flex-direction: column;
   align-items: center;
   flex-grow: 1;
-  padding-top: 150px;
+  padding-top: 100px;
   padding-bottom: 100px;
   font-size: 25px;
+  background-color: white;
+  background-image: url('/images/backgroundTEST2opacitychange.png');
 }
 
-#buttons-container {
+.home-div {
   display: flex;
-  width: 400px;
-  justify-content: space-evenly;
-  padding: 15px;
-}
-
-span input {
+  padding: 25px;
+  font-family: 'Karla', sans-serif;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  flex: 1 2 auto;
+  background-image: linear-gradient(#def1be, #9b89b1);
+  border: solid #9b89b1;
+  color: #2f2032;
+  width: 45%;
   border-radius: 15px;
-  font-family: 'Gamja Flower', cursive;
-  width: 200px;
-  height: 30px;
-  font-size: 20px;
-  text-align: center;
 }
 
-input:focus {
-  outline: none;
+.iconCanvas {
+  display: flex;
+  width: 100%;
+  padding: 15px;
+  justify-content: center;
+  align-items: center;
 }
 
 span {
   display: flex;
-  flex-direction: column;
+  justify-content: space-between;
+  text-align: center;
+  align-content: center;
   align-items: center;
-  font-size: 30px;
-  margin-top: 10px;
+  width: 90%;
+  font-size: 25px;
+}
+
+.roomButtons {
+  width: 85%;
+}
+
+.roomButtons button {
+  font-family: 'Karla', sans-serif;
+  width: 250px;
+  border: solid #9b89b1;
+  border-width: 1px;
+  background-color: #f9f6f6;
+}
+
+.roomButtons button:hover {
+  color: #fe797b;
+}
+
+.roomButtons label {
+  width: 250px;
+}
+
+#nicknameInput input {
+  margin: 5px;
+  border-radius: 15px;
+  border: solid #9b89b1;
+  color: #2f2032;
+  border-width: 1px;
+  font-family: 'Karla', sans-serif;
+  width: 75%;
+  height: 35px;
+  font-size: 25px;
+  text-align: center;
+}
+
+.roomButtons input {
+  height: 20px;
+  width: 20px;
+}
+
+input:focus {
+  outline: none;
 }
 
 #chat-window {
@@ -320,20 +445,25 @@ span {
   font-size: medium;
 }
 
+/* Gallery */
+
 #gallery {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  flex-grow: 1;
+  background-color: #795a80;
 }
 
 #monsters-container {
   display: grid;
-  grid-gap: 60px;
+  gap: 60px;
   justify-items: center;
-  grid-template-columns: repeat(auto-fit, 300px);
-  grid-template-rows: repeat(5, 450px);
+  grid-template-columns: repeat(auto-fit, 250px);
+  grid-template-rows: repeat(2, 350px);
   margin: 50px;
-  /* padding: 0px 150px; */
   flex: 0 0 60%;
 }
 
@@ -346,22 +476,132 @@ span {
   max-width: 100%;
   height: auto;
   border-radius: 20px;
-  border: solid #c7d66d;
-  border-width: 2px;
+  border: solid #5a5a5a;
+  border-width: 4px;
 }
 
-.slides {
+.navigationButtons {
   display: flex;
-  justify-content: center;
   align-items: center;
-  width: 700px;
-  height: 1000px;
-  flex: 0 0 40%;
-  margin: 50px;
+  justify-content: center;
+  margin: 20px;
 }
 
-.slides img {
+#frame {
+  background: url(./images/gold.png);
+  margin-left: auto;
+  margin-right: auto;
+  display: table-cell;
+  position: relative;
+  overflow: hidden;
+  width: 300px;
+  box-shadow: inset 0 50px rgba(255, 255, 255, 0.1),
+    inset 2px -15px 30px rgba(0, 0, 0, 0.4), 2px 2px 5px rgba(0, 0, 0, 0.3);
+  padding: 25px;
   border-radius: 20px;
-  border: solid #c7d66d;
-  border-width: 2px;
+  -webkit-border-radius: 20px;
+  -moz-border-radius: 20px;
+  vertical-align: middle;
+  text-align: center;
+}
+
+#frame:hover {
+  transform: scale(1.5);
+  cursor: pointer;
+}
+
+.name {
+  background: url(./images/wood.jpg);
+  border-radius: 10px;
+  margin: 10px;
+}
+
+/* Footer */
+
+.footer-container {
+  background-color: #9b89b1;
+  box-sizing: border-box;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  padding: 25px 50px;
+  gap: 2px;
+}
+
+.footer-left p {
+  color: #2f2032;
+  font-size: 27px;
+  margin: 0px;
+  font-family: 'Gamja Flower', cursive;
+}
+
+.footer-left {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+}
+.footer-right a {
+  display: inline-block;
+  width: 60px;
+  height: 60px;
+  border-radius: 2px;
+  font-size: 55px;
+  color: #2f2032;
+  text-align: center;
+  line-height: 35px;
+  margin: 0px 5px;
+  transition: all 0.25s;
+}
+
+.footer-right {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
+  text-align: center;
+}
+
+.footer-right div {
+  font-size: 20px;
+}
+
+.author img {
+  width: 3em;
+  height: 3em;
+}
+.author {
+  display: flex;
+  margin-left: 2em;
+  flex-direction: row;
+  align-items: center;
+  gap: 1em;
+  transition: all 0.25s;
+}
+
+.footer-right a:hover {
+  transform: scale(1.2);
+  color: #ffb750;
+}
+.footer-left a:hover,
+.footer-left a:hover p {
+  transform: scale(1.08);
+  color: #ffb750;
+}
+
+/* Media Queries for footer */
+
+@media (max-width: 600px) {
+  .footer-left,
+  .footer-right {
+    text-align: center;
+  }
+  .footer-right {
+    float: none;
+    margin: 0 auto 20px;
+  }
+  .footer-right a {
+    line-height: 1.8;
+  }
 }

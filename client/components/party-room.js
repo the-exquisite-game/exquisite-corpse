@@ -136,8 +136,6 @@ export class PartyRoom extends React.Component {
 
   handleNewGame() {
     this.setState({
-      // users: users,
-      // userTurn: users[0],
       finished: false,
       gamePlay: true,
       connectingLines: '',
@@ -190,6 +188,19 @@ export class PartyRoom extends React.Component {
         onMouseUp={this.handleMouseUp}
       >
         <div id="room-name">Room: {this.props.match.params.room}</div>
+
+        {this.state.gamePlay ? (
+          <div className="header-turn-info">
+            {this.state.me.id === userTurn.id
+              ? `It's your turn! Draw the 
+            ${this.state.bodyParts[this.state.done]}!`
+              : `It's ${userTurn.nickname}'s turn! Drawing the 
+            ${this.state.bodyParts[this.state.done]}...`}
+          </div>
+        ) : (
+          ''
+        )}
+
         <div id="main-party-room-area">
           <div id="users-section">
             <UsersBar
@@ -208,8 +219,8 @@ export class PartyRoom extends React.Component {
           <div id="party-room-center">
             {this.state.gamePlay ? (
               <div id="party-room-canvas">
-                It is {userTurn.nickname}'s turn! Drawing the{' '}
-                {this.state.bodyParts[this.state.done]}
+                {/* It is {userTurn.nickname}'s turn! Drawing the{' '}
+                {this.state.bodyParts[this.state.done]} */}
                 {myself.id === userTurn.id ? (
                   <Drawing
                     canvas={this.canvas}
@@ -249,13 +260,16 @@ export class PartyRoom extends React.Component {
                   </div>
                 ) : (
                   <div id="party-room-canvas">
-                    Waiting for {4 - this.state.users.length} more players!
+                    <div className="header-turn-info">
+                      Waiting for {4 - this.state.users.length} more players!
+                    </div>
+                    <Instructions />
                   </div>
                 )}
               </div>
             )}
           </div>
-          <div id="chat-window">
+          <div>
             <ChatWindow
               messages={this.state.chatMessages}
               room={room}

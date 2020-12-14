@@ -11,7 +11,7 @@ export default class ChatWindow extends Component {
   render() {
     const messages = this.props.messages
     return (
-      <div>
+      <div id="chat-window">
         <div id="chat-messages">
           {messages.map(message => (
             <ChatMessage key={message.id} message={message} />

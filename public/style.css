@@ -30,14 +30,7 @@ a {
 #navbar {
   /* background-image: linear-gradient(#a6a8e0, #d1d2f9); */
   /* background-color: #2f2032; */
-  <<<<<<<HEAD
-
-=======
->>>>>>> 04fe31b63c91b8073f8d0302514d56e434a6c430
-  background-image: linear-gradient(
-    #c0d44e,
-    #def1be
-  );
+  background-image: linear-gradient(#c0d44e, #def1be);
   width: 100%;
   display: flex;
   flex: 0 1 auto;
@@ -332,20 +325,14 @@ div.konvajs-content {
 
 .home-div {
   display: flex;
-  <<<<<<<HEAD
-  <<<<<<<Updated upstream
   width: 400px;
   justify-content: space-evenly;
-  =======padding: 25px;
-  =======padding: 25px;
-  >>>>>>>04fe31b63c91b8073f8d0302514d56e434a6c430
-  font-family: 'Karla',
-    sans-serif;
+  padding: 25px;
+  font-family: 'Karla', sans-serif;
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
   flex: 1 2 auto;
-  <<<<<<<HEAD
   /* background-image: linear-gradient(#def1be, #9b89b1); */
   background-image: linear-gradient(
     to bottom right,
@@ -354,8 +341,6 @@ div.konvajs-content {
     #dfd4ec,
     #aaa4b1
   );
-  =======background-image: linear-gradient(#def1be, #9b89b1);
-  >>>>>>>04fe31b63c91b8073f8d0302514d56e434a6c430
   border: solid #9b89b1;
   color: #2f2032;
   width: 45%;
@@ -365,10 +350,7 @@ div.konvajs-content {
 .iconCanvas {
   display: flex;
   width: 100%;
-  <<<<<<<HEAD
-  >>>>>>>Stashed changes
-=======
->>>>>>> 04fe31b63c91b8073f8d0302514d56e434a6c430
+
   padding: 15px;
   justify-content: center;
   align-items: center;

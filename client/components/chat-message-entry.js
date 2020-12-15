@@ -19,7 +19,11 @@ export default class ChatMessageEntry extends Component {
   render() {
     return (
       <div>
-        <form id="chat-message-entry" onSubmit={this.handleSubmit}>
+        <form
+          id="chat-message-entry"
+          autoComplete="off"
+          onSubmit={this.handleSubmit}
+        >
           <input
             type="text"
             name="messages"
@@ -42,6 +46,7 @@ export default class ChatMessageEntry extends Component {
     evt.preventDefault()
     sendMessage(this.createMessage(this.state.message), this.props.room)
     this.setState(defaultState)
+    //this.props.scrollToBottom()
   }
 
   createMessage(message) {

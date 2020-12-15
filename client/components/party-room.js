@@ -142,7 +142,7 @@ export class PartyRoom extends React.Component {
     this.setState(prevState => {
       return {
         done: numberFinished,
-        userTurn: prevState.users[numberFinished],
+        userTurn: prevState.users[numberFinished % prevState.users.length],
         bodyPartsImage: [...prevState.bodyPartsImage, limbs],
         connectingLines: leadingLines
       }
@@ -155,6 +155,7 @@ export class PartyRoom extends React.Component {
 
   handleNewGame() {
     this.setState({
+      userTurn: this.state.users[0],
       finished: false,
       gamePlay: true,
       connectingLines: '',

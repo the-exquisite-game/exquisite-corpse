@@ -15,9 +15,9 @@ class Timer extends Component {
   componentDidMount() {
     this.countdown()
 
-    this.time = setTimeout(() => {
-      this.props.handleDone()
-    }, 120000)
+    // this.time = setTimeout(() => {
+    //   this.props.handleDone()
+    // }, 120000)
   }
 
   //timer
@@ -28,6 +28,8 @@ class Timer extends Component {
   setTimer() {
     if (this.state.time > 0) {
       this.setState({time: this.state.time - 1000})
+    } else {
+      this.props.handleDone()
     }
   }
 

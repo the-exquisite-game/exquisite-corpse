@@ -21,7 +21,7 @@ class Drawing extends Component {
     this.handleChange = this.handleChange.bind(this)
   }
 
-  componentDidMount() {
+  componentWillUnmount() {
     this.setState({
       lines: []
     })

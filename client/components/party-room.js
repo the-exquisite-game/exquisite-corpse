@@ -14,6 +14,7 @@ import {
 import {UsersBar} from './users-bar'
 import {FinalMonster} from './finalMonster'
 import swal from '@sweetalert/with-react'
+import * as Scroll from 'react-scroll'
 import ChatWindow from './chat-window'
 import {Instructions} from './instructions'
 import axios from 'axios'
@@ -56,6 +57,7 @@ export class PartyRoom extends React.Component {
     this.handlePlayerDisconnecting = this.handlePlayerDisconnecting.bind(this)
     this.setNewUsers = this.setNewUsers.bind(this)
     this.handlePlayerLeavingEarly = this.handlePlayerLeavingEarly.bind(this)
+    this.scrollToBottom = this.scrollToBottom.bind(this)
   }
 
   componentDidMount() {
@@ -196,6 +198,7 @@ export class PartyRoom extends React.Component {
     this.setState(prevState => ({
       chatMessages: [...prevState.chatMessages, message]
     }))
+    this.scrollToBottom()
   }
 
   async handleSave() {
@@ -210,6 +213,14 @@ export class PartyRoom extends React.Component {
 
   handleTimer(time) {
     this.setState(time)
+  }
+
+  scrollToBottom() {
+    Scroll.animateScroll.scrollToBottom({
+      containerId: 'chat-messages',
+      delay: 0,
+      duration: 100
+    })
   }
 
   render() {

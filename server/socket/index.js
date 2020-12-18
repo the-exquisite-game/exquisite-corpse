@@ -101,7 +101,7 @@ module.exports = io => {
         users = [...user]
       }
 
-      if (users.length === 4) {
+      if (users.length === 4 || user) {
         users = shuffle(users)
         io.in(room).emit('gameStart', users)
       }

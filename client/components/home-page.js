@@ -82,6 +82,7 @@ export class Home extends React.Component {
               name="name"
               value={this.state.name}
               onChange={this.handleChange}
+              autoComplete="false"
             />
           </span>
           <span className="roomButtons">
